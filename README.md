@@ -20,3 +20,6 @@ Hierbei ist jedoch zu beachten, dass nur der Quellcode bearbeitet werden und das
 
 ## Debuggen mit Visual Studio
 To be documented
+
+## Using Godot with git
+Die Änderungen können aus Visual Studio oder auch über externe Tools synchronisiert werden.
