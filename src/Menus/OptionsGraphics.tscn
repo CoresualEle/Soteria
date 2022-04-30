@@ -1,0 +1,38 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Menus/ButtonTheme.tres" type="Theme" id=1]
+[ext_resource path="res://Menus/OptionsGraphics.cs" type="Script" id=2]
+
+[node name="OptionsGraphics" type="Control"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -221.0
+margin_right = 300.0
+rect_min_size = Vector2( 300, 200 )
+script = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+
+[node name="FullScreenButton" type="CheckButton" parent="VBoxContainer"]
+margin_right = 91.0
+margin_bottom = 40.0
+focus_neighbour_top = NodePath("../BackButton")
+theme = ExtResource( 1 )
+text = "Full Screen"
+flat = true
+
+[node name="BackButton" type="Button" parent="VBoxContainer"]
+margin_top = 44.0
+margin_right = 91.0
+margin_bottom = 52.0
+focus_neighbour_bottom = NodePath("../FullScreenButton")
+theme = ExtResource( 1 )
+text = "Back"
+flat = true
+align = 0
+
+[connection signal="toggled" from="VBoxContainer/FullScreenButton" to="." method="_on_FullScreenButton_toggled"]
+[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_BackButton_pressed"]
