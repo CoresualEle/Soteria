@@ -11,7 +11,7 @@ public class Main : Control
 
 	private void _on_StartButton_pressed()
 	{
-		//GetTree().ChangeScene("res://Menus/OptionsMenu.tscn");
+		GetTree().ChangeScene("res://Maps/World.tscn");
 	}
 
 	private void _on_OptionsButton_pressed()
