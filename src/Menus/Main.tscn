@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Menus/Main.cs" type="Script" id=1]
 [ext_resource path="res://Menus/ButtonTheme.tres" type="Theme" id=2]
-[ext_resource path="res://images/back.png" type="Texture" id=3]
+[ext_resource path="res://resources/images/back.png" type="Texture" id=3]
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
