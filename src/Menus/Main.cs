@@ -10,10 +10,10 @@ namespace Menus {
 			GetNode<Button>("VBoxContainer/StartButton").GrabFocus();
 		}
 
-	private void _on_StartButton_pressed()
-	{
-		GetTree().ChangeScene("res://Maps/World.tscn");
-	}
+		private void _on_StartButton_pressed()
+		{
+			GetTree().ChangeScene("res://Maps/World.tscn");
+		}
 
 		private void _on_OptionsButton_pressed()
 		{
