@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: resharper
+        name: resharper
+        entry: "dotnet jb cleanupcode src/Soteria.sln"
+        language: system
+        pass_filenames: false
+        types: [c#]
