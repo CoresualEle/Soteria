@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Network/Components/Server.cs" type="Script" id=1]
+[ext_resource path="res://resources/images/Server.png" type="Texture" id=2]
+
+[node name="ServerRoot" type="Node2D"]
+z_index = 1
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )

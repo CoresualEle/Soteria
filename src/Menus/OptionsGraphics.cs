@@ -1,25 +1,27 @@
 using Godot;
-using System;
 
-public class OptionsGraphics : Control
+namespace Soteria.Menus
 {
-	[Signal]
-	public delegate void BackButtonPressed();
+    public class OptionsGraphics : Control
+    {
+        [Signal]
+        public delegate void BackButtonPressed();
 
-	public override void _Ready()
-	{
-		GetNode<Button>("VBoxContainer/FullScreenButton").GrabFocus();
-		GetNode<CheckButton>("VBoxContainer/FullScreenButton").Disabled = OS.WindowFullscreen;
-	}
+        public override void _Ready()
+        {
+            this.GetNode<Button>("VBoxContainer/FullScreenButton").GrabFocus();
+            this.GetNode<CheckButton>("VBoxContainer/FullScreenButton").Disabled = OS.WindowFullscreen;
+        }
 
-	private void _on_FullScreenButton_toggled(bool button_pressed)
-	{
-		OS.WindowFullscreen = button_pressed;
-	}
+        private void _on_FullScreenButton_toggled(bool button_pressed)
+        {
+            OS.WindowFullscreen = button_pressed;
+        }
 
-	private void _on_BackButton_pressed()
-	{
-		QueueFree();
-		EmitSignal(nameof(BackButtonPressed));
-	}
+        private void _on_BackButton_pressed()
+        {
+            this.QueueFree();
+            this.EmitSignal(nameof(BackButtonPressed));
+        }
+    }
 }
