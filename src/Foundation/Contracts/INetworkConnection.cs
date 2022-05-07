@@ -2,6 +2,8 @@
 {
     public interface INetworkConnection
     {
+        int Weight { get; }
+
         INetworkNode Source { get; }
 
         INetworkNode Target { get; }

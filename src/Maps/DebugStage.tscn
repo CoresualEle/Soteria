@@ -8,14 +8,56 @@
 
 [node name="NetworkGraphRoot" parent="." instance=ExtResource( 3 )]
 
-[node name="ServerA" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
+[node name="A" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
 position = Vector2( 50, 250 )
-rotation = 2.28933
 
-[node name="ServerB" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
-position = Vector2( 500, 250 )
+[node name="AB" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
+SourceNodePath = NodePath("../A")
+TargetNodePath = NodePath("../B")
 
-[node name="ConnectionRoot" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
-rotation = -0.104087
-SourceNodePath = NodePath("../ServerA")
-TargetNodePath = NodePath("../ServerB")
+[node name="AD" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
+SourceNodePath = NodePath("../A")
+TargetNodePath = NodePath("../D")
+
+[node name="AE" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
+SourceNodePath = NodePath("../A")
+TargetNodePath = NodePath("../E")
+
+[node name="B" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
+position = Vector2( 460, 250 )
+
+[node name="BC" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
+SourceNodePath = NodePath("../B")
+TargetNodePath = NodePath("../C")
+
+[node name="BE" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
+SourceNodePath = NodePath("../B")
+TargetNodePath = NodePath("../E")
+
+[node name="BF" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
+SourceNodePath = NodePath("../B")
+TargetNodePath = NodePath("../F")
+
+[node name="C" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
+position = Vector2( 980, 250 )
+
+[node name="CF" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
+SourceNodePath = NodePath("../C")
+TargetNodePath = NodePath("../F")
+
+[node name="D" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
+position = Vector2( 50, 500 )
+
+[node name="DE" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
+SourceNodePath = NodePath("../D")
+TargetNodePath = NodePath("../E")
+
+[node name="E" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
+position = Vector2( 460, 500 )
+
+[node name="EF" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
+SourceNodePath = NodePath("../E")
+TargetNodePath = NodePath("../F")
+
+[node name="F" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
+position = Vector2( 980, 500 )
