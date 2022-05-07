@@ -13,7 +13,7 @@ namespace Soteria.Menus
 
         private void _on_StartButton_pressed()
         {
-            this.GetTree().ChangeScene("res://Maps/World.tscn");
+            this.GetTree().ChangeScene("res://Maps/DebugStage.tscn");
         }
 
         private void _on_OptionsButton_pressed()
