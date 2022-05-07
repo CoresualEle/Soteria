@@ -4,19 +4,22 @@ using Godot;
 
 using Soteria.Foundation.Contracts;
 
-public class Server : Node2D, INetworkNode
+namespace Soteria.Network.Components
 {
-    public IList<INetworkConnection> Connections { get; } = new List<INetworkConnection>();
-
-    public override void _Ready()
+    public class Server : Node2D, INetworkNode
     {
-    }
+        public IList<INetworkConnection> Connections { get; } = new List<INetworkConnection>();
 
-    public void AddConnection(INetworkConnection connection)
-    {
-        if (!this.Connections.Contains(connection))
+        public override void _Ready()
         {
-            this.Connections.Add(connection);
+        }
+
+        public void AddConnection(INetworkConnection connection)
+        {
+            if (!this.Connections.Contains(connection))
+            {
+                this.Connections.Add(connection);
+            }
         }
     }
 }

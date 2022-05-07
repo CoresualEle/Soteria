@@ -13,8 +13,6 @@ namespace Soteria.Network
         private readonly IList<INetworkNode> nodes = new List<INetworkNode>();
         private readonly IList<INetworkConnection> edges = new List<INetworkConnection>();
 
-        private bool initialRun;
-
         public void RegisterConnection(INetworkConnection connectionToRegister)
         {
             if (!this.edges.Contains(connectionToRegister))
@@ -26,16 +24,21 @@ namespace Soteria.Network
             if (!this.nodes.Contains(connectionToRegister.Source))
             {
                 this.nodes.Add(connectionToRegister.Source);
-                GD.Print($"Added Node {connectionToRegister.Source.Name}.");
             }
 
             if (!this.nodes.Contains(connectionToRegister.Target))
             {
                 this.nodes.Add(connectionToRegister.Target);
-                GD.Print($"Added Node {connectionToRegister.Target.Name}.");
             }
         }
 
+        /// <summary>
+        /// Finds the shortest path between two <see cref="INetworkNode" />--> on the graph using Dijkstra's algorithm.
+        /// See: https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Pseudocode
+        /// </summary>
+        /// <param name="source">Starting point of the path</param>
+        /// <param name="target">Endpoint of the path</param>
+        /// <returns>A list of the connections necessary to traverse the graph on the shortest path from source to target</returns>
         public IList<INetworkConnection> GetPathToNode(INetworkNode source, INetworkNode target)
         {
             if (source == null || !this.nodes.Contains(source))
@@ -53,70 +56,81 @@ namespace Soteria.Network
                 throw new ArgumentException("Target is the same instance as source.", nameof(target));
             }
 
-            var vertices = this.nodes;
-            var dist = new Dictionary<INetworkNode, int>();
-            var prev = new Dictionary<INetworkNode, INetworkNode>();
-            var Q = new List<INetworkNode>();
+            var distanceIndex = new Dictionary<INetworkNode, int>();
+            var previousNodeIndex = new Dictionary<INetworkNode, INetworkNode>();
+            var unvisitedNodes = new List<INetworkNode>();
 
-            foreach (var v in vertices)
+            // Initialize basics
+            foreach (var v in this.nodes)
             {
-                dist.Add(v, int.MaxValue);
-                prev.Add(v, null);
-                Q.Add(v);
+                distanceIndex.Add(v, int.MaxValue);
+                previousNodeIndex.Add(v, null);
+                unvisitedNodes.Add(v);
             }
 
-            dist[source] = 0;
+            // Starting point has distance of 0
+            distanceIndex[source] = 0;
 
-            while (Q.Count > 0)
+            // Repeat until all nodes are visited or target is found.
+            while (unvisitedNodes.Count > 0)
             {
-                var u = FindNodeWithMinDistance();
+                // Head of the shortest path so far
+                var currentPathHead = FindNodeWithMinDistance();
 
-                if (u == target)
+                // Finish loop if target is found
+                if (currentPathHead == target)
                 {
                     break;
                 }
 
-                Q.Remove(u);
+                unvisitedNodes.Remove(currentPathHead);
 
-                foreach (var connection in u.Connections.Where(x => Q.Contains(x.Target)))
+                // Repeat for each unvisited connected node
+                foreach (var connection in currentPathHead.Connections.Where(x => unvisitedNodes.Contains(x.Target)))
                 {
-                    var alt = dist[u] + connection.Weight;
-                    if (alt < dist[connection.Target])
+                    var sourceToTargetDistance = distanceIndex[currentPathHead] + connection.Weight;
+
+                    // Abort and continue with next connection if current path's distance is longer than another path to the intermediate target
+                    if (sourceToTargetDistance >= distanceIndex[connection.Target])
                     {
-                        dist[connection.Target] = alt;
-                        prev[connection.Target] = u;
+                        continue;
                     }
+
+                    // Set shorter value as new distance for this node
+                    distanceIndex[connection.Target] = sourceToTargetDistance;
+
+                    // Set current node as part of the final path
+                    previousNodeIndex[connection.Target] = currentPathHead;
                 }
             }
 
-            if (prev[target] == null)
+            // If target node has no previous node, no valid path has been found
+            if (previousNodeIndex[target] == null)
             {
                 throw new ArgumentOutOfRangeException(nameof(target), "No path is available.");
             }
 
             var path = new List<INetworkConnection>();
-            var r = target;
+            var nextItemToAdd = target;
 
+            // Build the list of connections from back to front
+            while (previousNodeIndex[nextItemToAdd] != null)
             {
-                while (prev[r] != null)
-                {
-                    var item = this.edges.Single(x => x.Target == r && x.Source == prev[r]);
-                    path.Insert(0, item);
-                    GD.Print($"Added {item.Source.Name} -> {item.Target.Name}");
-                    GD.Print($"prev is {prev[r].Name}");
-                    r = prev[r];
-                }
+                var item = this.edges.Single(x => x.Target == nextItemToAdd && x.Source == previousNodeIndex[nextItemToAdd]);
+                path.Insert(0, item);
+                nextItemToAdd = previousNodeIndex[nextItemToAdd];
             }
 
             return path;
 
+            // Iterates the list of unvisited nodes and finds the one with the lowest overall path length
             INetworkNode FindNodeWithMinDistance()
             {
-                var result = Q.First();
+                var result = unvisitedNodes.First();
 
-                foreach (var node in Q)
+                foreach (var node in unvisitedNodes)
                 {
-                    if (dist[node] < dist[result])
+                    if (distanceIndex[node] < distanceIndex[result])
                     {
                         result = node;
                     }
