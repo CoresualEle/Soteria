@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Menus/ButtonTheme.tres" type="Theme" id=1]
+[ext_resource path="res://Menus/Pause.cs" type="Script" id=2]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0, 0, 0.121569 )
+
+[sub_resource type="Theme" id=2]
+Panel/styles/panel = SubResource( 1 )
+
+[node name="Pause" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -77.0
+margin_top = -66.0
+margin_right = 77.0
+margin_bottom = 66.0
+
+[node name="ResumeButton" type="Button" parent="VBoxContainer"]
+margin_right = 154.0
+margin_bottom = 30.0
+focus_neighbour_top = NodePath("../QuitButton")
+theme = ExtResource( 1 )
+text = "Resume"
+flat = true
+
+[node name="RestartButton" type="Button" parent="VBoxContainer"]
+margin_top = 34.0
+margin_right = 154.0
+margin_bottom = 64.0
+theme = ExtResource( 1 )
+text = "Restart Scenario"
+flat = true
+
+[node name="BackToScenarioSelectionButton" type="Button" parent="VBoxContainer"]
+margin_top = 68.0
+margin_right = 154.0
+margin_bottom = 98.0
+theme = ExtResource( 1 )
+text = "Back to Scenario Selection"
+flat = true
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+margin_top = 102.0
+margin_right = 154.0
+margin_bottom = 132.0
+focus_neighbour_bottom = NodePath("../ResumeButton")
+theme = ExtResource( 1 )
+text = "Quit Game"
+flat = true
+
+[node name="BackgroundPanel" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 2 )
+
+[connection signal="pressed" from="VBoxContainer/ResumeButton" to="." method="_on_ResumeButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/RestartButton" to="." method="_on_RestartButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/BackToScenarioSelectionButton" to="." method="_on_BackToScenarioSelectionButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]
