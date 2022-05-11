@@ -17,12 +17,12 @@ namespace Soteria.Menus
         {
             this.GetNode<VBoxContainer>("VBoxContainer").Hide();
 
-            var options_graphics_scene = (PackedScene)ResourceLoader.Load("res://Menus/OptionsGraphics.tscn");
-            var options_graphics_scene_instance = (Control)options_graphics_scene.Instance();
+            var optionsGraphicsScene = (PackedScene)ResourceLoader.Load("res://Menus/OptionsGraphics.tscn");
+            var optionsGraphicsSceneInstance = (Control)optionsGraphicsScene.Instance();
 
-            this.GetTree().CurrentScene.AddChild(options_graphics_scene_instance);
+            this.GetTree().CurrentScene.AddChild(optionsGraphicsSceneInstance);
 
-            options_graphics_scene_instance.Connect("BackButtonPressed", this, "_on_Options_BackButton_Signal");
+            optionsGraphicsSceneInstance.Connect("BackButtonPressed", this, "_on_Options_BackButton_Signal");
         }
 
         private void _on_Options_BackButton_Signal()
