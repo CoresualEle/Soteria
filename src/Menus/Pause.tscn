@@ -10,9 +10,16 @@ bg_color = Color( 0, 0, 0, 0.121569 )
 Panel/styles/panel = SubResource( 1 )
 
 [node name="Pause" type="Control"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 2 )
+
+[node name="BackgroundPanel" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = SubResource( 2 )
+color = Color( 0, 0, 0, 0.243137 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_left = 0.5
@@ -56,11 +63,6 @@ focus_neighbour_bottom = NodePath("../ResumeButton")
 theme = ExtResource( 1 )
 text = "Quit Game"
 flat = true
-
-[node name="BackgroundPanel" type="Panel" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-theme = SubResource( 2 )
 
 [connection signal="pressed" from="VBoxContainer/ResumeButton" to="." method="_on_ResumeButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/RestartButton" to="." method="_on_RestartButton_pressed"]

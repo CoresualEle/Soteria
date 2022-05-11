@@ -1,26 +1,53 @@
 using Godot;
 
-namespace Menus
+namespace Soteria.Menus
 {
     public class Pause : Control
     {
+        private bool _isPaused;
+
         [Signal]
         public delegate void RestartButtonPressed();
 
+        // Could be that we will not use the ResumeButtonPressed signal
         [Signal]
         public delegate void ResumeButtonPressed();
 
         [Signal]
         public delegate void ScenarioSelectionButtonPressed();
 
-        public override void _Ready()
+        public bool IsPaused
         {
-            this.GetNode<Button>("VBoxContainer/ResumeButton").GrabFocus();
+            get
+            {
+                return this._isPaused;
+            }
+            set
+            {
+                this._setIsPaused(value);
+            }
         }
 
-        public override void _PhysicsProcess(float delta)
+        public override void _Ready()
         {
-            if (Input.IsActionJustPressed("ui_cancel"))
+            this.IsPaused = false;
+        }
+
+        private void _setIsPaused(bool value)
+        {
+            this._isPaused = value;
+            this.GetTree().Paused = this.IsPaused;
+            this.Visible = this.IsPaused;
+
+            if (this.IsPaused)
+            {
+                this.GetNode<Button>("VBoxContainer/ResumeButton").GrabFocus();
+            }
+        }
+
+        public override void _UnhandledInput(InputEvent inputEvent)
+        {
+            if (inputEvent.IsActionPressed("ui_cancel"))
             {
                 this._on_ResumeButton_pressed();
             }
@@ -28,22 +55,22 @@ namespace Menus
 
         private void _on_ResumeButton_pressed()
         {
-            this.QueueFree();
+            this.IsPaused = false;
             this.EmitSignal(nameof(ResumeButtonPressed));
         }
 
         private void _on_RestartButton_pressed()
         {
-            // We need to see how we can restart a scenario
-            this.QueueFree();
+            this.IsPaused = false;
             this.EmitSignal(nameof(RestartButtonPressed));
         }
 
         private void _on_BackToScenarioSelectionButton_pressed()
         {
-            // Instead of QueueFree and letting the caller handle this, we should
-            // instead directly load the scenario selection scene
-            this.QueueFree();
+            this.IsPaused = false;
+
+            // Instead of emiting a signal we should directly load the scenario
+            // selection scene
             this.EmitSignal(nameof(ScenarioSelectionButtonPressed));
         }
 
