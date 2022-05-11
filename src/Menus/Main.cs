@@ -20,12 +20,12 @@ namespace Soteria.Menus
         {
             this.GetNode<VBoxContainer>("VBoxContainer").Hide();
 
-            var options_scene = (PackedScene)ResourceLoader.Load("res://Menus/Options.tscn");
-            var options_scene_instance = (Control)options_scene.Instance();
+            var optionsScene = (PackedScene)ResourceLoader.Load("res://Menus/Options.tscn");
+            var optionsSceneInstance = (Control)optionsScene.Instance();
 
-            this.GetTree().CurrentScene.AddChild(options_scene_instance);
+            this.GetTree().CurrentScene.AddChild(optionsSceneInstance);
 
-            options_scene_instance.Connect("BackButtonPressed", this, "_on_Options_BackButton_Signal");
+            optionsSceneInstance.Connect("BackButtonPressed", this, "_on_Options_BackButton_Signal");
         }
 
         private void Resize()
