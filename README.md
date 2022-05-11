@@ -45,7 +45,19 @@ Resharper ist ein Code-Checker, der die Syntax und die Logik von Code-Blöcken
 
 ```shell
 dotnet tool restore
-dotnet jb cleanupcode src/Soteria.sln
+
+dotnet jb cleanupcode src/Soteria.sln \
+  -s="src/Soteria.sln.DotSettings" \
+  -s="src/Soteria.sln.DotSettings.user" \
+  -s="src/rules/StyleCop.dotSettings" \
+  -s="src/rules/Team.DotSettings"
+
+dotnet jb inspectcode src/Soteria.sln \
+  --profile="src/Soteria.sln.DotSettings" \
+  --profile="src/Soteria.sln.DotSettings.user" \
+  --profile="src/rules/StyleCop.dotSettings" \
+  --profile="src/rules/Team.DotSettings" \
+  -o=result.txt --format=Text -s=WARNING
 ```
 
 Alternativ kann auch [pre-commit](https://pre-commit.com/) installiert werden.
