@@ -3,7 +3,7 @@ repos:
     hooks:
       - id: resharper
         name: resharper
-        entry: "dotnet jb cleanupcode src/Soteria.sln"
+        entry: dotnet jb cleanupcode src/Soteria.sln -s="src/Soteria.sln.DotSettings" -s="src/Soteria.sln.DotSettings.user" -s="src/rules/StyleCop.dotSettings" -s="src/rules/Team.DotSettings" --verbosity=WARN
         language: system
         pass_filenames: false
         types: [c#]
