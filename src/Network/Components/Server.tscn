@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Network/Components/Server.cs" type="Script" id=1]
 [ext_resource path="res://resources/images/Server.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 32, 32 )
 
 [node name="ServerRoot" type="Node2D"]
 z_index = 1
@@ -13,3 +16,38 @@ __meta__ = {
 [node name="Sprite" type="Sprite" parent="."]
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ContextMenu" type="PopupPanel" parent="CanvasLayer"]
+visible = true
+margin_right = 242.0
+margin_bottom = 74.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ContextMenu"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 238.0
+margin_bottom = 70.0
+
+[node name="Label" type="Label" parent="CanvasLayer/ContextMenu/VBoxContainer"]
+margin_right = 234.0
+margin_bottom = 14.0
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/ContextMenu/VBoxContainer"]
+margin_top = 18.0
+margin_right = 234.0
+margin_bottom = 22.0
+
+[node name="DiskEncryptionCheckButton" type="CheckButton" parent="CanvasLayer/ContextMenu/VBoxContainer"]
+margin_top = 26.0
+margin_right = 234.0
+margin_bottom = 66.0
+text = "Disk Encryption enabled"
+
+[connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
