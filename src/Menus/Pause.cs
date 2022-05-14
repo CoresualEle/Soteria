@@ -13,9 +13,6 @@ namespace Soteria.Menus
         [Signal]
         public delegate void ResumeButtonPressed();
 
-        [Signal]
-        public delegate void ScenarioSelectionButtonPressed();
-
         public bool IsPaused
         {
             get
@@ -68,10 +65,7 @@ namespace Soteria.Menus
         private void _on_BackToScenarioSelectionButton_pressed()
         {
             this.IsPaused = false;
-
-            // Instead of emiting a signal we should directly load the scenario
-            // selection scene
-            this.EmitSignal(nameof(ScenarioSelectionButtonPressed));
+            this.GetTree().ChangeScene("res://Menus/ScenarioSelect.tscn");
         }
 
         private void _on_QuitButton_pressed()
