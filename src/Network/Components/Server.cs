@@ -16,8 +16,8 @@ namespace Soteria.Network.Components
         public override void _Ready()
         {
             this.GetNode<Label>("CanvasLayer/ContextMenu/VBoxContainer/Label").Text = this.Name;
-            this.networkGraph = this.GetNode<INetworkGraph>(new NodePath(".."));
 
+            this.networkGraph = this.GetNode<INetworkGraph>(new NodePath(".."));
             this.networkGraph.NetworkTick += this.NetworkGraph_OnNetworkTick;
         }
 
