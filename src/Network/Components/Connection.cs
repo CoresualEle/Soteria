@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 using Godot;
 
@@ -38,6 +39,22 @@ namespace Soteria.Network.Components
             this.GetNode<INetworkGraph>(new NodePath("..")).RegisterConnection(this);
 
             this.SetupConnectionGraphic();
+        }
+        
+        public override void _Process(float delta)
+        {
+            base._Process(delta);
+
+            if (this.Source.Infections.Any() && !this.Target.Infections.Any())
+            {
+                this.lineGraphic.DefaultColor = new Color(1, 1, 0);
+                this.SetupConnectionGraphic();
+            }
+            else if (this.Source.Infections.Any() && this.Target.Infections.Any())
+            {
+                this.lineGraphic.DefaultColor = new Color(1, 0, 0);
+                this.SetupConnectionGraphic();
+            }
         }
 
         private void SetupConnectionGraphic()

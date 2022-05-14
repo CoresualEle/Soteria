@@ -10,8 +10,12 @@ namespace Soteria.Foundation.Contracts
 
         IList<INetworkConnection> Connections { get; }
 
+        IList<IAggressor> Infections { get; }
+
         Vector2 Position { get; }
 
         void AddConnection(INetworkConnection connection);
+
+        bool Attack(IAggressor aggressor);
     }
 }
