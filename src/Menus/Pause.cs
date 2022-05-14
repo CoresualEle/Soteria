@@ -4,7 +4,7 @@ namespace Soteria.Menus
 {
     public class Pause : Control
     {
-        private bool _isPaused;
+        private bool isPaused;
 
         [Signal]
         public delegate void RestartButtonPressed();
@@ -20,7 +20,7 @@ namespace Soteria.Menus
         {
             get
             {
-                return this._isPaused;
+                return this.isPaused;
             }
             set
             {
@@ -35,7 +35,7 @@ namespace Soteria.Menus
 
         private void _setIsPaused(bool value)
         {
-            this._isPaused = value;
+            this.isPaused = value;
             this.GetTree().Paused = this.IsPaused;
             this.Visible = this.IsPaused;
 

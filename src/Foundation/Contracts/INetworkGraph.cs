@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Soteria.Foundation.Contracts
 {
     public interface INetworkGraph
     {
+        event EventHandler<EventArgs> NetworkTick;
+
         void RegisterConnection(INetworkConnection connectionToRegister);
 
         /// <summary>
