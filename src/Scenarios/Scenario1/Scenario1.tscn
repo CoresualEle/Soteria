@@ -24,7 +24,6 @@ position = Vector2( 400, 250 )
 [node name="UI" parent="." instance=ExtResource( 4 )]
 
 [node name="GameTickTimer" type="Timer" parent="."]
-wait_time = 0.1
 autostart = true
 
-[connection signal="timeout" from="GameTickTimer" to="." method="_on_GameTickTimer_timeout"]
+[connection signal="timeout" from="GameTickTimer" to="NetworkGraphRoot" method="_on_GameTickTimer_timeout"]

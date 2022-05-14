@@ -13,6 +13,8 @@ namespace Soteria.Network
         private readonly IList<INetworkNode> nodes = new List<INetworkNode>();
         private readonly IList<INetworkConnection> edges = new List<INetworkConnection>();
 
+        public event EventHandler<EventArgs> NetworkTick;
+
         public void RegisterConnection(INetworkConnection connectionToRegister)
         {
             if (!this.edges.Contains(connectionToRegister))
@@ -30,6 +32,11 @@ namespace Soteria.Network
             {
                 this.nodes.Add(connectionToRegister.Target);
             }
+        }
+
+        private void _on_GameTickTimer_timeout()
+        {
+            this.NetworkTick?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
