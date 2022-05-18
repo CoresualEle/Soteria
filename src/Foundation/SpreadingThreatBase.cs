@@ -5,17 +5,17 @@ using Soteria.Foundation.Contracts;
 
 namespace Soteria.Foundation
 {
-    public class Virus : IAggressor, IDisposable
+    public class SpreadingThreatBase : IThreat, IDisposable
     {
         private readonly INetworkGraph networkGraph;
         private readonly IList<INetworkNode> infectedNodes = new List<INetworkNode>();
 
-        public Virus(INetworkNode originatingNode, INetworkGraph networkGraph)
+        public SpreadingThreatBase(INetworkNode sourceNode, INetworkGraph networkGraph)
         {
+            this.infectedNodes.Add(sourceNode);
+
             this.networkGraph = networkGraph;
             this.networkGraph.NetworkTick += this.NetworkGraph_OnNetworkTick;
-
-            this.infectedNodes.Add(originatingNode);
         }
 
         private void Spread()
@@ -26,7 +26,7 @@ namespace Soteria.Foundation
             {
                 foreach (var connection in infectedNode.Connections)
                 {
-                    if (!connection.Target.Infections.Contains(this) && connection.Target.Attack(this))
+                    if (!connection.Target.Infections.Contains(this) && connection.Target.AttemptInfection(this))
                     {
                         this.infectedNodes.Add(connection.Target);
                     }

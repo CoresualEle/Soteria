@@ -10,7 +10,8 @@
 
 [node name="A" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
 position = Vector2( 50, 250 )
-CanSpawnVirus = true
+ChanceToSpawnVirus = 1.0
+ThreatResistance = 0.0
 
 [node name="AB" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
 SourceNodePath = NodePath("../A")
@@ -62,7 +63,6 @@ TargetNodePath = NodePath("../F")
 
 [node name="F" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
 position = Vector2( 980, 500 )
-CanSpawnVirus = true
 
 [node name="GameTickTimer" type="Timer" parent="."]
 autostart = true

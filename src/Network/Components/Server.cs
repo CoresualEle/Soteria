@@ -10,22 +10,23 @@ namespace Soteria.Network.Components
 {
     public class Server : Node2D, INetworkNode
     {
-        private const float ChanceToSpawnVirus = 0.2f;
-        private const float VirusResistance = 0.5f;
-
         private readonly Random randomizer = new Random();
-        private INetworkGraph networkGraph;
 
-        [Export]
-        public bool CanSpawnVirus;
+        [Export(PropertyHint.Range, "0.0,1.0,0.05")]
+        private readonly float ChanceToSpawnVirus = 0.0f;
+
+        [Export(PropertyHint.Range, "0.0,1.0,0.05")]
+        private readonly float ThreatResistance = 0.8f;
+
+        private INetworkGraph networkGraph;
 
         public IList<INetworkConnection> Connections { get; } = new List<INetworkConnection>();
 
-        public IList<IAggressor> Infections { get; private set; }
+        public IList<IThreat> Infections { get; private set; }
 
         public override void _Ready()
         {
-            this.Infections = new List<IAggressor>();
+            this.Infections = new List<IThreat>();
 
             this.networkGraph = this.GetNode<INetworkGraph>(new NodePath(".."));
             this.networkGraph.NetworkTick += this.NetworkGraph_OnNetworkTick;
@@ -41,13 +42,11 @@ namespace Soteria.Network.Components
             }
         }
 
-        public bool Attack(IAggressor aggressor)
+        public bool AttemptInfection(IThreat threat)
         {
-            GD.Print($"Server {this.Name} is attacked");
-
-            if (this.randomizer.NextDouble() > VirusResistance)
+            if (!this.Infections.Contains(threat) && this.randomizer.NextDouble() > this.ThreatResistance)
             {
-                this.Infections.Add(aggressor);
+                this.Infections.Add(threat);
 
                 return true;
             }
@@ -57,18 +56,13 @@ namespace Soteria.Network.Components
 
         private void NetworkGraph_OnNetworkTick(object sender, EventArgs e)
         {
-            if (this.CanSpawnVirus && this.Infections.Count == 0)
+            if (this.ChanceToSpawnVirus > 0 && this.randomizer.NextDouble() <= this.ChanceToSpawnVirus && this.randomizer.NextDouble() > this.ThreatResistance)
             {
-                if (this.randomizer.NextDouble() <= ChanceToSpawnVirus)
+                var newThreat = new SpreadingThreatBase(this, this.networkGraph);
+                if (!this.Infections.Contains(newThreat))
                 {
-                    this.Infections.Add(new Virus(this, this.networkGraph));
-
-                    GD.Print($"Server {this.Name} is infected.");
-
-                    return;
+                    this.Infections.Add(newThreat);
                 }
-
-                GD.Print($"Server {this.Name} resited infection.");
             }
         }
 

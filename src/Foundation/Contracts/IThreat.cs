@@ -1,6 +1,6 @@
 ﻿namespace Soteria.Foundation.Contracts
 {
-    public interface IAggressor
+    public interface IThreat
     {
         
     }
