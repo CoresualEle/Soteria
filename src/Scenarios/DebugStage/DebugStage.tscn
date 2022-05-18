@@ -1,11 +1,13 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Network/Components/Server.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Network/Components/Connection.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Network/NetworkGraph.tscn" type="PackedScene" id=3]
 [ext_resource path="res://UI/UI.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenarios/DebugStage/DebugStage.cs" type="Script" id=5]
 
 [node name="DebugStage" type="Node2D"]
+script = ExtResource( 5 )
 
 [node name="NetworkGraphRoot" parent="." instance=ExtResource( 3 )]
 
