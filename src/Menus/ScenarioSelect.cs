@@ -5,7 +5,8 @@ using System.Collections.Generic;
 public class ScenarioSelect : Control
 {
     private int selected_scenario;
-    private string[] scenarios =
+
+    private readonly string[] scenarios =
     {
         "Scenario1",
         "DebugStage"
@@ -18,11 +19,12 @@ public class ScenarioSelect : Control
 
     private void select_scenario(int number)
     {
-        int mod(int x, int m) {
+        int mod(int x, int m) =>
+
             // Modulus of negative numbers
             // https://stackoverflow.com/a/1082938
-            return (x%m + m)%m;
-        }
+            (x % m + m) % m;
+
         this.selected_scenario = mod(number, this.scenarios.Length);
         GD.Print(this.selected_scenario);
         var scenario_name_label = this.GetNode<Label>("HBoxContainer/VBoxContainer/ScenarioName");
@@ -35,25 +37,26 @@ public class ScenarioSelect : Control
         {
             this._on_PreviousScenarioButton_pressed();
         }
+
         if (@event.IsActionPressed("ui_right"))
         {
             this._on_NextScenarioButton_pressed();
         }
     }
 
-
     private void _on_PreviousScenarioButton_pressed()
     {
         this.select_scenario(this.selected_scenario - 1);
     }
+
     private void _on_NextScenarioButton_pressed()
     {
         this.select_scenario(this.selected_scenario + 1);
     }
+
     private void _on_StartScenarioButton_pressed()
     {
         var scenario_name = this.scenarios[this.selected_scenario];
-        this.GetTree().ChangeScene("res://Scenarios/"+scenario_name+"/"+scenario_name+".tscn");
+        this.GetTree().ChangeScene("res://Scenarios/" + scenario_name + "/" + scenario_name + ".tscn");
     }
-
 }
