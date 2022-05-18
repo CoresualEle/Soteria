@@ -26,7 +26,6 @@ public class ScenarioSelect : Control
             (x % m + m) % m;
 
         this.selected_scenario = mod(number, this.scenarios.Length);
-        GD.Print(this.selected_scenario);
         var scenario_name_label = this.GetNode<Label>("HBoxContainer/VBoxContainer/ScenarioName");
         scenario_name_label.Text = this.scenarios[this.selected_scenario];
     }
