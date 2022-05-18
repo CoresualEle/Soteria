@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Network/Components/Server.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Network/Components/Connection.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Network/NetworkGraph.tscn" type="PackedScene" id=3]
+[ext_resource path="res://UI/UI.tscn" type="PackedScene" id=4]
 
 [node name="DebugStage" type="Node2D"]
 
@@ -10,6 +11,8 @@
 
 [node name="A" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
 position = Vector2( 50, 250 )
+ChanceToSpawnVirus = 1.0
+ThreatResistance = 0.0
 
 [node name="AB" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
 SourceNodePath = NodePath("../A")
@@ -63,5 +66,8 @@ TargetNodePath = NodePath("../F")
 position = Vector2( 980, 500 )
 
 [node name="GameTickTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="UI" parent="." instance=ExtResource( 4 )]
 
 [connection signal="timeout" from="GameTickTimer" to="NetworkGraphRoot" method="_on_GameTickTimer_timeout"]
