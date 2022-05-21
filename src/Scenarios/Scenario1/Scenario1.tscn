@@ -31,6 +31,7 @@ script = ExtResource( 5 )
 [node name="Background" type="ColorRect" parent="."]
 margin_right = 1024.0
 margin_bottom = 600.0
+mouse_filter = 2
 color = Color( 0.101961, 0.0901961, 0.0901961, 1 )
 
 [node name="NetworkGraphRoot" parent="." instance=ExtResource( 3 )]

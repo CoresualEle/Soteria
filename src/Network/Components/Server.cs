@@ -1,7 +1,6 @@
+using Godot;
 using System;
 using System.Collections.Generic;
-
-using Godot;
 
 using Soteria.Foundation;
 using Soteria.Foundation.Contracts;
@@ -22,6 +21,9 @@ namespace Soteria.Network.Components
 
         private INetworkGraph networkGraph;
 
+        private bool policyAntivirus = false;
+        private bool policySoftwareFirewall = false;
+
         public IList<INetworkConnection> Connections { get; } = new List<INetworkConnection>();
 
         public IList<IThreat> Infections { get; private set; }
@@ -35,6 +37,11 @@ namespace Soteria.Network.Components
 
             this.GetNode<Label>("CanvasLayer/ContextMenu/VBoxContainer/Label").Text = this.Name;
             this.GetNode<Polygon2D>("Polygon2D").Color = this.normalColor;
+
+            var softwareFirewallNode = this.GetNode<ContextMenuBoolean>("CanvasLayer/ContextMenu/VBoxContainer/SoftwareFirewall");
+            softwareFirewallNode.Connect("ButtonToggled", this, "_on_softwareFirewall_toggled");
+            var antivirusNode = this.GetNode<ContextMenuBoolean>("CanvasLayer/ContextMenu/VBoxContainer/AntiVirus");
+            antivirusNode.Connect("ButtonToggled", this, "_on_antivirus_toggled");
         }
 
         public void AddConnection(INetworkConnection connection)
@@ -71,7 +78,7 @@ namespace Soteria.Network.Components
             }
         }
 
-        private void _on_Area2D_input_event(object viewport, object @event, int shape_idx)
+        private void _on_Area2D_input_event(Node viewport, InputEvent @event, int shape_idx)
         {
             if (@event is InputEventMouseButton && ((InputEventMouseButton)@event).ButtonIndex == (int)ButtonList.Left)
             {
@@ -81,6 +88,16 @@ namespace Soteria.Network.Components
                 contextMenu.MarginLeft = this.Position.x;
                 contextMenu.MarginTop = this.Position.y;
             }
+        }
+
+        private void _on_softwareFirewall_toggled(bool value)
+        {
+            this.policySoftwareFirewall = value;
+        }
+
+        private void _on_antivirus_toggled(bool value)
+        {
+            this.policyAntivirus = value;
         }
     }
 }
