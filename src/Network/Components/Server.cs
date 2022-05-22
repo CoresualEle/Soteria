@@ -10,6 +10,8 @@ namespace Soteria.Network.Components
 {
     public class Server : Node2D, INetworkNode
     {
+        private readonly Color normalColor = new Color("003F7A");
+        private readonly Color infectedColor = new Color("7D1022");
         private readonly Random randomizer = new Random();
 
         [Export(PropertyHint.Range, "0.0,1.0,0.05")]
@@ -32,6 +34,7 @@ namespace Soteria.Network.Components
             this.networkGraph.NetworkTick += this.NetworkGraph_OnNetworkTick;
 
             this.GetNode<Label>("CanvasLayer/ContextMenu/VBoxContainer/Label").Text = this.Name;
+            this.GetNode<Polygon2D>("Polygon2D").Color = this.normalColor;
         }
 
         public void AddConnection(INetworkConnection connection)
@@ -47,6 +50,7 @@ namespace Soteria.Network.Components
             if (!this.Infections.Contains(threat) && this.randomizer.NextDouble() > this.ThreatResistance)
             {
                 this.Infections.Add(threat);
+                this.GetNode<Polygon2D>("Polygon2D").Color = this.infectedColor;
 
                 return true;
             }
@@ -62,6 +66,7 @@ namespace Soteria.Network.Components
                 if (!this.Infections.Contains(newThreat))
                 {
                     this.Infections.Add(newThreat);
+                    this.GetNode<Polygon2D>("Polygon2D").Color = this.infectedColor;
                 }
             }
         }
