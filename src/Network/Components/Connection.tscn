@@ -9,3 +9,5 @@ __meta__ = {
 }
 
 [node name="ConnectionGraphic" type="Line2D" parent="."]
+modulate = Color( 2, 2, 2, 1 )
+default_color = Color( 0, 0.207843, 0.4, 1 )
