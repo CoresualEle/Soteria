@@ -10,6 +10,9 @@ namespace Soteria.Network.Components
     public class Connection : Node2D, INetworkConnection
     {
         private Line2D lineGraphic;
+        private Color normalColor = new Color("003566");
+        private Color infectedColor = new Color("7D1022");
+        private Color infectableColor = new Color("#7A3D00");
 
         [Export]
         public NodePath SourceNodePath;
@@ -47,12 +50,12 @@ namespace Soteria.Network.Components
 
             if (this.Source.Infections.Any() && !this.Target.Infections.Any())
             {
-                this.lineGraphic.DefaultColor = new Color(1, 1, 0);
+                this.lineGraphic.DefaultColor = this.infectableColor;
                 this.SetupConnectionGraphic();
             }
             else if (this.Source.Infections.Any() && this.Target.Infections.Any())
             {
-                this.lineGraphic.DefaultColor = new Color(1, 0, 0);
+                this.lineGraphic.DefaultColor = this.infectedColor;
                 this.SetupConnectionGraphic();
             }
         }
