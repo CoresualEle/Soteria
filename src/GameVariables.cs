@@ -2,30 +2,56 @@ using Godot;
 
 namespace Soteria
 {
-    public class GameVariables : Node
-    {
-        public int Budget = 0;
-        public float WorkSatisfaction = 1.0f;
-        public int Upkeep = 0;
+	public class GameVariables : Node
+	{
+		[Signal]
+		public delegate void BudgetChanged();
 
-        private Timer weeklyTimer;
+		[Signal]
+		public delegate void UpkeepChanged();
 
-        public override void _Ready()
-        {
-            this.weeklyTimer = new Timer();
-            this.weeklyTimer.OneShot = false;
-            this.weeklyTimer.PauseMode = PauseModeEnum.Stop;
-            this.weeklyTimer.WaitTime = 5.0f;
-            this.weeklyTimer.Connect("timeout", this, "_weeklytimer_callback");
-            this.weeklyTimer.Autostart = true;
-            this.AddChild(this.weeklyTimer);
-        }
+		public int Budget
+		{
+			get => _budget;
+			set
+			{
+				_budget = value;
+				this.EmitSignal(nameof(BudgetChanged), _budget);
+			}
+		}
 
-        private void _weeklytimer_callback()
-        {
-            this.Budget -= this.Upkeep;
-            GD.Print("Budget: " + this.Budget.ToString());
-            GD.Print("Weekly upkeep: " + this.Upkeep.ToString());
-        }
-    }
+		public float WorkSatisfaction = 1.0f;
+
+		public int Upkeep
+		{
+			get => _upkeep;
+			set
+			{
+				_upkeep = value;
+				this.EmitSignal(nameof(UpkeepChanged), _upkeep);
+			}
+		}
+
+		private Timer _weeklyTimer;
+		private int _budget = 0;
+		private int _upkeep = 0;
+
+		public override void _Ready()
+		{
+			this._weeklyTimer = new Timer();
+			this._weeklyTimer.OneShot = false;
+			this._weeklyTimer.PauseMode = PauseModeEnum.Stop;
+			this._weeklyTimer.WaitTime = 5.0f;
+			this._weeklyTimer.Connect("timeout", this, nameof(_weeklytimer_callback));
+			this._weeklyTimer.Autostart = true;
+			this.AddChild(this._weeklyTimer);
+		}
+
+		private void _weeklytimer_callback()
+		{
+			this.Budget -= this.Upkeep;
+			GD.Print("Budget: " + this.Budget.ToString());
+			GD.Print("Weekly upkeep: " + this.Upkeep.ToString());
+		}
+	}
 }
