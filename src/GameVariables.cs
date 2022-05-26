@@ -50,8 +50,6 @@ namespace Soteria
 		private void _weeklytimer_callback()
 		{
 			this.Budget -= this.Upkeep;
-			GD.Print("Budget: " + this.Budget.ToString());
-			GD.Print("Weekly upkeep: " + this.Upkeep.ToString());
 		}
 	}
 }

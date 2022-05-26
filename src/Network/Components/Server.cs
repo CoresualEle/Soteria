@@ -21,8 +21,11 @@ namespace Soteria.Network.Components
 
         private INetworkGraph networkGraph;
 
-        private bool policyAntivirus = false;
+        [Export]
         private bool policySoftwareFirewall = false;
+
+        [Export]
+        private bool policyAntivirus = false;
 
         public IList<INetworkConnection> Connections { get; } = new List<INetworkConnection>();
 
@@ -38,10 +41,30 @@ namespace Soteria.Network.Components
             this.GetNode<Label>("CanvasLayer/ContextMenu/VBoxContainer/Label").Text = this.Name;
             this.GetNode<Polygon2D>("Polygon2D").Color = this.normalColor;
 
-            var softwareFirewallNode = this.GetNode<ContextMenuBoolean>("CanvasLayer/ContextMenu/VBoxContainer/SoftwareFirewall");
-            softwareFirewallNode.Connect("ButtonToggled", this, "_on_softwareFirewall_toggled");
-            var antivirusNode = this.GetNode<ContextMenuBoolean>("CanvasLayer/ContextMenu/VBoxContainer/AntiVirus");
-            antivirusNode.Connect("ButtonToggled", this, "_on_antivirus_toggled");
+            var softwareFirewallScene = (PackedScene)ResourceLoader.Load("res://UI/ContextMenuBoolean.tscn");
+            var softwareFirewallNode = (ContextMenuBoolean)softwareFirewallScene.Instance();
+            softwareFirewallNode.Name = "SoftwareFirewall";
+            softwareFirewallNode.OptionLabel = "Software Firewall";
+            softwareFirewallNode.Upkeep = 100;
+            softwareFirewallNode.Cost = 1000;
+            softwareFirewallNode.Enabled = this.policySoftwareFirewall;
+            softwareFirewallNode.Connect(nameof(ContextMenuBoolean.ButtonToggled), this, nameof(_on_softwareFirewall_toggled));
+            this.GetNode<VBoxContainer>("CanvasLayer/ContextMenu/VBoxContainer").AddChild(softwareFirewallNode);
+
+            
+
+            var antivirusScene = (PackedScene)ResourceLoader.Load("res://UI/ContextMenuBoolean.tscn");
+            var antivirusNode = (ContextMenuBoolean)antivirusScene.Instance();
+            antivirusNode.Name = "AntiVirus";
+            antivirusNode.OptionLabel = "Anti Virus";
+            antivirusNode.Upkeep = 500;
+            antivirusNode.Cost = 1500;
+            antivirusNode.Enabled = this.policyAntivirus;
+            antivirusNode.Connect(nameof(ContextMenuBoolean.ButtonToggled), this, nameof(_on_antivirus_toggled));
+            this.GetNode<VBoxContainer>("CanvasLayer/ContextMenu/VBoxContainer").AddChild(antivirusNode);
+
+            var backupRestoreNode = this.GetNode<ContextMenuAction>("CanvasLayer/ContextMenu/VBoxContainer/BackupRestore");
+            backupRestoreNode.Connect(nameof(ContextMenuAction.ActionPressed), this, "_on_backup_restored");
         }
 
         public void AddConnection(INetworkConnection connection)
@@ -98,6 +121,16 @@ namespace Soteria.Network.Components
         private void _on_antivirus_toggled(bool value)
         {
             this.policyAntivirus = value;
+        }
+
+        private void _on_backup_restored()
+        {
+            foreach(var threat in this.Infections)
+            {
+                threat.RemoveNode(this);
+            }
+            this.Infections.Clear();
+            this.GetNode<Polygon2D>("Polygon2D").Color = this.normalColor;
         }
     }
 }
