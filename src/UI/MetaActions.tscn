@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://UI/MetaActions/MetaActionButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://UI/MetaActions/MetaActionSlider.tscn" type="PackedScene" id=2]
+[ext_resource path="res://UI/MetaActions/MetaActionSwitch.tscn" type="PackedScene" id=3]
+
+[node name="MetaActions" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.517647 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="TrainEmployees" parent="VBoxContainer" instance=ExtResource( 1 )]
+margin_right = 1024.0
+margin_bottom = 74.0
+ActionName = "Train Employees"
+Cost = 5000
+
+[node name="BackupBudget" parent="VBoxContainer" instance=ExtResource( 2 )]
+margin_top = 78.0
+margin_right = 1024.0
+margin_bottom = 138.0
+ActionName = "Backup Budget"
+MaxValue = 10000
+Step = 500
+DefaultValue = 500
+
+[node name="2FA" parent="VBoxContainer" instance=ExtResource( 3 )]
+margin_top = 142.0
+margin_right = 1024.0
+margin_bottom = 244.0
+ActionName = "2-Factor Authentication"
+Cost = 25000
+Upkeep = 2500
