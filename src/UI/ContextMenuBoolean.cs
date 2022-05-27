@@ -1,45 +1,48 @@
 using Godot;
-using Soteria;
 
-public class ContextMenuBoolean : VBoxContainer
+namespace Soteria.UI
 {
-    [Export]
-    public string OptionLabel;
-
-    [Export]
-    public int Cost;
-
-    [Export]
-    public int Upkeep;
-
-    [Signal]
-    public delegate void ButtonToggled(bool value);
-
-    [Export]
-    public bool Enabled { get; set; }
-
-    private GameVariables gameVariables;
-
-    public override void _Ready()
+    public class ContextMenuBoolean : VBoxContainer
     {
-        this.gameVariables = GetNode<GameVariables>("/root/GameVariables");
+        [Export]
+        public string OptionLabel;
 
-        this.GetNode<Label>("Name").Text = this.OptionLabel;
-        this.GetNode<Label>("CostBox/CostValue").Text = this.Cost.ToString();
-        this.GetNode<Label>("UpkeepBox/UpkeepValue").Text = this.Upkeep.ToString();
-        this.GetNode<CheckButton>("CheckButton").Pressed = this.Enabled;
-    }
+        [Export]
+        public int Cost;
 
-    private void _on_CheckButton_toggled(bool value)
-    {
-        this.EmitSignal(nameof(ButtonToggled), value);
-        if (value)
+        [Export]
+        public int Upkeep;
+
+        private GameVariables gameVariables;
+
+        [Signal]
+        public delegate void ButtonToggled(bool value);
+
+        [Export]
+        public bool Enabled { get; set; }
+
+        public override void _Ready()
         {
-            gameVariables.Budget -= this.Cost;
-            gameVariables.Upkeep += this.Upkeep;
-        } else
+            this.gameVariables = this.GetNode<GameVariables>("/root/GameVariables");
+
+            this.GetNode<Label>("Name").Text = this.OptionLabel;
+            this.GetNode<Label>("CostBox/CostValue").Text = this.Cost.ToString();
+            this.GetNode<Label>("UpkeepBox/UpkeepValue").Text = this.Upkeep.ToString();
+            this.GetNode<CheckButton>("CheckButton").Pressed = this.Enabled;
+        }
+
+        private void _on_CheckButton_toggled(bool value)
         {
-            gameVariables.Upkeep -= this.Upkeep;
+            this.EmitSignal(nameof(ButtonToggled), value);
+            if (value)
+            {
+                this.gameVariables.Budget -= this.Cost;
+                this.gameVariables.Upkeep += this.Upkeep;
+            }
+            else
+            {
+                this.gameVariables.Upkeep -= this.Upkeep;
+            }
         }
     }
 }
