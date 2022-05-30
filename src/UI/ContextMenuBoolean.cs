@@ -29,9 +29,14 @@ namespace Soteria.UI
             this.GetNode<Label>("CostBox/CostValue").Text = this.Cost.ToString();
             this.GetNode<Label>("UpkeepBox/UpkeepValue").Text = this.Upkeep.ToString();
             this.GetNode<CheckButton>("CheckButton").Pressed = this.Enabled;
+            if (this.Enabled)
+            {
+                // Add back Budget if enabled by default
+                this.gameVariables.Budget += this.Cost;
+            }
         }
 
-        private void _on_CheckButton_toggled(bool value)
+        public void _on_CheckButton_toggled(bool value)
         {
             this.EmitSignal(nameof(ButtonToggled), value);
             if (value)

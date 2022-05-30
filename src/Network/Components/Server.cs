@@ -43,28 +43,20 @@ namespace Soteria.Network.Components
             this.GetNode<Label>("CanvasLayer/ContextMenu/VBoxContainer/Label").Text = this.Name;
             this.GetNode<Polygon2D>("Polygon2D").Color = this.normalColor;
 
-            var softwareFirewallScene = (PackedScene)ResourceLoader.Load("res://UI/ContextMenuBoolean.tscn");
-            var softwareFirewallNode = (ContextMenuBoolean)softwareFirewallScene.Instance();
-            softwareFirewallNode.Name = "SoftwareFirewall";
-            softwareFirewallNode.OptionLabel = "Software Firewall";
-            softwareFirewallNode.Upkeep = 100;
-            softwareFirewallNode.Cost = 1000;
-            softwareFirewallNode.Enabled = this.policySoftwareFirewall;
+            var softwareFirewallNode = this.GetNode<ContextMenuBoolean>("CanvasLayer/ContextMenu/VBoxContainer/SoftwareFirewall");
             softwareFirewallNode.Connect(nameof(ContextMenuBoolean.ButtonToggled), this, nameof(this._on_softwareFirewall_toggled));
-            this.GetNode<VBoxContainer>("CanvasLayer/ContextMenu/VBoxContainer").AddChild(softwareFirewallNode);
+            softwareFirewallNode.Enabled = this.policySoftwareFirewall;
+            // We need to explicitely call the _Ready method of the ContextMenuBoolean nodes to get it to be enabled by default
+            softwareFirewallNode._Ready();
 
-            var antivirusScene = (PackedScene)ResourceLoader.Load("res://UI/ContextMenuBoolean.tscn");
-            var antivirusNode = (ContextMenuBoolean)antivirusScene.Instance();
-            antivirusNode.Name = "AntiVirus";
-            antivirusNode.OptionLabel = "Anti Virus";
-            antivirusNode.Upkeep = 500;
-            antivirusNode.Cost = 1500;
-            antivirusNode.Enabled = this.policyAntivirus;
+            
+            var antivirusNode = this.GetNode<ContextMenuBoolean>("CanvasLayer/ContextMenu/VBoxContainer/AntiVirus");
             antivirusNode.Connect(nameof(ContextMenuBoolean.ButtonToggled), this, nameof(this._on_antivirus_toggled));
-            this.GetNode<VBoxContainer>("CanvasLayer/ContextMenu/VBoxContainer").AddChild(antivirusNode);
+            antivirusNode.Enabled = this.policyAntivirus;
+            antivirusNode._Ready();
 
             var backupRestoreNode = this.GetNode<ContextMenuAction>("CanvasLayer/ContextMenu/VBoxContainer/BackupRestore");
-            backupRestoreNode.Connect(nameof(ContextMenuAction.ActionPressed), this, "_on_backup_restored");
+            backupRestoreNode.Connect(nameof(ContextMenuAction.ActionPressed), this, nameof(this._on_backup_restored));
         }
 
         public void AddConnection(INetworkConnection connection)

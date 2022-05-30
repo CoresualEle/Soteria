@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Network/Components/Server.cs" type="Script" id=1]
 [ext_resource path="res://resources/images/LightSprite.png" type="Texture" id=2]
+[ext_resource path="res://UI/ContextMenuBoolean.tscn" type="PackedScene" id=3]
 [ext_resource path="res://UI/ContextMenuAction.tscn" type="PackedScene" id=4]
 
 [sub_resource type="OccluderPolygon2D" id=1]
@@ -36,7 +37,7 @@ margin_bottom = 118.0
 margin_left = 4.0
 margin_top = 4.0
 margin_right = 260.0
-margin_bottom = 210.0
+margin_bottom = 316.0
 
 [node name="Label" type="Label" parent="CanvasLayer/ContextMenu/VBoxContainer"]
 margin_right = 256.0
@@ -48,11 +49,27 @@ margin_right = 256.0
 margin_bottom = 22.0
 
 [node name="BackupRestore" parent="CanvasLayer/ContextMenu/VBoxContainer" instance=ExtResource( 4 )]
-margin_top = 238.0
+margin_top = 26.0
 margin_right = 256.0
-margin_bottom = 312.0
+margin_bottom = 100.0
 OptionLabel = "Restore from Backup"
 Cost = 500
+
+[node name="AntiVirus" parent="CanvasLayer/ContextMenu/VBoxContainer" instance=ExtResource( 3 )]
+margin_top = 104.0
+margin_right = 256.0
+margin_bottom = 206.0
+OptionLabel = "Anti-Virus"
+Cost = 1500
+Upkeep = 150
+
+[node name="SoftwareFirewall" parent="CanvasLayer/ContextMenu/VBoxContainer" instance=ExtResource( 3 )]
+margin_top = 210.0
+margin_right = 256.0
+margin_bottom = 312.0
+OptionLabel = "Software Firewall"
+Cost = 1000
+Upkeep = 100
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 occluder = SubResource( 1 )
