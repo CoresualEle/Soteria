@@ -15,6 +15,12 @@ namespace Soteria.Foundation
         [Export(PropertyHint.Range, "0.0,1.0,0.05")]
         protected readonly float ThreatResistance = 0.8f;
 
+        [Export(PropertyHint.ColorNoAlpha)]
+        protected readonly Color NormalColor = new Color("003F7A");
+
+        [Export(PropertyHint.ColorNoAlpha)]
+        protected readonly Color InfectedColor = new Color("7D1022");
+
         protected readonly Random Randomizer = new Random();
 
         protected INetworkGraph NetworkGraph;

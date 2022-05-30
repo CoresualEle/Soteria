@@ -9,12 +9,6 @@ namespace Soteria.Network.Components.Nodes
 {
     public class Client : NetworkNodeBase
     {
-        [Export(PropertyHint.ColorNoAlpha)]
-        private readonly Color normalColor = new Color("003F7A");
-
-        [Export(PropertyHint.ColorNoAlpha)]
-        private readonly Color infectedColor = new Color("7D1022");
-
         public override void _Ready()
         {
             base._Ready();
@@ -28,7 +22,7 @@ namespace Soteria.Network.Components.Nodes
                 if (!this.Infections.Contains(newThreat))
                 {
                     this.Infections.Add(newThreat);
-                    this.GetNode<Polygon2D>("Polygon2D").Color = this.infectedColor;
+                    this.GetNode<Polygon2D>("Polygon2D").Color = this.InfectedColor;
                 }
             }
         }
@@ -38,7 +32,7 @@ namespace Soteria.Network.Components.Nodes
             if (!this.Infections.Contains(threat) && this.Randomizer.NextDouble() > this.ThreatResistance)
             {
                 this.Infections.Add(threat);
-                this.GetNode<Polygon2D>("Polygon2D").Color = this.infectedColor;
+                this.GetNode<Polygon2D>("Polygon2D").Color = this.InfectedColor;
 
                 return true;
             }
