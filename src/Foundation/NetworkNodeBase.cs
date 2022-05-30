@@ -55,10 +55,14 @@ namespace Soteria.Foundation
             if (@event is InputEventMouseButton button && button.ButtonIndex == (int)ButtonList.Left)
             {
                 var contextMenu = this.GetNode<PopupPanel>("CanvasLayer/ContextMenu");
-                contextMenu.Popup_();
 
-                contextMenu.MarginLeft = this.Position.x;
-                contextMenu.MarginTop = this.Position.y;
+                var visibleRect = this.GetTree().Root.GetVisibleRect();
+                var maxVector = visibleRect.Position + visibleRect.Size - contextMenu.RectSize;
+
+                contextMenu.MarginLeft = Mathf.Min(this.Position.x, maxVector.x);
+                contextMenu.MarginTop = Mathf.Min(this.Position.y, maxVector.y);
+
+                contextMenu.Popup_();
             }
         }
 
