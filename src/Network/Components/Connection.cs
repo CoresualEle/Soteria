@@ -9,10 +9,10 @@ namespace Soteria.Network.Components
 {
     public class Connection : Node2D, INetworkConnection
     {
+        private readonly Color normalColor = new Color("003566");
+        private readonly Color infectedColor = new Color("7D1022");
+        private readonly Color infectableColor = new Color("#7A3D00");
         private Line2D lineGraphic;
-        private Color normalColor = new Color("003566");
-        private Color infectedColor = new Color("7D1022");
-        private Color infectableColor = new Color("#7A3D00");
 
         [Export]
         public NodePath SourceNodePath;
@@ -43,25 +43,32 @@ namespace Soteria.Network.Components
 
             this.SetupConnectionGraphic();
         }
-        
+
         public override void _Process(float delta)
         {
             base._Process(delta);
 
-            if (this.Source.Infections.Any() && !this.Target.Infections.Any())
-            {
-                this.lineGraphic.DefaultColor = this.infectableColor;
-                this.SetupConnectionGraphic();
-            }
-            else if (this.Source.Infections.Any() && this.Target.Infections.Any())
-            {
-                this.lineGraphic.DefaultColor = this.infectedColor;
-                this.SetupConnectionGraphic();
-            }
+            this.SetupConnectionGraphic();
         }
 
         private void SetupConnectionGraphic()
         {
+            if (this.Source.Infections != null && this.Target.Infections != null)
+            {
+                if (!this.Source.Infections.Any())
+                {
+                    this.lineGraphic.DefaultColor = this.normalColor;
+                }
+                else if (this.Source.Infections.Any() && !this.Target.Infections.Any())
+                {
+                    this.lineGraphic.DefaultColor = this.infectableColor;
+                }
+                else if (this.Source.Infections.Any() && this.Target.Infections.Any())
+                {
+                    this.lineGraphic.DefaultColor = this.infectedColor;
+                }
+            }
+
             this.lineGraphic.ClearPoints();
 
             this.lineGraphic.AddPoint(new Vector2(this.Source.Position.x, this.Source.Position.y));

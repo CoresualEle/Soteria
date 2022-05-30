@@ -6,11 +6,11 @@ namespace Soteria.Scenarios
 {
     public class ScenarioBase : Node2D
     {
-        protected GameVariables gameVariables;
+        protected GameVariables GameVariables;
 
         public override void _Ready()
         {
-            this.gameVariables = GetNode<GameVariables>("/root/GameVariables");
+            this.GameVariables = this.GetNode<GameVariables>("/root/GameVariables");
         }
 
         public override void _Input(InputEvent inputEvent)

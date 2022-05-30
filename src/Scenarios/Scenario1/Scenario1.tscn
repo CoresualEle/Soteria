@@ -39,6 +39,7 @@ color = Color( 0.101961, 0.0901961, 0.0901961, 1 )
 [node name="A" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
 position = Vector2( 150, 250 )
 ChanceToSpawnVirus = 0.85
+policySoftwareFirewall = true
 
 [node name="AB" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
 SourceNodePath = NodePath("../A")

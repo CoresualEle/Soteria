@@ -34,6 +34,11 @@ namespace Soteria.Foundation
             }
         }
 
+        public void RemoveNode(INetworkNode node)
+        {
+            this.infectedNodes.Remove(node);
+        }
+
         private void NetworkGraph_OnNetworkTick(object sender, EventArgs e)
         {
             this.Spread();

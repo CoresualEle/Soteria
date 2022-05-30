@@ -1,61 +1,58 @@
 using Godot;
-using System;
-using System.Collections.Generic;
 
-public class ScenarioSelect : Control
+namespace Soteria.Menus
 {
-    private int selected_scenario;
-
-    private readonly string[] scenarios =
+    public class ScenarioSelect : Control
     {
-        "Scenario1",
-        "DebugStage"
-    };
-
-    public override void _Ready()
-    {
-        this.select_scenario(0);
-    }
-
-    private void select_scenario(int number)
-    {
-        int mod(int x, int m) =>
-
-            // Modulus of negative numbers
-            // https://stackoverflow.com/a/1082938
-            (x % m + m) % m;
-
-        this.selected_scenario = mod(number, this.scenarios.Length);
-        var scenario_name_label = this.GetNode<Label>("HBoxContainer/VBoxContainer/ScenarioName");
-        scenario_name_label.Text = this.scenarios[this.selected_scenario];
-    }
-
-    public override void _Input(InputEvent @event)
-    {
-        if (@event.IsActionPressed("ui_left"))
+        private readonly string[] scenarios =
         {
-            this._on_PreviousScenarioButton_pressed();
+            "Scenario1",
+            "DebugStage"
+        };
+
+        private int selectedScenario;
+
+        public override void _Ready()
+        {
+            this.select_scenario(0);
         }
 
-        if (@event.IsActionPressed("ui_right"))
+        private void select_scenario(int number)
         {
-            this._on_NextScenarioButton_pressed();
+            int Mod(int x, int m) => (x % m + m) % m; // Modulus of negative numbers: https://stackoverflow.com/a/1082938
+
+            this.selectedScenario = Mod(number, this.scenarios.Length);
+            var scenarioNameLabel = this.GetNode<Label>("HBoxContainer/VBoxContainer/ScenarioName");
+            scenarioNameLabel.Text = this.scenarios[this.selectedScenario];
         }
-    }
 
-    private void _on_PreviousScenarioButton_pressed()
-    {
-        this.select_scenario(this.selected_scenario - 1);
-    }
+        public override void _Input(InputEvent @event)
+        {
+            if (@event.IsActionPressed("ui_left"))
+            {
+                this._on_PreviousScenarioButton_pressed();
+            }
 
-    private void _on_NextScenarioButton_pressed()
-    {
-        this.select_scenario(this.selected_scenario + 1);
-    }
+            if (@event.IsActionPressed("ui_right"))
+            {
+                this._on_NextScenarioButton_pressed();
+            }
+        }
 
-    private void _on_StartScenarioButton_pressed()
-    {
-        var scenario_name = this.scenarios[this.selected_scenario];
-        this.GetTree().ChangeScene("res://Scenarios/" + scenario_name + "/" + scenario_name + ".tscn");
+        private void _on_PreviousScenarioButton_pressed()
+        {
+            this.select_scenario(this.selectedScenario - 1);
+        }
+
+        private void _on_NextScenarioButton_pressed()
+        {
+            this.select_scenario(this.selectedScenario + 1);
+        }
+
+        private void _on_StartScenarioButton_pressed()
+        {
+            var scenarioName = this.scenarios[this.selectedScenario];
+            this.GetTree().ChangeScene("res://Scenarios/" + scenarioName + "/" + scenarioName + ".tscn");
+        }
     }
 }

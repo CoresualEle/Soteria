@@ -1,9 +1,11 @@
-using Godot;
 using System;
 using System.Collections.Generic;
 
+using Godot;
+
 using Soteria.Foundation;
 using Soteria.Foundation.Contracts;
+using Soteria.UI;
 
 namespace Soteria.Network.Components
 {
@@ -21,8 +23,11 @@ namespace Soteria.Network.Components
 
         private INetworkGraph networkGraph;
 
-        private bool policyAntivirus = false;
-        private bool policySoftwareFirewall = false;
+        [Export]
+        private bool policySoftwareFirewall;
+
+        [Export]
+        private bool policyAntivirus;
 
         public IList<INetworkConnection> Connections { get; } = new List<INetworkConnection>();
 
@@ -39,9 +44,19 @@ namespace Soteria.Network.Components
             this.GetNode<Polygon2D>("Polygon2D").Color = this.normalColor;
 
             var softwareFirewallNode = this.GetNode<ContextMenuBoolean>("CanvasLayer/ContextMenu/VBoxContainer/SoftwareFirewall");
-            softwareFirewallNode.Connect("ButtonToggled", this, "_on_softwareFirewall_toggled");
+            softwareFirewallNode.Connect(nameof(ContextMenuBoolean.ButtonToggled), this, nameof(this._on_softwareFirewall_toggled));
+            softwareFirewallNode.Enabled = this.policySoftwareFirewall;
+            // We need to explicitely call the _Ready method of the ContextMenuBoolean nodes to get it to be enabled by default
+            softwareFirewallNode._Ready();
+
+            
             var antivirusNode = this.GetNode<ContextMenuBoolean>("CanvasLayer/ContextMenu/VBoxContainer/AntiVirus");
-            antivirusNode.Connect("ButtonToggled", this, "_on_antivirus_toggled");
+            antivirusNode.Connect(nameof(ContextMenuBoolean.ButtonToggled), this, nameof(this._on_antivirus_toggled));
+            antivirusNode.Enabled = this.policyAntivirus;
+            antivirusNode._Ready();
+
+            var backupRestoreNode = this.GetNode<ContextMenuAction>("CanvasLayer/ContextMenu/VBoxContainer/BackupRestore");
+            backupRestoreNode.Connect(nameof(ContextMenuAction.ActionPressed), this, nameof(this._on_backup_restored));
         }
 
         public void AddConnection(INetworkConnection connection)
@@ -78,7 +93,7 @@ namespace Soteria.Network.Components
             }
         }
 
-        private void _on_Area2D_input_event(Node viewport, InputEvent @event, int shape_idx)
+        private void _on_Area2D_input_event(Node viewport, InputEvent @event, int shapeIdx)
         {
             if (@event is InputEventMouseButton && ((InputEventMouseButton)@event).ButtonIndex == (int)ButtonList.Left)
             {
@@ -98,6 +113,17 @@ namespace Soteria.Network.Components
         private void _on_antivirus_toggled(bool value)
         {
             this.policyAntivirus = value;
+        }
+
+        private void _on_backup_restored()
+        {
+            foreach (var threat in this.Infections)
+            {
+                threat.RemoveNode(this);
+            }
+
+            this.Infections.Clear();
+            this.GetNode<Polygon2D>("Polygon2D").Color = this.normalColor;
         }
     }
 }

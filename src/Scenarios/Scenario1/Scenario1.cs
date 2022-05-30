@@ -4,11 +4,10 @@ namespace Soteria.Scenarios.Scenario1
     {
         public override void _Ready()
         {
-            base._Ready(); // First invoke base, because this is where the
-                           // gameVariables are loaded
+            base._Ready(); // First invoke base, because this is where the gameVariables are loaded
 
-            this.gameVariables.Budget = 20000;
-            this.gameVariables.WorkSatisfaction = 0.8f;
+            this.GameVariables.Budget = 20000;
+            this.GameVariables.WorkSatisfaction = 0.8f;
         }
     }
 }
