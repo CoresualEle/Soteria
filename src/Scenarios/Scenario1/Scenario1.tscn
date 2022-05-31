@@ -7,7 +7,6 @@
 [ext_resource path="res://Scenarios/Scenario1/Scenario1.cs" type="Script" id=5]
 [ext_resource path="res://resources/images/LightSprite.png" type="Texture" id=6]
 
-
 [sub_resource type="Environment" id=1]
 background_mode = 4
 background_color = Color( 0.227451, 0.2, 0.207843, 1 )
