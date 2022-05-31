@@ -14,7 +14,7 @@ public class TimeControl : Control
     private Button speed2xNode;
     
     private Color colorActive = new Color("ffffff");
-    private Color colorNormal = new Color("0a0a0a");
+    private Color colorNormal = new Color("aaaaaa");
 
     public override void _Ready()
     {
