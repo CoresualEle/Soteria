@@ -13,8 +13,8 @@ namespace Soteria.Scenarios
         {
             this.GameVariables = this.GetNode<GameVariables>("/root/GameVariables");
 
-            var NetworkGraphInstance = this.GetNode<NetworkGraph>("NetworkGraphRoot");
-            this.GameVariables.Connect(nameof(GameVariables.DateIncreasedDay), NetworkGraphInstance, "_on_GameTickTimer_timeout");
+            var networkGraphInstance = this.GetNode<NetworkGraph>("NetworkGraphRoot");
+            this.GameVariables.Connect(nameof(GameVariables.DateIncreasedDay), networkGraphInstance, "_on_GameTickTimer_timeout");
         }
 
         public override void _Input(InputEvent inputEvent)
