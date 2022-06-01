@@ -1,8 +1,7 @@
 using Godot;
-using Soteria;
-using System;
 
-namespace Soteria.UI.MetaActions {
+namespace Soteria.UI.MetaActions
+{
     public class MetaActionButton : VBoxContainer
     {
         [Export]
@@ -11,14 +10,14 @@ namespace Soteria.UI.MetaActions {
         [Export]
         public int Cost;
 
+        private GameVariables gameVariables;
+
         [Signal]
         public delegate void ActionPressed();
 
-        private GameVariables gameVariables;
-
         public override void _Ready()
         {
-            this.gameVariables = GetNode<GameVariables>("/root/GameVariables");
+            this.gameVariables = this.GetNode<GameVariables>("/root/GameVariables");
             this.GetNode<Label>("ActionName").Text = this.ActionName;
             this.GetNode<Label>("CostBox/CostValue").Text = this.Cost.ToString();
         }

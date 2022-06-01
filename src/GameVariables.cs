@@ -9,21 +9,21 @@ namespace Soteria
         private int budget;
         private int upkeep;
 
+        private int day;
+        private int week;
+        private Timer dailyTimer;
+
         [Signal]
         public delegate void BudgetChanged();
 
         [Signal]
-        public delegate void UpkeepChanged();
-        
-        [Signal]
         public delegate void DateIncreasedDay();
 
         [Signal]
+        public delegate void UpkeepChanged();
+
+        [Signal]
         public delegate void WeekChanged(int week);
-        
-        private int day = 0;
-        private int week = 0;
-        private Timer dailyTimer;
 
         public int Budget
         {
@@ -57,14 +57,14 @@ namespace Soteria
             this.dailyTimer.OneShot = false;
             this.dailyTimer.PauseMode = PauseModeEnum.Stop;
             this.dailyTimer.WaitTime = 1.0f;
-            this.dailyTimer.Connect("timeout", this, nameof(this._dailytimer_callback));
+            this.dailyTimer.Connect("timeout", this, nameof(this.Dailytimer_callback));
             this.dailyTimer.Autostart = true;
             this.AddChild(this.dailyTimer);
         }
 
-        public void setTimeScale(int timeScale)
+        public void SetTimeScale(int timeScale)
         {
-            switch(timeScale)
+            switch (timeScale)
             {
                 case 0:
                     this.dailyTimer.Paused = true;
@@ -80,19 +80,20 @@ namespace Soteria
             }
         }
 
-        private void _dailytimer_callback()
+        private void Dailytimer_callback()
         {
             this.day = (this.day + 1) % 7;
             if (this.day == 6)
             {
-                _weeklytimer_callback();
+                this.Weeklytimer_callback();
             }
+
             this.EmitSignal(nameof(DateIncreasedDay));
         }
 
-        private void _weeklytimer_callback()
+        private void Weeklytimer_callback()
         {
-            this.week +=1;
+            this.week += 1;
             this.Budget -= this.Upkeep;
             this.EmitSignal(nameof(WeekChanged), this.week);
         }

@@ -1,74 +1,77 @@
-using Godot;
 using System;
-using Soteria;
 
-public class TimeControl : Control
+using Godot;
+
+namespace Soteria.UI
 {
-    private GameVariables gameVariables;
-
-    private DateTime currentTime;
-    private Label currentTimeLabel;
-    private Label currentWeekLabel;
-    private Button pauseNode;
-    private Button speed1xNode;
-    private Button speed2xNode;
-    
-    private Color colorActive = new Color("ffffff");
-    private Color colorNormal = new Color("aaaaaa");
-
-    public override void _Ready()
+    public class TimeControl : Control
     {
-        this.gameVariables = this.GetNode<GameVariables>("/root/GameVariables");
+        private readonly Color colorActive = new Color("ffffff");
+        private readonly Color colorNormal = new Color("aaaaaa");
+        private GameVariables gameVariables;
 
-        this.currentTime = DateTime.Now;
-        this.currentTimeLabel = this.GetNode<Label>("VBoxContainer/CurrentTimeContainer/CurrentTime");
-        this.currentTimeLabel.Text = this.currentTime.ToString("yyyy-MM-dd");
+        private DateTime currentTime;
+        private Label currentTimeLabel;
+        private Label currentWeekLabel;
+        private Button pauseNode;
+        private Button speed1xNode;
+        private Button speed2xNode;
 
-        
-        this.currentWeekLabel = this.GetNode<Label>("VBoxContainer/CurrentTimeContainer/WeekValue");
-        
-        this.pauseNode = this.GetNode<Button>("VBoxContainer/TimeControlButtons/Pause");
-        this.speed1xNode = this.GetNode<Button>("VBoxContainer/TimeControlButtons/Speed1X");
-        this.speed2xNode = this.GetNode<Button>("VBoxContainer/TimeControlButtons/Speed2X");
-        this.setActive(this.speed1xNode);
-        
-        gameVariables.Connect(nameof(GameVariables.DateIncreasedDay), this, nameof(this._on_DateIncreased));
-        gameVariables.Connect(nameof(GameVariables.WeekChanged), this, nameof(this._on_WeekChanged));
-    }
-    
-    private void _on_DateIncreased()
-    {
-        this.currentTime = this.currentTime.AddDays(1);
-        this.currentTimeLabel.Text = this.currentTime.ToString("yyyy-MM-dd");
-    }
+        public override void _Ready()
+        {
+            this.gameVariables = this.GetNode<GameVariables>("/root/GameVariables");
 
-    private void _on_WeekChanged(int week)
-    {
-        this.currentWeekLabel.Text = week.ToString();
-    }
+            this.currentTime = DateTime.Now;
+            this.currentTimeLabel = this.GetNode<Label>("VBoxContainer/CurrentTimeContainer/CurrentTime");
+            this.currentTimeLabel.Text = this.currentTime.ToString("yyyy-MM-dd");
 
-    private void _on_Pause_pressed()
-    {
-        this.setActive(this.pauseNode);
-        this.gameVariables.setTimeScale(0);
-    }
-    private void _on_Speed1X_pressed()
-    {
-        this.setActive(this.speed1xNode);
-        this.gameVariables.setTimeScale(1);
-    }
-    private void _on_Speed2X_pressed()
-    {
-        this.setActive(this.speed2xNode);
-        this.gameVariables.setTimeScale(2);
-    }
-    private void setActive(Button node)
-    {
-        this.pauseNode.Modulate = colorNormal;
-        this.speed1xNode.Modulate = colorNormal;
-        this.speed2xNode.Modulate = colorNormal;
+            this.currentWeekLabel = this.GetNode<Label>("VBoxContainer/CurrentTimeContainer/WeekValue");
 
-        node.Modulate = colorActive;
+            this.pauseNode = this.GetNode<Button>("VBoxContainer/TimeControlButtons/Pause");
+            this.speed1xNode = this.GetNode<Button>("VBoxContainer/TimeControlButtons/Speed1X");
+            this.speed2xNode = this.GetNode<Button>("VBoxContainer/TimeControlButtons/Speed2X");
+            this.SetActive(this.speed1xNode);
 
+            this.gameVariables.Connect(nameof(GameVariables.DateIncreasedDay), this, nameof(this._on_DateIncreased));
+            this.gameVariables.Connect(nameof(GameVariables.WeekChanged), this, nameof(this._on_WeekChanged));
+        }
+
+        private void _on_DateIncreased()
+        {
+            this.currentTime = this.currentTime.AddDays(1);
+            this.currentTimeLabel.Text = this.currentTime.ToString("yyyy-MM-dd");
+        }
+
+        private void _on_WeekChanged(int week)
+        {
+            this.currentWeekLabel.Text = week.ToString();
+        }
+
+        private void _on_Pause_pressed()
+        {
+            this.SetActive(this.pauseNode);
+            this.gameVariables.SetTimeScale(0);
+        }
+
+        private void _on_Speed1X_pressed()
+        {
+            this.SetActive(this.speed1xNode);
+            this.gameVariables.SetTimeScale(1);
+        }
+
+        private void _on_Speed2X_pressed()
+        {
+            this.SetActive(this.speed2xNode);
+            this.gameVariables.SetTimeScale(2);
+        }
+
+        private void SetActive(Button node)
+        {
+            this.pauseNode.Modulate = this.colorNormal;
+            this.speed1xNode.Modulate = this.colorNormal;
+            this.speed2xNode.Modulate = this.colorNormal;
+
+            node.Modulate = this.colorActive;
+        }
     }
 }
