@@ -44,46 +44,45 @@ color = Color( 0.101961, 0.0901961, 0.0901961, 1 )
 environment = SubResource( 1 )
 
 [node name="Light2D" type="Light2D" parent="WorldEnvironment"]
-position = Vector2( 135, 150 )
+position = Vector2( 183, 197 )
 texture = ExtResource( 6 )
-texture_scale = 2.5
-energy = 1.2
+texture_scale = 3.0
 shadow_enabled = true
+shadow_color = Color( 0.384314, 0.290196, 0.290196, 0 )
 shadow_buffer_size = 4096
-shadow_filter = 5
+shadow_filter = 4
 
 [node name="Light2D2" type="Light2D" parent="WorldEnvironment"]
-position = Vector2( 908, 268 )
+position = Vector2( 808, 551 )
 texture = ExtResource( 6 )
-offset = Vector2( 95, 320 )
-texture_scale = 2.5
-energy = 1.2
+texture_scale = 3.0
 shadow_enabled = true
+shadow_color = Color( 0.384314, 0.290196, 0.290196, 0 )
 shadow_buffer_size = 4096
-shadow_filter = 5
+shadow_filter = 4
 
 [node name="Light2D3" type="Light2D" parent="WorldEnvironment"]
-position = Vector2( 442, 595 )
+position = Vector2( 149, 620 )
 texture = ExtResource( 6 )
-texture_scale = 2.5
-energy = 1.2
+texture_scale = 3.0
 shadow_enabled = true
+shadow_color = Color( 0.384314, 0.290196, 0.290196, 0 )
 shadow_buffer_size = 4096
-shadow_filter = 5
+shadow_filter = 4
 
 [node name="Light2D4" type="Light2D" parent="WorldEnvironment"]
-position = Vector2( 765, 72 )
+position = Vector2( 824, 68 )
 texture = ExtResource( 6 )
-texture_scale = 2.5
-energy = 1.2
+texture_scale = 3.0
 shadow_enabled = true
+shadow_color = Color( 0.384314, 0.290196, 0.290196, 0 )
 shadow_buffer_size = 4096
-shadow_filter = 5
+shadow_filter = 4
 
 [node name="NetworkGraphRoot" parent="." instance=ExtResource( 3 )]
 
 [node name="Webserver" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
-position = Vector2( 562, 231 )
+position = Vector2( 627, 272 )
 ThreatResistance = 0.95
 policySoftwareFirewall = true
 
@@ -92,11 +91,11 @@ SourceNodePath = NodePath("../Webserver")
 TargetNodePath = NodePath("../Database")
 
 [node name="Database" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
-position = Vector2( 441, 444 )
+position = Vector2( 525, 496 )
 ThreatResistance = 0.9
 
 [node name="Employee" parent="NetworkGraphRoot" instance=ExtResource( 7 )]
-position = Vector2( 302, 318 )
+position = Vector2( 235, 431 )
 
 [node name="Emp-DB" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
 SourceNodePath = NodePath("../Employee")
