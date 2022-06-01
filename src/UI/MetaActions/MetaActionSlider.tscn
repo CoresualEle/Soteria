@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://UI/MetaActions/MetaActionSlider.cs" type="Script" id=1]
+
+[node name="MetaActionSlider" type="VBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )
+
+[node name="ActionName" type="Label" parent="."]
+margin_right = 147.0
+margin_bottom = 14.0
+text = "Action"
+
+[node name="UpkeepBox" type="HBoxContainer" parent="."]
+margin_top = 18.0
+margin_right = 147.0
+margin_bottom = 32.0
+
+[node name="UpkeepLabel" type="Label" parent="UpkeepBox"]
+margin_right = 57.0
+margin_bottom = 14.0
+text = "Upkeep: "
+
+[node name="UpkeepValue" type="Label" parent="UpkeepBox"]
+margin_left = 61.0
+margin_right = 69.0
+margin_bottom = 14.0
+text = "0"
+
+[node name="UpkeepUnit" type="Label" parent="UpkeepBox"]
+margin_left = 73.0
+margin_right = 147.0
+margin_bottom = 14.0
+text = "Euro / week"
+
+[node name="Slider" type="HSlider" parent="."]
+margin_top = 36.0
+margin_right = 147.0
+margin_bottom = 52.0
+
+[node name="HSeparator" type="HSeparator" parent="."]
+margin_top = 56.0
+margin_right = 147.0
+margin_bottom = 60.0
+
+[connection signal="value_changed" from="Slider" to="." method="_on_Slider_value_changed"]

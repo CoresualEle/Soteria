@@ -57,7 +57,9 @@ namespace Soteria.Foundation
                 var contextMenu = this.GetNode<PopupPanel>("CanvasLayer/ContextMenu");
 
                 var visibleRect = this.GetTree().Root.GetVisibleRect();
-                var maxVector = visibleRect.Position + visibleRect.Size - contextMenu.RectSize;
+                // TODO Refactor this later to not include magic numbers
+                // We also need to substract anything that is in the UI, which is 50px off the bottom and 215px from the right side
+                var maxVector = visibleRect.Position + visibleRect.Size - contextMenu.RectSize - new Vector2(215, 50);
 
                 contextMenu.MarginLeft = Mathf.Min(this.Position.x, maxVector.x);
                 contextMenu.MarginTop = Mathf.Min(this.Position.y, maxVector.y);
