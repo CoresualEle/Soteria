@@ -103,16 +103,11 @@ position = Vector2( 980, 500 )
 
 [node name="1" parent="NetworkGraphRoot" instance=ExtResource( 7 )]
 position = Vector2( 460, 150 )
-ChanceToSpawnVirus = 0.0
 ThreatResistance = 0.8
 
 [node name="2" parent="NetworkGraphRoot" instance=ExtResource( 7 )]
 position = Vector2( 980, 150 )
-ChanceToSpawnVirus = 0.0
 ThreatResistance = 0.8
-
-[node name="GameTickTimer" type="Timer" parent="."]
-autostart = true
 
 [node name="UI" parent="." instance=ExtResource( 4 )]
 
@@ -151,5 +146,3 @@ texture_scale = 2.5
 energy = 1.2
 shadow_enabled = true
 shadow_buffer_size = 4096
-
-[connection signal="timeout" from="GameTickTimer" to="NetworkGraphRoot" method="_on_GameTickTimer_timeout"]
