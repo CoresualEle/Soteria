@@ -9,7 +9,7 @@ namespace Soteria.Network.Components
 {
     public class Connection : Node2D, INetworkConnection
     {
-        private float frame = (float) new Random().NextDouble();
+        private float frame;
         private readonly Color[] colorsNormal = { new Color("#005FB8"), new Color("#007EF5"), new Color("#005FB8")};
         private readonly Color[] colorsInfectable= { new Color("#A35200"), new Color("#F57A00"), new Color("#A35200")};
         private readonly Color[] colorsInfected = { new Color("#901328"), new Color("#E32646"), new Color("#901328")};
@@ -18,8 +18,6 @@ namespace Soteria.Network.Components
         private Vector2 offsetx2 = new Vector2(-1,0);
         private Vector2 offsety1 = new Vector2(0,1);
         private Vector2 offsety2 = new Vector2(0,-1);
-
-        private Line2D lineGraphic;
 
         [Export]
         public NodePath SourceNodePath;
@@ -41,24 +39,25 @@ namespace Soteria.Network.Components
 
         public override void _Ready()
         {
-            this.lineGraphic = (Line2D)this.GetNode(new NodePath("./ConnectionGraphic"));
-
             this.Source = (INetworkNode)this.GetNode(this.SourceNodePath) ?? throw new ArgumentNullException(nameof(this.Source));
             this.Target = (INetworkNode)this.GetNode(this.TargetNodePath) ?? throw new ArgumentNullException(nameof(this.Target));
 
             this.GetNode<INetworkGraph>(new NodePath("..")).RegisterConnection(this);
+
+            // Randomize starting point of animation
+            this.frame = (float) new Random().NextDouble();
         }
 
         public override void _Process(float delta)
         {
             base._Process(delta);
+
+            // Calls the _Draw() method
             this.Update();
         }
 
         public override void _Draw()
         {
-
-
             var newValue = (this.frame + 0.01f);
             this.frame = newValue > 1.0f ? 0f : newValue;
             var directionVector = this.Target.Position - this.Source.Position;
@@ -93,27 +92,27 @@ namespace Soteria.Network.Components
             {
                 if (!this.Source.Infections.Any())
                 {
-                    this.DrawMultilineColors(points, this.colorsNormal, 10.0f);
-                    this.DrawMultilineColors(points1, this.colorsNormal, 10.0f);
-                    this.DrawMultilineColors(points2, this.colorsNormal, 10.0f);
-                    this.DrawMultilineColors(points3, this.colorsNormal, 10.0f);
-                    this.DrawMultilineColors(points4, this.colorsNormal, 10.0f);
+                    this.DrawMultilineColors(points, this.colorsNormal);
+                    this.DrawMultilineColors(points1, this.colorsNormal);
+                    this.DrawMultilineColors(points2, this.colorsNormal);
+                    this.DrawMultilineColors(points3, this.colorsNormal);
+                    this.DrawMultilineColors(points4, this.colorsNormal);
                 }
                 else if (this.Source.Infections.Any() && !this.Target.Infections.Any())
                 {
-                    this.DrawMultilineColors(points, this.colorsInfectable, 10.0f);
-                    this.DrawMultilineColors(points1, this.colorsInfectable, 10.0f);
-                    this.DrawMultilineColors(points2, this.colorsInfectable, 10.0f);
-                    this.DrawMultilineColors(points3, this.colorsInfectable, 10.0f);
-                    this.DrawMultilineColors(points4, this.colorsInfectable, 10.0f);
+                    this.DrawMultilineColors(points, this.colorsInfectable);
+                    this.DrawMultilineColors(points1, this.colorsInfectable);
+                    this.DrawMultilineColors(points2, this.colorsInfectable);
+                    this.DrawMultilineColors(points3, this.colorsInfectable);
+                    this.DrawMultilineColors(points4, this.colorsInfectable);
                 }
                 else if (this.Source.Infections.Any() && this.Target.Infections.Any())
                 {
-                    this.DrawMultilineColors(points, this.colorsInfected, 10.0f);
-                    this.DrawMultilineColors(points1, this.colorsInfected, 10.0f);
-                    this.DrawMultilineColors(points2, this.colorsInfected, 10.0f);
-                    this.DrawMultilineColors(points3, this.colorsInfected, 10.0f);
-                    this.DrawMultilineColors(points4, this.colorsInfected, 10.0f);
+                    this.DrawMultilineColors(points, this.colorsInfected);
+                    this.DrawMultilineColors(points1, this.colorsInfected);
+                    this.DrawMultilineColors(points2, this.colorsInfected);
+                    this.DrawMultilineColors(points3, this.colorsInfected);
+                    this.DrawMultilineColors(points4, this.colorsInfected);
                 }
             }
         }

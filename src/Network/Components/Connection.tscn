@@ -7,7 +7,3 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-
-[node name="ConnectionGraphic" type="Line2D" parent="."]
-modulate = Color( 2, 2, 2, 1 )
-antialiased = true
