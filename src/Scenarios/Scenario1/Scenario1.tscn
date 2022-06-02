@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Network/Components/Connection.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Network/Components/Nodes/Server.tscn" type="PackedScene" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://UI/UI.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenarios/Scenario1/Scenario1.cs" type="Script" id=5]
 [ext_resource path="res://resources/images/LightSprite.png" type="Texture" id=6]
+[ext_resource path="res://Network/Components/Nodes/Client.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Network/Components/Nodes/Internet.tscn" type="PackedScene" id=8]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -36,55 +38,78 @@ margin_bottom = 720.0
 mouse_filter = 2
 color = Color( 0.101961, 0.0901961, 0.0901961, 1 )
 
-[node name="NetworkGraphRoot" parent="." instance=ExtResource( 3 )]
-
-[node name="A" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
-position = Vector2( 150, 250 )
-ChanceToSpawnVirus = 0.85
-policySoftwareFirewall = true
-
-[node name="AB" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
-SourceNodePath = NodePath("../A")
-TargetNodePath = NodePath("../B")
-
-[node name="B" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
-position = Vector2( 400, 250 )
-ThreatResistance = 0.8
-
 [node name="UI" parent="." instance=ExtResource( 4 )]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
 
 [node name="Light2D" type="Light2D" parent="WorldEnvironment"]
-position = Vector2( 23, 71 )
+position = Vector2( 183, 197 )
 texture = ExtResource( 6 )
-texture_scale = 2.5
-energy = 1.2
+texture_scale = 3.0
 shadow_enabled = true
+shadow_color = Color( 0.384314, 0.290196, 0.290196, 0 )
 shadow_buffer_size = 4096
+shadow_filter = 4
 
 [node name="Light2D2" type="Light2D" parent="WorldEnvironment"]
-position = Vector2( 733, 110 )
+position = Vector2( 808, 551 )
 texture = ExtResource( 6 )
-offset = Vector2( 95, 320 )
-texture_scale = 2.5
-energy = 1.2
+texture_scale = 3.0
 shadow_enabled = true
+shadow_color = Color( 0.384314, 0.290196, 0.290196, 0 )
 shadow_buffer_size = 4096
+shadow_filter = 4
 
 [node name="Light2D3" type="Light2D" parent="WorldEnvironment"]
-position = Vector2( 201, 506 )
+position = Vector2( 149, 620 )
 texture = ExtResource( 6 )
-texture_scale = 2.5
-energy = 1.2
+texture_scale = 3.0
 shadow_enabled = true
+shadow_color = Color( 0.384314, 0.290196, 0.290196, 0 )
 shadow_buffer_size = 4096
+shadow_filter = 4
 
 [node name="Light2D4" type="Light2D" parent="WorldEnvironment"]
-position = Vector2( 669, 97 )
+position = Vector2( 824, 68 )
 texture = ExtResource( 6 )
-texture_scale = 2.5
-energy = 1.2
+texture_scale = 3.0
 shadow_enabled = true
+shadow_color = Color( 0.384314, 0.290196, 0.290196, 0 )
 shadow_buffer_size = 4096
+shadow_filter = 4
+
+[node name="NetworkGraphRoot" parent="." instance=ExtResource( 3 )]
+
+[node name="Webserver" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
+position = Vector2( 627, 272 )
+ThreatResistance = 0.95
+policySoftwareFirewall = true
+
+[node name="WS-DB" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
+SourceNodePath = NodePath("../Webserver")
+TargetNodePath = NodePath("../Database")
+
+[node name="Database" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
+position = Vector2( 525, 496 )
+ThreatResistance = 0.9
+
+[node name="Employee" parent="NetworkGraphRoot" instance=ExtResource( 7 )]
+position = Vector2( 235, 431 )
+
+[node name="Emp-DB" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
+SourceNodePath = NodePath("../Employee")
+TargetNodePath = NodePath("../Database")
+
+[node name="Emp-WS" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
+SourceNodePath = NodePath("../Employee")
+TargetNodePath = NodePath("../Webserver")
+
+[node name="Internet" parent="NetworkGraphRoot" instance=ExtResource( 8 )]
+position = Vector2( 528, 45 )
+ChanceToSpawnVirus = 0.8
+ThreatResistance = 0.0
+
+[node name="Internet-WS" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
+SourceNodePath = NodePath("../Internet")
+TargetNodePath = NodePath("../Webserver")

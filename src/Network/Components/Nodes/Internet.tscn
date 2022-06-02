@@ -1,29 +1,30 @@
 [gd_scene load_steps=4 format=2]
 
+[ext_resource path="res://Network/Components/Nodes/Internet.cs" type="Script" id=1]
 [ext_resource path="res://resources/images/LightSprite.png" type="Texture" id=2]
-[ext_resource path="res://Network/Components/Nodes/Client.cs" type="Script" id=3]
 
 [sub_resource type="OccluderPolygon2D" id=1]
-polygon = PoolVector2Array( 0, -55, -32, 0, 0, 55, 32, 0 )
+polygon = PoolVector2Array( 192, -64, -192, -64, -192, 64, 192, 64 )
 
-[node name="Node2D" type="Node2D"]
+[node name="Internet" type="Node2D"]
 scale = Vector2( 0.7, 0.7 )
 z_index = 1
-script = ExtResource( 3 )
+script = ExtResource( 1 )
 __meta__ = {
-"_edit_group_": true
+"_edit_group_": true,
+"_edit_lock_": true
 }
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 modulate = Color( 2, 2, 2, 1 )
 self_modulate = Color( 2, 2, 2, 1 )
 color = Color( 0, 0.207843, 0.4, 1 )
-polygon = PoolVector2Array( 0, -55, -32, 0, 0, 55, 32, 0 )
+polygon = PoolVector2Array( 192, -64, -192, -64, -192, 64, 192, 64 )
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-polygon = PoolVector2Array( 0, -55, -32, 0, 0, 55, 32, 0 )
+polygon = PoolVector2Array( 192, -64, -192, -64, -192, 64, 192, 64 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -53,5 +54,20 @@ occluder = SubResource( 1 )
 texture = ExtResource( 2 )
 color = Color( 0.352941, 0.619608, 1, 1 )
 energy = 0.5
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -26.0
+margin_top = -7.0
+margin_right = 26.0
+margin_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Internet"
+align = 1
+valign = 1
 
 [connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]

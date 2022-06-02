@@ -4,6 +4,3 @@
 
 [node name="NetworkGraphRoot" type="Node2D"]
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_group_": true
-}
