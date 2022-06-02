@@ -9,6 +9,8 @@ namespace Soteria.Network.Components
 {
     public class Connection : Node2D, INetworkConnection
     {
+        private GameVariables gameVariables;
+
         private float frame;
         private readonly Color[] colorsNormal = { new Color("#005FB8"), new Color("#007EF5"), new Color("#005FB8")};
         private readonly Color[] colorsInfectable= { new Color("#A35200"), new Color("#F57A00"), new Color("#A35200")};
@@ -36,9 +38,14 @@ namespace Soteria.Network.Components
         public INetworkNode Source { get; private set; }
 
         public INetworkNode Target { get; private set; }
+        
+        private readonly float base_speed = 0.01f;
+        private int timescale = 1;
+        private readonly float length = 0.2f;
 
         public override void _Ready()
         {
+            this.gameVariables = this.GetNode<GameVariables>("/root/GameVariables");
             this.Source = (INetworkNode)this.GetNode(this.SourceNodePath) ?? throw new ArgumentNullException(nameof(this.Source));
             this.Target = (INetworkNode)this.GetNode(this.TargetNodePath) ?? throw new ArgumentNullException(nameof(this.Target));
 
@@ -46,6 +53,8 @@ namespace Soteria.Network.Components
 
             // Randomize starting point of animation
             this.frame = (float) new Random().NextDouble();
+
+            gameVariables.Connect(nameof(GameVariables.TimeScaleChanged), this, nameof(this.changeTimescale));
         }
 
         public override void _Process(float delta)
@@ -56,16 +65,21 @@ namespace Soteria.Network.Components
             this.Update();
         }
 
+        private void changeTimescale(int timescale)
+        {
+            this.timescale = timescale;
+        }
+
         public override void _Draw()
         {
-            var newValue = (this.frame + 0.01f);
+            var newValue = (this.frame + this.timescale * this.base_speed);
             this.frame = newValue > 1.0f ? 0f : newValue;
             var directionVector = this.Target.Position - this.Source.Position;
             
             Vector2[] points = {
                 this.Source.Position + this.frame * directionVector,
-                this.Source.Position + (this.frame + 0.1f) * directionVector,
-                this.Source.Position + (this.frame + 0.2f) * directionVector
+                this.Source.Position + (this.frame + this.length / 2) * directionVector,
+                this.Source.Position + (this.frame + this.length) * directionVector
             };
             Vector2[] points1 = {
                 points[0] + this.offsetx1,
