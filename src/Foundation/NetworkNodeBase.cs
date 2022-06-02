@@ -29,6 +29,8 @@ namespace Soteria.Foundation
 
         public IList<IThreat> Infections { get; private set; }
 
+        protected Label nodeTypeLabel;
+
         public void AddConnection(INetworkConnection connection)
         {
             if (!this.Connections.Contains(connection))
@@ -48,12 +50,19 @@ namespace Soteria.Foundation
 
             this.NetworkGraph = this.GetNode<INetworkGraph>(new NodePath(".."));
             this.NetworkGraph.NetworkTick += this.NetworkGraph_OnNetworkTick;
+
+            
+            this.nodeTypeLabel = this.GetNode<Label>("CanvasLayer/NodeTypeLabel");
+            this.nodeTypeLabel.MarginLeft = this.Position.x;
+            this.nodeTypeLabel.MarginTop = this.Position.y;
+            this.nodeTypeLabel.Hide();
         }
 
         protected void _on_Area2D_input_event(Node viewport, InputEvent @event, int shapeIdx)
         {
             if (@event is InputEventMouseButton button && button.ButtonIndex == (int)ButtonList.Left)
             {
+                this.nodeTypeLabel.Hide();
                 var contextMenu = this.GetNode<PopupPanel>("CanvasLayer/ContextMenu");
 
                 var visibleRect = this.GetTree().Root.GetVisibleRect();
@@ -67,6 +76,15 @@ namespace Soteria.Foundation
 
                 contextMenu.Popup_();
             }
+        }
+        
+        protected void _on_Area2D_mouse_entered()
+        {
+            this.nodeTypeLabel.Show();
+        }
+        protected void _on_Area2D_mouse_exited()
+        {
+            this.nodeTypeLabel.Hide();
         }
 
         protected abstract void NetworkGraph_OnNetworkTick(object sender, EventArgs e);
