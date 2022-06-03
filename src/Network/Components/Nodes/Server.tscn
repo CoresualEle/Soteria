@@ -1,9 +1,15 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Network/Components/Nodes/Server.cs" type="Script" id=1]
 [ext_resource path="res://resources/images/LightSprite.png" type="Texture" id=2]
 [ext_resource path="res://UI/ContextMenuBoolean.tscn" type="PackedScene" id=3]
 [ext_resource path="res://UI/ContextMenuAction.tscn" type="PackedScene" id=4]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0, 0, 0, 0.686275 )
+
+[sub_resource type="Theme" id=3]
+Label/styles/normal = SubResource( 2 )
 
 [sub_resource type="OccluderPolygon2D" id=1]
 polygon = PoolVector2Array( 32, -55, -32, -55, -64, 0, -32, 55, 32, 55, 64, 0 )
@@ -72,6 +78,12 @@ OptionLabel = "Software Firewall"
 Cost = 1000
 Upkeep = 100
 
+[node name="NodeTypeLabel" type="Label" parent="CanvasLayer"]
+margin_right = 40.0
+margin_bottom = 14.0
+theme = SubResource( 3 )
+text = "Server"
+
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 occluder = SubResource( 1 )
 
@@ -81,3 +93,5 @@ color = Color( 0.352941, 0.619608, 1, 1 )
 energy = 0.5
 
 [connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_Area2D_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_Area2D_mouse_exited"]
