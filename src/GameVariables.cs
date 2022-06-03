@@ -25,6 +25,9 @@ namespace Soteria
         [Signal]
         public delegate void WeekChanged(int week);
 
+        [Signal]
+        public delegate void TimeScaleChanged(int timescale);
+
         public int Budget
         {
             get
@@ -78,6 +81,7 @@ namespace Soteria
                     this.dailyTimer.Paused = false;
                     break;
             }
+            this.EmitSignal(nameof(TimeScaleChanged), timeScale);
         }
 
         private void Dailytimer_callback()
