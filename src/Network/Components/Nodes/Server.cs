@@ -1,10 +1,8 @@
-using System;
-
 using Godot;
-
 using Soteria.Foundation;
 using Soteria.Foundation.Contracts;
 using Soteria.UI;
+using System;
 
 namespace Soteria.Network.Components.Nodes
 {
