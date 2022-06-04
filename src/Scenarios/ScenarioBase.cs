@@ -13,6 +13,9 @@ namespace Soteria.Scenarios
         {
             this.GameVariables = this.GetNode<GameVariables>("/root/GameVariables");
 
+            this.GameVariables.AttemptedInfections = 0;
+            this.GameVariables.SuccessfulInfections = 0;
+
             var networkGraphInstance = this.GetNode<NetworkGraph>("NetworkGraphRoot");
             this.GameVariables.Connect(nameof(GameVariables.DateIncreasedDay), networkGraphInstance, "_on_GameTickTimer_timeout");
         }
