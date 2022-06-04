@@ -1,6 +1,5 @@
-using System;
-
 using Godot;
+using System;
 
 namespace Soteria.UI
 {

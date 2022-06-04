@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
-using Godot;
-
+﻿using Godot;
 using Soteria.Foundation.Contracts;
+using System;
+using System.Collections.Generic;
 
 namespace Soteria.Foundation
 {
@@ -51,7 +49,6 @@ namespace Soteria.Foundation
             this.NetworkGraph = this.GetNode<INetworkGraph>(new NodePath(".."));
             this.NetworkGraph.NetworkTick += this.NetworkGraph_OnNetworkTick;
 
-            
             this.nodeTypeLabel = this.GetNode<Label>("CanvasLayer/NodeTypeLabel");
             this.nodeTypeLabel.MarginLeft = this.Position.x;
             this.nodeTypeLabel.MarginTop = this.Position.y;
@@ -77,11 +74,12 @@ namespace Soteria.Foundation
                 contextMenu.Popup_();
             }
         }
-        
+
         protected void _on_Area2D_mouse_entered()
         {
             this.nodeTypeLabel.Show();
         }
+
         protected void _on_Area2D_mouse_exited()
         {
             this.nodeTypeLabel.Hide();

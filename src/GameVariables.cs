@@ -5,22 +5,27 @@ namespace Soteria
     public class GameVariables : Node
     {
         public float WorkSatisfaction = 1.0f;
+        public float CustomerSatisfaction = 1.0f;
 
         private int budget;
         private int upkeep;
+        private int income;
 
         private int day;
         private int week;
         private Timer dailyTimer;
 
         [Signal]
-        public delegate void BudgetChanged();
+        public delegate void BudgetChanged(int budget);
 
         [Signal]
         public delegate void DateIncreasedDay();
 
         [Signal]
-        public delegate void UpkeepChanged();
+        public delegate void UpkeepChanged(int upkeep);
+
+        [Signal]
+        public delegate void IncomeChanged(int income);
 
         [Signal]
         public delegate void WeekChanged(int week);
@@ -54,6 +59,19 @@ namespace Soteria
             }
         }
 
+        public int Income
+        {
+            get
+            {
+                return this.income;
+            }
+            set
+            {
+                this.income = value;
+                this.EmitSignal(nameof(IncomeChanged), this.income);
+            }
+        }
+
         public override void _Ready()
         {
             this.dailyTimer = new Timer();
@@ -72,10 +90,12 @@ namespace Soteria
                 case 0:
                     this.dailyTimer.Paused = true;
                     break;
+
                 case 1:
                     this.dailyTimer.WaitTime = 1.0f;
                     this.dailyTimer.Paused = false;
                     break;
+
                 case 2:
                     this.dailyTimer.WaitTime = 0.5f;
                     this.dailyTimer.Paused = false;
@@ -86,6 +106,8 @@ namespace Soteria
 
         private void Dailytimer_callback()
         {
+            this.Budget += (int)(this.Income * this.CustomerSatisfaction - this.Upkeep) / 7;
+
             this.day = (this.day + 1) % 7;
             if (this.day == 6)
             {
@@ -98,7 +120,6 @@ namespace Soteria
         private void Weeklytimer_callback()
         {
             this.week += 1;
-            this.Budget -= this.Upkeep;
             this.EmitSignal(nameof(WeekChanged), this.week);
         }
     }

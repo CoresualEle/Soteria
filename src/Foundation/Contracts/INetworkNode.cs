@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
-
-using Godot;
+﻿using Godot;
+using System.Collections.Generic;
 
 namespace Soteria.Foundation.Contracts
 {

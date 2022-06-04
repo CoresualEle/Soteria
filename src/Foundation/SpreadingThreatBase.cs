@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
 using Soteria.Foundation.Contracts;
+using System;
+using System.Collections.Generic;
 
 namespace Soteria.Foundation
 {
