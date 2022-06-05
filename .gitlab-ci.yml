@@ -8,6 +8,8 @@
 include:
 - template: Security/Secret-Detection.gitlab-ci.yml
 - template: Security/SAST.gitlab-ci.yml
+- project: 'renovate-bot/renovate-runner'
+  file: '/templates/renovate-dind.gitlab-ci.yml'
 
 stages:
 - test
