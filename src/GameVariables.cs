@@ -7,6 +7,8 @@ namespace Soteria
         public float WorkSatisfaction = 1.0f;
         public float CustomerSatisfaction = 1.0f;
 
+        public int NodeAffectedByDenialOfService = 0;
+
         public int AttemptedInfections = 0;
         public int SuccessfulInfections = 0;
 
@@ -110,7 +112,14 @@ namespace Soteria
 
         private void Dailytimer_callback()
         {
-            this.Budget += (int)(this.Income * this.CustomerSatisfaction - this.Upkeep) / 7;
+            var denialOfServiceFactor = this.NodeAffectedByDenialOfService * 0.1 <= 0.4 ? this.NodeAffectedByDenialOfService * 0.1 : 0.4;
+
+            if (denialOfServiceFactor > 0)
+            {
+                GD.Print($"Adjusting budget by {denialOfServiceFactor}");
+            }
+
+            this.Budget += (int)(this.Income * (this.CustomerSatisfaction * (1 - denialOfServiceFactor)) - this.Upkeep) / 7;
 
             this.day = (this.day + 1) % 7;
             if (this.day == 6)

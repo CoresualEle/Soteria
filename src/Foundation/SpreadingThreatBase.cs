@@ -1,51 +1,57 @@
-using Soteria.Foundation.Contracts;
 using System;
 using System.Collections.Generic;
 
+using Godot;
+
+using Soteria.Foundation.Contracts;
+using Soteria.Network;
+
 namespace Soteria.Foundation
 {
-    public class SpreadingThreatBase : IThreat, IDisposable
+    public abstract class SpreadingThreatBase : Node, IThreat
     {
-        private readonly INetworkGraph networkGraph;
-        private readonly IList<INetworkNode> infectedNodes = new List<INetworkNode>();
+        [Export(PropertyHint.Range, "0,14,1,or_greater")]
+        public readonly int DaysBetweenInfections = 0;
 
-        public SpreadingThreatBase(INetworkNode sourceNode, INetworkGraph networkGraph)
+        protected GameVariables GameVariables;
+        protected NetworkGraph NetworkGraph;
+        protected List<INetworkNode> InfectedNodes;
+        protected int DayCounter;
+        protected INetworkNode NodeToInfect;
+
+        [Export]
+        public NodePath NodeToInfectPath;
+
+        public override void _Ready()
         {
-            this.infectedNodes.Add(sourceNode);
+            base._Ready();
 
-            this.networkGraph = networkGraph;
-            this.networkGraph.NetworkTick += this.NetworkGraph_OnNetworkTick;
+            this.GameVariables = this.GetNode<GameVariables>("/root/GameVariables");
+            this.NetworkGraph = this.GetNode<NetworkGraph>("..");
+            this.InfectedNodes = new List<INetworkNode>();
+
+            this.NodeToInfect = (INetworkNode)this.GetNode(this.NodeToInfectPath);
+
+            this.NetworkGraph.NetworkTick += this.OnNetworkTick;
+
+            this.DayCounter = this.DaysBetweenInfections;
         }
 
-        private void Spread()
+        public void OnNetworkTick(object sender, EventArgs e)
         {
-            var targets = new List<INetworkNode>(this.infectedNodes);
-
-            foreach (var infectedNode in targets)
+            if (this.DayCounter < 0)
             {
-                foreach (var connection in infectedNode.Connections)
-                {
-                    if (!connection.Target.Infections.Contains(this) && connection.Target.AttemptInfection(this))
-                    {
-                        this.infectedNodes.Add(connection.Target);
-                    }
-                }
+                this.DayCounter = this.DaysBetweenInfections;
+                this.Spread();
+            }
+            else
+            {
+                this.DayCounter -= 1;
             }
         }
 
-        public void RemoveNode(INetworkNode node)
-        {
-            this.infectedNodes.Remove(node);
-        }
+        protected abstract void Spread();
 
-        private void NetworkGraph_OnNetworkTick(object sender, EventArgs e)
-        {
-            this.Spread();
-        }
-
-        public void Dispose()
-        {
-            this.networkGraph.NetworkTick -= this.NetworkGraph_OnNetworkTick;
-        }
+        public abstract void RemoveNode(INetworkNode node);
     }
 }

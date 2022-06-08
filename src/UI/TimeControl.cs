@@ -13,8 +13,8 @@ namespace Soteria.UI
         private Label currentTimeLabel;
         private Label currentWeekLabel;
         private Button pauseNode;
-        private Button speed1xNode;
-        private Button speed2xNode;
+        private Button speed1XNode;
+        private Button speed2XNode;
 
         public override void _Ready()
         {
@@ -27,9 +27,9 @@ namespace Soteria.UI
             this.currentWeekLabel = this.GetNode<Label>("VBoxContainer/CurrentTimeContainer/WeekValue");
 
             this.pauseNode = this.GetNode<Button>("VBoxContainer/TimeControlButtons/Pause");
-            this.speed1xNode = this.GetNode<Button>("VBoxContainer/TimeControlButtons/Speed1X");
-            this.speed2xNode = this.GetNode<Button>("VBoxContainer/TimeControlButtons/Speed2X");
-            this.SetActive(this.speed1xNode);
+            this.speed1XNode = this.GetNode<Button>("VBoxContainer/TimeControlButtons/Speed1X");
+            this.speed2XNode = this.GetNode<Button>("VBoxContainer/TimeControlButtons/Speed2X");
+            this.SetActive(this.speed1XNode);
 
             this.gameVariables.Connect(nameof(GameVariables.DateIncreasedDay), this, nameof(this._on_DateIncreased));
             this.gameVariables.Connect(nameof(GameVariables.WeekChanged), this, nameof(this._on_WeekChanged));
@@ -54,21 +54,21 @@ namespace Soteria.UI
 
         private void _on_Speed1X_pressed()
         {
-            this.SetActive(this.speed1xNode);
+            this.SetActive(this.speed1XNode);
             this.gameVariables.SetTimeScale(1);
         }
 
         private void _on_Speed2X_pressed()
         {
-            this.SetActive(this.speed2xNode);
+            this.SetActive(this.speed2XNode);
             this.gameVariables.SetTimeScale(2);
         }
 
         private void SetActive(Button node)
         {
             this.pauseNode.Modulate = this.colorNormal;
-            this.speed1xNode.Modulate = this.colorNormal;
-            this.speed2xNode.Modulate = this.colorNormal;
+            this.speed1XNode.Modulate = this.colorNormal;
+            this.speed2XNode.Modulate = this.colorNormal;
 
             node.Modulate = this.colorActive;
         }
