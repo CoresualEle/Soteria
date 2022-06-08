@@ -1,5 +1,3 @@
-using Godot;
-
 using Soteria.Foundation;
 using Soteria.Foundation.Contracts;
 
@@ -16,12 +14,12 @@ public class DenialOfService : SpreadingThreatBase
     public override void RemoveNode(INetworkNode node)
     {
         this.InfectedNodes.Remove(node);
-        this.GameVariables.NodeAffectedByDenialOfService -= 1;
+        this.GameVariables.NodesAffectedByDenialOfService -= 1;
     }
 
     private void AddInfectedNode(INetworkNode networkNode)
     {
         this.InfectedNodes.Add(networkNode);
-        this.GameVariables.NodeAffectedByDenialOfService += 1;
+        this.GameVariables.NodesAffectedByDenialOfService += 1;
     }
 }
