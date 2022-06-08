@@ -131,7 +131,7 @@ namespace Soteria
 
         private float GetModifiedCustomerSatisfaction()
         {
-            var denialOfServiceFactor = 1 - (float)(this.NodeAffectedByDenialOfService * 0.1 <= 0.4 ? this.NodeAffectedByDenialOfService * 0.1 : 0.4);
+            var denialOfServiceFactor = 1 - Mathf.Max(this.NodeAffectedByDenialOfService * 0.1f, 0.4f);
 
             return this.CustomerSatisfaction * denialOfServiceFactor;
         }
