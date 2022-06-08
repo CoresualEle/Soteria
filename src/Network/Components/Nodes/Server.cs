@@ -1,8 +1,8 @@
 using Godot;
+
 using Soteria.Foundation;
 using Soteria.Foundation.Contracts;
 using Soteria.UI;
-using System;
 
 namespace Soteria.Network.Components.Nodes
 {
@@ -22,19 +22,6 @@ namespace Soteria.Network.Components.Nodes
 
             this.SetupMenu();
         }
-
-        //protected override void NetworkGraph_OnNetworkTick(object sender, EventArgs e)
-        //{
-        //    if (this.ChanceToSpawnVirus > 0 && this.Randomizer.NextDouble() <= this.ChanceToSpawnVirus && this.Randomizer.NextDouble() > this.ThreatResistance)
-        //    {
-        //        var newThreat = new SpreadingThreatBase(this, this.NetworkGraph);
-        //        if (!this.Infections.Contains(newThreat))
-        //        {
-        //            this.Infections.Add(newThreat);
-        //            this.GetNode<Polygon2D>("Polygon2D").Color = this.InfectedColor;
-        //        }
-        //    }
-        //}
 
         public override bool AttemptInfection(IThreat threat)
         {

@@ -25,16 +25,16 @@ namespace Soteria
         public delegate void DateIncreasedDay();
 
         [Signal]
-        public delegate void UpkeepChanged(int upkeep);
-
-        [Signal]
         public delegate void IncomeChanged(int income);
 
         [Signal]
-        public delegate void WeekChanged(int week);
+        public delegate void TimeScaleChanged(int timescale);
 
         [Signal]
-        public delegate void TimeScaleChanged(int timescale);
+        public delegate void UpkeepChanged(int upkeep);
+
+        [Signal]
+        public delegate void WeekChanged(int week);
 
         public int Budget
         {
@@ -104,6 +104,7 @@ namespace Soteria
                     this.dailyTimer.Paused = false;
                     break;
             }
+
             this.EmitSignal(nameof(TimeScaleChanged), timeScale);
         }
 

@@ -24,7 +24,7 @@ namespace Soteria.Foundation
 
         public IList<IThreat> Infections { get; private set; }
 
-        protected Label nodeTypeLabel;
+        protected Label NodeTypeLabel;
 
         protected GameVariables GameVariables;
 
@@ -49,17 +49,17 @@ namespace Soteria.Foundation
 
             this.NetworkGraph = this.GetNode<INetworkGraph>(new NodePath(".."));
 
-            this.nodeTypeLabel = this.GetNode<Label>("CanvasLayer/NodeTypeLabel");
-            this.nodeTypeLabel.MarginLeft = this.Position.x;
-            this.nodeTypeLabel.MarginTop = this.Position.y;
-            this.nodeTypeLabel.Hide();
+            this.NodeTypeLabel = this.GetNode<Label>("CanvasLayer/NodeTypeLabel");
+            this.NodeTypeLabel.MarginLeft = this.Position.x;
+            this.NodeTypeLabel.MarginTop = this.Position.y;
+            this.NodeTypeLabel.Hide();
         }
 
         protected void _on_Area2D_input_event(Node viewport, InputEvent @event, int shapeIdx)
         {
             if (@event is InputEventMouseButton button && button.ButtonIndex == (int)ButtonList.Left)
             {
-                this.nodeTypeLabel.Hide();
+                this.NodeTypeLabel.Hide();
                 var contextMenu = this.GetNode<PopupPanel>("CanvasLayer/ContextMenu");
 
                 var visibleRect = this.GetTree().Root.GetVisibleRect();
@@ -77,12 +77,12 @@ namespace Soteria.Foundation
 
         protected void _on_Area2D_mouse_entered()
         {
-            this.nodeTypeLabel.Show();
+            this.NodeTypeLabel.Show();
         }
 
         protected void _on_Area2D_mouse_exited()
         {
-            this.nodeTypeLabel.Hide();
+            this.NodeTypeLabel.Hide();
         }
 
         // Previously Network Objects could spawn Threats
