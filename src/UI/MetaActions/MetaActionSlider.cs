@@ -41,7 +41,6 @@ namespace Soteria.UI.MetaActions
 
         private void _on_Slider_value_changed(float value)
         {
-            GD.Print("Called function");
             var valueInt = (int)value;
             this.GetNode<Label>("UpkeepBox/UpkeepValue").Text = valueInt.ToString();
             this.gameVariables.Upkeep += valueInt;

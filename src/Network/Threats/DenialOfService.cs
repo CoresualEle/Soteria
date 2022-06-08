@@ -15,11 +15,13 @@ public class DenialOfService : SpreadingThreatBase
     {
         this.InfectedNodes.Remove(node);
         this.GameVariables.NodesAffectedByDenialOfService -= 1;
+        this.GameVariables.CurrentInfections -= 1;
     }
 
     private void AddInfectedNode(INetworkNode networkNode)
     {
         this.InfectedNodes.Add(networkNode);
         this.GameVariables.NodesAffectedByDenialOfService += 1;
+        this.GameVariables.CurrentInfections += 1;
     }
 }

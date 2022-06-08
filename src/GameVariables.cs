@@ -6,6 +6,8 @@ namespace Soteria
     {
         public float WorkSatisfaction = 1.0f;
         public float CustomerSatisfaction = 1.0f;
+
+        public int CostToUpgrade = 0;
         
         public int AttemptedInfections = 0;
         public int SuccessfulInfections = 0;
@@ -13,6 +15,7 @@ namespace Soteria
         private int budget;
         private int upkeep;
         private int baseIncome;
+        private int currentInfections = 0;
 
         private int day;
         private int week;
@@ -33,9 +36,12 @@ namespace Soteria
 
         [Signal]
         public delegate void UpkeepChanged(int upkeep);
-
+        
         [Signal]
         public delegate void WeekChanged(int week);
+
+        [Signal]
+        public delegate void CurrentInfectionsChanged(int currentInfections);
 
         public int Budget
         {
@@ -75,12 +81,25 @@ namespace Soteria
                 this.EmitSignal(nameof(IncomeChanged), this.ActualIncome);
             }
         }
-
+        
         public int ActualIncome
         {
             get
             {
                 return (int)(this.baseIncome * this.GetModifiedCustomerSatisfaction());
+            }
+        }
+
+        public int CurrentInfections
+        {
+            get
+            {
+                return this.currentInfections;
+            }
+            set
+            {
+                this.currentInfections = value;
+                this.EmitSignal(nameof(CurrentInfectionsChanged), this.currentInfections);
             }
         }
 
