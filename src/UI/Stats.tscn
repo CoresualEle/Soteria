@@ -31,6 +31,8 @@ margin_bottom = 23.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Budget"
+align = 2
+valign = 2
 
 [node name="Value" type="Label" parent="Background/HBoxContainer/Budget"]
 margin_top = 27.0
@@ -39,6 +41,7 @@ margin_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "0"
+align = 2
 
 [node name="Upkeep" type="VBoxContainer" parent="Background/HBoxContainer"]
 margin_left = 151.0
@@ -55,6 +58,8 @@ margin_bottom = 23.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Weekly Upkeep"
+align = 2
+valign = 2
 
 [node name="Value" type="Label" parent="Background/HBoxContainer/Upkeep"]
 margin_top = 27.0
@@ -63,6 +68,7 @@ margin_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "0"
+align = 2
 
 [node name="Income" type="VBoxContainer" parent="Background/HBoxContainer"]
 margin_left = 302.0
@@ -79,6 +85,8 @@ margin_bottom = 23.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Weekly Income"
+align = 2
+valign = 2
 
 [node name="Value" type="Label" parent="Background/HBoxContainer/Income"]
 margin_top = 27.0
@@ -87,6 +95,7 @@ margin_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "0"
+align = 2
 
 [node name="CurrentInfections" type="VBoxContainer" parent="Background/HBoxContainer"]
 margin_left = 453.0
@@ -103,6 +112,8 @@ margin_bottom = 23.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Current Infections"
+align = 2
+valign = 2
 
 [node name="Value" type="Label" parent="Background/HBoxContainer/CurrentInfections"]
 margin_top = 27.0
@@ -111,3 +122,4 @@ margin_bottom = 50.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "0"
+align = 2
