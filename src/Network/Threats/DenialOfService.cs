@@ -21,7 +21,6 @@ public class DenialOfService : SpreadingThreatBase
 
     private void AddInfectedNode(INetworkNode networkNode)
     {
-        GD.Print($"{networkNode.Name} infected by DoS");
         this.InfectedNodes.Add(networkNode);
         this.GameVariables.NodeAffectedByDenialOfService += 1;
     }
