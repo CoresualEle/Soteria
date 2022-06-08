@@ -7,6 +7,9 @@ namespace Soteria
         public float WorkSatisfaction = 1.0f;
         public float CustomerSatisfaction = 1.0f;
 
+        public int AttemptedInfections = 0;
+        public int SuccessfulInfections = 0;
+
         private int budget;
         private int upkeep;
         private int income;

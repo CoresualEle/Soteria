@@ -8,9 +8,6 @@ namespace Soteria.Foundation
     public abstract class NetworkNodeBase : Node2D, INetworkNode
     {
         [Export(PropertyHint.Range, "0.0,1.0,0.05")]
-        protected readonly float ChanceToSpawnVirus = 0.0f;
-
-        [Export(PropertyHint.Range, "0.0,1.0,0.05")]
         protected readonly float ThreatResistance = 0.8f;
 
         [Export(PropertyHint.ColorNoAlpha)]
@@ -29,6 +26,8 @@ namespace Soteria.Foundation
 
         protected Label nodeTypeLabel;
 
+        protected GameVariables GameVariables;
+
         public void AddConnection(INetworkConnection connection)
         {
             if (!this.Connections.Contains(connection))
@@ -44,10 +43,11 @@ namespace Soteria.Foundation
             this.Connections = new List<INetworkConnection>();
             this.Infections = new List<IThreat>();
 
+            this.GameVariables = this.GetNode<GameVariables>("/root/GameVariables");
+
             this.GetNode<Label>("CanvasLayer/ContextMenu/VBoxContainer/Label").Text = this.Name;
 
             this.NetworkGraph = this.GetNode<INetworkGraph>(new NodePath(".."));
-            this.NetworkGraph.NetworkTick += this.NetworkGraph_OnNetworkTick;
 
             this.nodeTypeLabel = this.GetNode<Label>("CanvasLayer/NodeTypeLabel");
             this.nodeTypeLabel.MarginLeft = this.Position.x;
@@ -85,7 +85,9 @@ namespace Soteria.Foundation
             this.nodeTypeLabel.Hide();
         }
 
-        protected abstract void NetworkGraph_OnNetworkTick(object sender, EventArgs e);
+        // Previously Network Objects could spawn Threats
+        // Now Threats are handled more controlled in the scenarios
+        //protected abstract void NetworkGraph_OnNetworkTick(object sender, EventArgs e);
 
         public abstract bool AttemptInfection(IThreat threat);
     }
