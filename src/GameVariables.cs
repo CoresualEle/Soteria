@@ -112,14 +112,7 @@ namespace Soteria
 
         private void Dailytimer_callback()
         {
-            var denialOfServiceFactor = this.NodeAffectedByDenialOfService * 0.1 <= 0.4 ? this.NodeAffectedByDenialOfService * 0.1 : 0.4;
-
-            if (denialOfServiceFactor > 0)
-            {
-                GD.Print($"Adjusting budget by {denialOfServiceFactor}");
-            }
-
-            this.Budget += (int)(this.Income * (this.CustomerSatisfaction * (1 - denialOfServiceFactor)) - this.Upkeep) / 7;
+            this.Budget += (int)(this.Income * this.GetModifiedCustomerSatisfaction() - this.Upkeep) / 7;
 
             this.day = (this.day + 1) % 7;
             if (this.day == 6)
@@ -134,6 +127,13 @@ namespace Soteria
         {
             this.week += 1;
             this.EmitSignal(nameof(WeekChanged), this.week);
+        }
+
+        private float GetModifiedCustomerSatisfaction()
+        {
+            var denialOfServiceFactor = 1 - (float)(this.NodeAffectedByDenialOfService * 0.1 <= 0.4 ? this.NodeAffectedByDenialOfService * 0.1 : 0.4);
+
+            return this.CustomerSatisfaction * denialOfServiceFactor;
         }
     }
 }
