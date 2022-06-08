@@ -13,7 +13,7 @@ namespace Soteria.UI
 
             this.OnBudgetChanged(gameVariables.Budget);
             this.OnUpkeepChanged(gameVariables.Upkeep);
-            this.OnIncomeChanged(gameVariables.Income);
+            this.OnIncomeChanged(gameVariables.BaseIncome);
         }
 
         private void OnBudgetChanged(int budget)

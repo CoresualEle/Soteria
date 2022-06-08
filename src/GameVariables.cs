@@ -6,17 +6,18 @@ namespace Soteria
     {
         public float WorkSatisfaction = 1.0f;
         public float CustomerSatisfaction = 1.0f;
-
+        
         public int AttemptedInfections = 0;
         public int SuccessfulInfections = 0;
 
         private int budget;
         private int upkeep;
-        private int income;
+        private int baseIncome;
 
         private int day;
         private int week;
         private Timer dailyTimer;
+        private int nodesAffectedByDenialOfService;
 
         [Signal]
         public delegate void BudgetChanged(int budget);
@@ -25,16 +26,16 @@ namespace Soteria
         public delegate void DateIncreasedDay();
 
         [Signal]
-        public delegate void UpkeepChanged(int upkeep);
-
-        [Signal]
         public delegate void IncomeChanged(int income);
 
         [Signal]
-        public delegate void WeekChanged(int week);
+        public delegate void TimeScaleChanged(int timescale);
 
         [Signal]
-        public delegate void TimeScaleChanged(int timescale);
+        public delegate void UpkeepChanged(int upkeep);
+
+        [Signal]
+        public delegate void WeekChanged(int week);
 
         public int Budget
         {
@@ -62,16 +63,42 @@ namespace Soteria
             }
         }
 
-        public int Income
+        public int BaseIncome
         {
             get
             {
-                return this.income;
+                return this.baseIncome;
             }
             set
             {
-                this.income = value;
-                this.EmitSignal(nameof(IncomeChanged), this.income);
+                this.baseIncome = value;
+                this.EmitSignal(nameof(IncomeChanged), this.ActualIncome);
+            }
+        }
+
+        public int ActualIncome
+        {
+            get
+            {
+                return (int)(this.baseIncome * this.GetModifiedCustomerSatisfaction());
+            }
+        }
+
+        public int NodesAffectedByDenialOfService
+        {
+            get
+            {
+                return this.nodesAffectedByDenialOfService;
+            }
+            set
+            {
+                if (this.nodesAffectedByDenialOfService == value)
+                {
+                    return;
+                }
+
+                this.nodesAffectedByDenialOfService = value;
+                this.EmitSignal(nameof(IncomeChanged), this.ActualIncome);
             }
         }
 
@@ -104,12 +131,13 @@ namespace Soteria
                     this.dailyTimer.Paused = false;
                     break;
             }
+
             this.EmitSignal(nameof(TimeScaleChanged), timeScale);
         }
 
         private void Dailytimer_callback()
         {
-            this.Budget += (int)(this.Income * this.CustomerSatisfaction - this.Upkeep) / 7;
+            this.Budget += (this.ActualIncome - this.Upkeep) / 7;
 
             this.day = (this.day + 1) % 7;
             if (this.day == 6)
@@ -124,6 +152,13 @@ namespace Soteria
         {
             this.week += 1;
             this.EmitSignal(nameof(WeekChanged), this.week);
+        }
+
+        private float GetModifiedCustomerSatisfaction()
+        {
+            var denialOfServiceFactor = 1 - Mathf.Min(this.NodesAffectedByDenialOfService * 0.1f, 0.4f);
+
+            return this.CustomerSatisfaction * denialOfServiceFactor;
         }
     }
 }
