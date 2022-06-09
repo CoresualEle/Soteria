@@ -68,6 +68,23 @@ namespace Soteria.Menus
             this.GetTree().ChangeScene("res://Menus/ScenarioSelect.tscn");
         }
 
+        private void _on_OptionsButton_pressed()
+        {
+            this.Hide();
+            var optionsScene = (PackedScene)ResourceLoader.Load("res://Menus/Options.tscn");
+            var optionsSceneInstance = (CanvasLayer)optionsScene.Instance();
+
+            this.GetTree().CurrentScene.AddChild(optionsSceneInstance);
+
+            optionsSceneInstance.Connect("BackButtonPressed", this, nameof(this._on_Options_BackButton_Signal));
+        }
+
+        private void _on_Options_BackButton_Signal()
+        {
+            this.Show();
+            this.GetNode<Button>("VBoxContainer/OptionsButton").GrabFocus();
+        }
+
         private void _on_QuitButton_pressed()
         {
             this.GetTree().Quit();

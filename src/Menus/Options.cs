@@ -2,7 +2,7 @@ using Godot;
 
 namespace Soteria.Menus
 {
-    public class Options : Control
+    public class Options : CanvasLayer
     {
         [Signal]
         public delegate void BackButtonPressed();
@@ -18,7 +18,7 @@ namespace Soteria.Menus
             this.GetNode<VBoxContainer>("VBoxContainer").Hide();
 
             var optionsGraphicsScene = (PackedScene)ResourceLoader.Load("res://Menus/OptionsGraphics.tscn");
-            var optionsGraphicsSceneInstance = (Control)optionsGraphicsScene.Instance();
+            var optionsGraphicsSceneInstance = (CanvasLayer)optionsGraphicsScene.Instance();
 
             this.GetTree().CurrentScene.AddChild(optionsGraphicsSceneInstance);
 
