@@ -16,6 +16,8 @@ namespace Soteria.Network.Components.Nodes
         private bool policyAntivirus;
         private float antivirusEffectiveness = 2f;
 
+        private Label currentInfectionsLabel;
+
         public override void _Ready()
         {
             base._Ready();
@@ -36,6 +38,11 @@ namespace Soteria.Network.Components.Nodes
                 this.GameVariables.SuccessfulInfections += 1;
                 this.Infections.Add(threat);
                 this.GetNode<Polygon2D>("Polygon2D").Color = this.InfectedColor;
+                var currentInfections = "Current Infections: ";
+                foreach(var infection in this.Infections) {
+                    currentInfections += $"{infection.Name}, ";
+                }
+                this.currentInfectionsLabel.Text = currentInfections.TrimEnd(", ".ToCharArray());
 
                 return true;
             }
@@ -59,6 +66,9 @@ namespace Soteria.Network.Components.Nodes
 
             var backupRestoreNode = this.GetNode<ContextMenuAction>("CanvasLayer/ContextMenu/VBoxContainer/BackupRestore");
             backupRestoreNode.Connect(nameof(ContextMenuAction.ActionPressed), this, nameof(this._on_backup_restored));
+
+            this.currentInfectionsLabel = this.GetNode<Label>("CanvasLayer/ContextMenu/VBoxContainer/InfectionsLabel");
+            this.currentInfectionsLabel.Text = "Current Infections: /";
         }
 
         private void _on_softwareFirewall_toggled(bool value)
@@ -110,6 +120,7 @@ namespace Soteria.Network.Components.Nodes
             }
 
             this.Infections.Clear();
+            this.currentInfectionsLabel.Text = "Current Infections: /";
             this.GetNode<Polygon2D>("Polygon2D").Color = this.NormalColor;
         }
     }

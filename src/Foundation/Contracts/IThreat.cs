@@ -2,6 +2,7 @@
 {
     public interface IThreat
     {
+        string Name {get; }
         void RemoveNode(INetworkNode node);
     }
 }
