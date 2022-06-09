@@ -21,23 +21,23 @@ anchor_bottom = 1.0
 
 [node name="TrainEmployees" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_right = 1280.0
-margin_bottom = 74.0
+margin_bottom = 90.0
 ActionName = "Train Employees"
 Cost = 5000
 
 [node name="BackupBudget" parent="VBoxContainer" instance=ExtResource( 2 )]
-margin_top = 78.0
+margin_top = 94.0
 margin_right = 1280.0
-margin_bottom = 138.0
+margin_bottom = 170.0
 ActionName = "Backup Budget"
 MaxValue = 2500
 Step = 100
 DefaultValue = 500
 
 [node name="2FA" parent="VBoxContainer" instance=ExtResource( 3 )]
-margin_top = 142.0
+margin_top = 174.0
 margin_right = 1280.0
-margin_bottom = 244.0
+margin_bottom = 292.0
 ActionName = "2-Factor Authentication"
 Cost = 25000
 Upkeep = 2500

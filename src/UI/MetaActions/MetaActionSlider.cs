@@ -26,10 +26,13 @@ namespace Soteria.UI.MetaActions
         [Signal]
         public delegate void SliderValueChanged(int value);
 
+        [Signal]
+        public delegate void InfoButtonPressed();
+
         public override void _Ready()
         {
             this.gameVariables = this.GetNode<GameVariables>("/root/GameVariables");
-            this.GetNode<Label>("ActionName").Text = this.ActionName;
+            this.GetNode<Label>("Headline/ActionName").Text = this.ActionName;
             this.GetNode<Label>("UpkeepBox/UpkeepValue").Text = this.DefaultValue.ToString();
 
             var slider = this.GetNode<HSlider>("Slider");
@@ -37,6 +40,9 @@ namespace Soteria.UI.MetaActions
             slider.MaxValue = this.MaxValue;
             slider.Step = this.Step;
             slider.Value = this.DefaultValue;
+
+            var infoButton = this.GetNode<Button>("Headline/InfoButton");
+            infoButton.Connect("pressed", this, nameof(OnInfoButtonPressed));
         }
 
         private void _on_Slider_value_changed(float value)
@@ -47,6 +53,11 @@ namespace Soteria.UI.MetaActions
             this.gameVariables.Upkeep -= this.oldValue;
             this.oldValue = valueInt;
             this.EmitSignal(nameof(SliderValueChanged), valueInt);
+        }
+
+        private void OnInfoButtonPressed()
+        {
+            this.EmitSignal(nameof(InfoButtonPressed));
         }
     }
 }
