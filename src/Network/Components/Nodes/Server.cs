@@ -68,6 +68,12 @@ namespace Soteria.Network.Components.Nodes
 
         private void _on_backup_restored()
         {
+            if (this.Randomizer.NextDouble() > this.GameVariables.BackupRestoreSuccessful)
+            {
+                // Backup failed
+                // TODO maybe we should also show the user that the backup failed
+                return;
+            }
             foreach (var threat in this.Infections)
             {
                 threat.RemoveNode(this);

@@ -46,7 +46,7 @@ namespace Soteria.UI.MetaActions
             this.gameVariables.Upkeep += valueInt;
             this.gameVariables.Upkeep -= this.oldValue;
             this.oldValue = valueInt;
-            this.EmitSignal(nameof(SliderValueChanged), this, valueInt);
+            this.EmitSignal(nameof(SliderValueChanged), valueInt);
         }
     }
 }

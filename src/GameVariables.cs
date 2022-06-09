@@ -8,9 +8,11 @@ namespace Soteria
         public float CustomerSatisfaction = 1.0f;
 
         public int CostToUpgrade = 0;
-        
+
         public int AttemptedInfections = 0;
         public int SuccessfulInfections = 0;
+
+        public float BackupRestoreSuccessful = 1.0f;
 
         private int budget;
         private int upkeep;
@@ -36,7 +38,7 @@ namespace Soteria
 
         [Signal]
         public delegate void UpkeepChanged(int upkeep);
-        
+
         [Signal]
         public delegate void WeekChanged(int week);
 
@@ -81,7 +83,7 @@ namespace Soteria
                 this.EmitSignal(nameof(IncomeChanged), this.ActualIncome);
             }
         }
-        
+
         public int ActualIncome
         {
             get
