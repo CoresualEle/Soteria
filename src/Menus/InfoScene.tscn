@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://resources/fonts/Dongle_24.tres" type="DynamicFont" id=1]
+[ext_resource path="res://resources/fonts/Dongle_42.tres" type="DynamicFont" id=2]
+[ext_resource path="res://resources/images/close.png" type="Texture" id=3]
+[ext_resource path="res://Menus/InfoScene.cs" type="Script" id=4]
+
+[node name="InfoScene" type="CanvasLayer"]
+script = ExtResource( 4 )
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0, 0, 0, 0.854902 )
+
+[node name="Container" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Title" type="Label" parent="Container"]
+margin_right = 1280.0
+margin_bottom = 62.0
+size_flags_horizontal = 3
+size_flags_vertical = 5
+custom_fonts/font = ExtResource( 2 )
+text = "Title"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="Container"]
+margin_top = 66.0
+margin_right = 1280.0
+margin_bottom = 70.0
+size_flags_horizontal = 3
+size_flags_vertical = 5
+
+[node name="Description" type="Label" parent="Container"]
+margin_top = 74.0
+margin_right = 1280.0
+margin_bottom = 110.0
+size_flags_horizontal = 3
+size_flags_vertical = 5
+custom_fonts/font = ExtResource( 1 )
+text = "Description"
+align = 1
+
+[node name="CloseButton" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -60.0
+margin_bottom = 54.0
+icon = ExtResource( 3 )
+flat = true

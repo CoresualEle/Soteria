@@ -8,6 +8,7 @@ namespace Soteria.Scenarios.DebugStage
 
             this.GameVariables.BaseIncome = 10000;
             this.GameVariables.Budget = 20000;
+            this.GameVariables.CostToUpgrade = 50;
             this.GameVariables.WorkSatisfaction = 0.8f;
         }
     }

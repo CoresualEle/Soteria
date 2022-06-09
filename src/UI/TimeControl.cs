@@ -33,6 +33,7 @@ namespace Soteria.UI
 
             this.gameVariables.Connect(nameof(GameVariables.DateIncreasedDay), this, nameof(this._on_DateIncreased));
             this.gameVariables.Connect(nameof(GameVariables.WeekChanged), this, nameof(this._on_WeekChanged));
+            this.gameVariables.Connect(nameof(GameVariables.TimeScaleChanged), this, nameof(this.OnTimeScaleChanged));
         }
 
         private void _on_DateIncreased()
@@ -71,6 +72,22 @@ namespace Soteria.UI
             this.speed2XNode.Modulate = this.colorNormal;
 
             node.Modulate = this.colorActive;
+        }
+
+        private void OnTimeScaleChanged(int timescale)
+        {
+            switch(timescale)
+            {
+                case 0:
+                    this.SetActive(this.pauseNode);
+                    break;
+                case 1:
+                    this.SetActive(this.speed1XNode);
+                    break;
+                case 2:
+                    this.SetActive(this.speed2XNode);
+                    break;
+            }
         }
     }
 }
