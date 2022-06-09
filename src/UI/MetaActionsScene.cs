@@ -23,7 +23,7 @@ namespace Soteria.UI {
             // Currently this is linear, maybe another formular has better values
             // Also it does not allow for 100% change, but only 99.99%
             var backupSuccessfulChance = (float) value / ((float) this.backupBudgetMax + 1f);
-            GD.Print(backupSuccessfulChance);
+            GD.Print($"Chance of successful restore: {backupSuccessfulChance*100}%");
             this.gameVariables.BackupRestoreSuccessful = backupSuccessfulChance;
         }
     }

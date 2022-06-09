@@ -7,8 +7,8 @@ namespace Soteria.Foundation
 {
     public abstract class NetworkNodeBase : Node2D, INetworkNode
     {
-        [Export(PropertyHint.Range, "0.0,1.0,0.05")]
-        protected readonly float ThreatResistance = 0.8f;
+        protected float BaseThreatResistance = 0f;
+        protected float ThreatResistance = 0f;
 
         [Export(PropertyHint.ColorNoAlpha)]
         protected readonly Color NormalColor = new Color("003F7A");
