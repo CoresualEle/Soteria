@@ -20,6 +20,8 @@ namespace Soteria.Scenarios
             this.GameVariables.Connect(nameof(GameVariables.DateIncreasedDay), networkGraphInstance, "_on_GameTickTimer_timeout");
 
             RegisterGameOver();
+
+            this.GameVariables.SetTimeScale(1);
         }
 
         protected virtual void RegisterGameOver()
