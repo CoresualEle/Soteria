@@ -44,36 +44,42 @@ margin_bottom = 118.0
 margin_left = 4.0
 margin_top = 4.0
 margin_right = 260.0
-margin_bottom = 316.0
+margin_bottom = 334.0
 
 [node name="Label" type="Label" parent="CanvasLayer/ContextMenu/VBoxContainer"]
 margin_right = 256.0
 margin_bottom = 14.0
 
-[node name="HSeparator" type="HSeparator" parent="CanvasLayer/ContextMenu/VBoxContainer"]
+[node name="InfectionsLabel" type="Label" parent="CanvasLayer/ContextMenu/VBoxContainer"]
 margin_top = 18.0
 margin_right = 256.0
-margin_bottom = 22.0
+margin_bottom = 32.0
+text = "Current Infections: /"
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/ContextMenu/VBoxContainer"]
+margin_top = 36.0
+margin_right = 256.0
+margin_bottom = 40.0
 
 [node name="BackupRestore" parent="CanvasLayer/ContextMenu/VBoxContainer" instance=ExtResource( 4 )]
-margin_top = 26.0
+margin_top = 44.0
 margin_right = 256.0
-margin_bottom = 100.0
+margin_bottom = 118.0
 OptionLabel = "Restore from Backup"
 Cost = 500
 
 [node name="AntiVirus" parent="CanvasLayer/ContextMenu/VBoxContainer" instance=ExtResource( 3 )]
-margin_top = 104.0
+margin_top = 122.0
 margin_right = 256.0
-margin_bottom = 206.0
+margin_bottom = 224.0
 OptionLabel = "Anti-Virus"
 Cost = 1500
 Upkeep = 150
 
 [node name="SoftwareFirewall" parent="CanvasLayer/ContextMenu/VBoxContainer" instance=ExtResource( 3 )]
-margin_top = 210.0
+margin_top = 228.0
 margin_right = 256.0
-margin_bottom = 312.0
+margin_bottom = 330.0
 OptionLabel = "Software Firewall"
 Cost = 1000
 Upkeep = 100

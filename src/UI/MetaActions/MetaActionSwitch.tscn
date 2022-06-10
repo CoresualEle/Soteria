@@ -1,21 +1,34 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://UI/MetaActions/MetaActionSwitch.cs" type="Script" id=1]
+[ext_resource path="res://resources/images/info_small.png" type="Texture" id=2]
 
 [node name="MetaActionSwitch" type="VBoxContainer"]
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 1 )
 
-[node name="ActionName" type="Label" parent="."]
+[node name="Headline" type="HBoxContainer" parent="."]
 margin_right = 147.0
-margin_bottom = 14.0
+margin_bottom = 30.0
+
+[node name="ActionName" type="Label" parent="Headline"]
+margin_top = 8.0
+margin_right = 41.0
+margin_bottom = 22.0
 text = "Action"
 
+[node name="InfoButton" type="Button" parent="Headline"]
+margin_left = 45.0
+margin_right = 81.0
+margin_bottom = 30.0
+icon = ExtResource( 2 )
+flat = true
+
 [node name="CostBox" type="HBoxContainer" parent="."]
-margin_top = 18.0
+margin_top = 34.0
 margin_right = 147.0
-margin_bottom = 32.0
+margin_bottom = 48.0
 
 [node name="CostLabel" type="Label" parent="CostBox"]
 margin_right = 36.0
@@ -35,9 +48,9 @@ margin_bottom = 14.0
 text = "Euro"
 
 [node name="UpkeepBox" type="HBoxContainer" parent="."]
-margin_top = 36.0
+margin_top = 52.0
 margin_right = 147.0
-margin_bottom = 50.0
+margin_bottom = 66.0
 
 [node name="UpkeepLabel" type="Label" parent="UpkeepBox"]
 margin_right = 57.0
@@ -57,13 +70,13 @@ margin_bottom = 14.0
 text = "Euro / week"
 
 [node name="SwitchButton" type="CheckButton" parent="."]
-margin_top = 54.0
+margin_top = 70.0
 margin_right = 147.0
-margin_bottom = 94.0
+margin_bottom = 110.0
 
 [node name="HSeparator" type="HSeparator" parent="."]
-margin_top = 98.0
+margin_top = 114.0
 margin_right = 147.0
-margin_bottom = 102.0
+margin_bottom = 118.0
 
 [connection signal="toggled" from="SwitchButton" to="." method="_on_SwitchButton_toggled"]

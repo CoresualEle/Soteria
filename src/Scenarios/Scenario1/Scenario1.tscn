@@ -85,7 +85,6 @@ shadow_filter = 4
 
 [node name="Webserver" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
 position = Vector2( 627, 272 )
-ThreatResistance = 0.95
 policySoftwareFirewall = true
 
 [node name="WS-DB" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
@@ -94,7 +93,6 @@ TargetNodePath = NodePath("../Database")
 
 [node name="Database" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
 position = Vector2( 525, 496 )
-ThreatResistance = 0.9
 
 [node name="Employee" parent="NetworkGraphRoot" instance=ExtResource( 7 )]
 position = Vector2( 235, 431 )
@@ -109,7 +107,6 @@ TargetNodePath = NodePath("../Webserver")
 
 [node name="Internet" parent="NetworkGraphRoot" instance=ExtResource( 8 )]
 position = Vector2( 528, 45 )
-ThreatResistance = 0.0
 
 [node name="Internet-WS" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
 SourceNodePath = NodePath("../Internet")

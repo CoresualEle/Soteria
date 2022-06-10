@@ -31,16 +31,55 @@ glow_high_quality = true
 script = ExtResource( 5 )
 
 [node name="Background" type="ColorRect" parent="."]
-margin_right = 1024.0
-margin_bottom = 600.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1280.0
+margin_bottom = 720.0
 mouse_filter = 2
 color = Color( 0.101961, 0.0901961, 0.0901961, 1 )
+
+[node name="UI" parent="." instance=ExtResource( 4 )]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
+[node name="Light2D" type="Light2D" parent="WorldEnvironment"]
+position = Vector2( 23, 71 )
+texture = ExtResource( 6 )
+texture_scale = 2.5
+energy = 1.2
+shadow_enabled = true
+shadow_buffer_size = 4096
+
+[node name="Light2D2" type="Light2D" parent="WorldEnvironment"]
+position = Vector2( 733, 110 )
+texture = ExtResource( 6 )
+offset = Vector2( 95, 320 )
+texture_scale = 2.5
+energy = 1.2
+shadow_enabled = true
+shadow_buffer_size = 4096
+
+[node name="Light2D3" type="Light2D" parent="WorldEnvironment"]
+position = Vector2( 201, 506 )
+texture = ExtResource( 6 )
+texture_scale = 2.5
+energy = 1.2
+shadow_enabled = true
+shadow_buffer_size = 4096
+
+[node name="Light2D4" type="Light2D" parent="WorldEnvironment"]
+position = Vector2( 669, 97 )
+texture = ExtResource( 6 )
+texture_scale = 2.5
+energy = 1.2
+shadow_enabled = true
+shadow_buffer_size = 4096
 
 [node name="NetworkGraphRoot" parent="." instance=ExtResource( 3 )]
 
 [node name="A" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
 position = Vector2( 50, 250 )
-ThreatResistance = 0.0
 
 [node name="AB" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
 SourceNodePath = NodePath("../A")
@@ -103,49 +142,10 @@ position = Vector2( 980, 500 )
 
 [node name="1" parent="NetworkGraphRoot" instance=ExtResource( 7 )]
 position = Vector2( 460, 150 )
-ThreatResistance = 0.8
 
 [node name="2" parent="NetworkGraphRoot" instance=ExtResource( 7 )]
 position = Vector2( 980, 150 )
-ThreatResistance = 0.8
 
 [node name="Malware1" parent="NetworkGraphRoot" instance=ExtResource( 8 )]
-NodeToInfect = NodePath("../A")
-
-[node name="UI" parent="." instance=ExtResource( 4 )]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 1 )
-
-[node name="Light2D" type="Light2D" parent="WorldEnvironment"]
-position = Vector2( 23, 71 )
-texture = ExtResource( 6 )
-texture_scale = 2.5
-energy = 1.2
-shadow_enabled = true
-shadow_buffer_size = 4096
-
-[node name="Light2D2" type="Light2D" parent="WorldEnvironment"]
-position = Vector2( 733, 110 )
-texture = ExtResource( 6 )
-offset = Vector2( 95, 320 )
-texture_scale = 2.5
-energy = 1.2
-shadow_enabled = true
-shadow_buffer_size = 4096
-
-[node name="Light2D3" type="Light2D" parent="WorldEnvironment"]
-position = Vector2( 201, 506 )
-texture = ExtResource( 6 )
-texture_scale = 2.5
-energy = 1.2
-shadow_enabled = true
-shadow_buffer_size = 4096
-
-[node name="Light2D4" type="Light2D" parent="WorldEnvironment"]
-position = Vector2( 669, 97 )
-texture = ExtResource( 6 )
-texture_scale = 2.5
-energy = 1.2
-shadow_enabled = true
-shadow_buffer_size = 4096
+DaysBetweenInfections = 1
+NodeToInfectPath = NodePath("../A")

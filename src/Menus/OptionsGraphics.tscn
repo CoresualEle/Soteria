@@ -3,12 +3,7 @@
 [ext_resource path="res://Menus/ButtonTheme.tres" type="Theme" id=1]
 [ext_resource path="res://Menus/OptionsGraphics.cs" type="Script" id=2]
 
-[node name="OptionsGraphics" type="Control"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_top = -221.0
-margin_right = 300.0
-rect_min_size = Vector2( 300, 200 )
+[node name="OptionsGraphics" type="CanvasLayer"]
 script = ExtResource( 2 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]

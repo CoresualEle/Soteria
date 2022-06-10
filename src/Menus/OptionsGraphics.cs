@@ -2,7 +2,7 @@ using Godot;
 
 namespace Soteria.Menus
 {
-    public class OptionsGraphics : Control
+    public class OptionsGraphics : CanvasLayer
     {
         [Signal]
         public delegate void BackButtonPressed();

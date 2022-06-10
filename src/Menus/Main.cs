@@ -21,7 +21,7 @@ namespace Soteria.Menus
             this.GetNode<VBoxContainer>("VBoxContainer").Hide();
 
             var optionsScene = (PackedScene)ResourceLoader.Load("res://Menus/Options.tscn");
-            var optionsSceneInstance = (Control)optionsScene.Instance();
+            var optionsSceneInstance = (CanvasLayer)optionsScene.Instance();
 
             this.GetTree().CurrentScene.AddChild(optionsSceneInstance);
 
