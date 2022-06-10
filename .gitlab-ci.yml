@@ -6,19 +6,89 @@
 # Note that environment variables can be set in several places
 # See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 include:
-- template: Security/Secret-Detection.gitlab-ci.yml
-- template: Security/SAST.gitlab-ci.yml
-- project: 'renovate-bot/renovate-runner'
-  file: '/templates/renovate-dind.gitlab-ci.yml'
+  - template: Security/Secret-Detection.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
+  - project: 'renovate-bot/renovate-runner'
+    file: '/templates/renovate-dind.gitlab-ci.yml'
+
+variables:
+  EXPORT_NAME: Soteria
+  ITCHIO_NAME: sbibow/$EXPORT_NAME
 
 stages:
-- test
-- deploy
+  - export
+  - test
+  - deploy
+  - release
 
-renovate:
-    rules:
-        - if: '$CI_PIPELINE_SOURCE == "schedule"'
-        - if: '$CI_PIPELINE_SOURCE == "push"'
+# Godot Export from https://docs.google.com/document/d/1G9G2JvR3Up8erSdhACT_519OJ1MTQQ9VQmaN2SCx_EA/edit#
+windows:
+  stage: export
+  image: barichello/godot-ci:mono-3.4.4
+  script:
+    - cd src
+    - mkdir -v -p build/windows
+    - godot -v --export "Windows Desktop" ./build/windows/$EXPORT_NAME.exe
+  artifacts:
+    name: $EXPORT_NAME-$CI_JOB_NAME
+    paths:
+      - src/build/windows
+
+linux:
+  stage: export
+  image: barichello/godot-ci:mono-3.4.4
+  script:
+    - cd src
+    - mkdir -v -p build/linux
+    - godot -v --export "Linux/X11" ./build/linux/$EXPORT_NAME.x86_64
+  artifacts:
+    name: $EXPORT_NAME-$CI_JOB_NAME
+    paths:
+      - src/build/linux
+
+macosx:
+  stage: export
+  image: barichello/godot-ci:mono-3.4.4
+  script:
+    - cd src
+    - mkdir -v -p build/macosx
+    - godot -v --export "Mac OSX" ./build/macosx/$EXPORT_NAME.zip
+    - ls ./build/macosx
+    - (cd ./build/macosx && unzip -a $EXPORT_NAME.zip && rm $EXPORT_NAME.zip)
+  artifacts:
+    name: $EXPORT_NAME-$CI_JOB_NAME
+    paths:
+      - src/build/macosx
 
 sast:
   stage: test
+
+itch:
+  stage: release
+  dependencies:
+    - windows
+    - linux
+    - macosx
+  image: barichello/godot-ci:mono-3.4.4
+  script:
+    - butler push src/build/windows $ITCHIO_NAME:windows-latest
+    - butler push src/build/linux $ITCHIO_NAME:linux-latest
+    # MacOSX does not work without much work put into it
+    # See https://github.com/abarichello/godot-ci/issues/81
+    # - butler push src/build/macosx $ITCHIO_NAME:macosx-latest
+  rules:
+    - if: $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+
+itch_stable:
+  stage: release
+  dependencies:
+    - windows
+    - linux
+    - macosx
+  image: barichello/godot-ci:mono-3.4.4
+  script:
+    - butler push src/build/windows $ITCHIO_NAME:windows-stable --userversion $CI_COMMIT_TAG
+    - butler push src/build/linux $ITCHIO_NAME:linux-stable --userversion $CI_COMMIT_TAG
+    # - butler push src/build/macosx $ITCHIO_NAME:macosx-stable --userversion $CI_COMMIT_TAG
+  rules:
+   - if: $CI_COMMIT_TAG
