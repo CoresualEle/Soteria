@@ -18,6 +18,18 @@ namespace Soteria.Scenarios
 
             var networkGraphInstance = this.GetNode<NetworkGraph>("NetworkGraphRoot");
             this.GameVariables.Connect(nameof(GameVariables.DateIncreasedDay), networkGraphInstance, "_on_GameTickTimer_timeout");
+
+            RegisterGameOver();
+        }
+
+        protected virtual void RegisterGameOver()
+        {
+            this.GameVariables.Connect(nameof(GameVariables.NoMoreMoney), this, nameof(DisplayGameOver));
+        }
+
+        private void DisplayGameOver()
+        {
+            this.GetTree().ChangeScene("Menus/GameOver.tscn");
         }
 
         public override void _Input(InputEvent inputEvent)

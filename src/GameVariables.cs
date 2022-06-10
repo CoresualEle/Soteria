@@ -6,7 +6,7 @@ namespace Soteria
     {
         public float WorkSatisfaction = 1.0f;
         public float CustomerSatisfaction = 1.0f;
-        
+
         public int AttemptedInfections = 0;
         public int SuccessfulInfections = 0;
 
@@ -36,6 +36,9 @@ namespace Soteria
 
         [Signal]
         public delegate void WeekChanged(int week);
+
+        [Signal]
+        public delegate void NoMoreMoney();
 
         public int Budget
         {
@@ -138,6 +141,15 @@ namespace Soteria
         private void Dailytimer_callback()
         {
             this.Budget += (this.ActualIncome - this.Upkeep) / 7;
+
+            if (Budget <= 0)
+            {
+                Budget = 0;
+
+                this.SetTimeScale(0);
+                this.EmitSignal(nameof(NoMoreMoney));
+                return;
+            }
 
             this.day = (this.day + 1) % 7;
             if (this.day == 6)
