@@ -22,7 +22,7 @@ namespace Soteria.Menus
 
             this.GetTree().CurrentScene.AddChild(optionsGraphicsSceneInstance);
 
-            optionsGraphicsSceneInstance.Connect("BackButtonPressed", this, "_on_Options_BackButton_Signal");
+            optionsGraphicsSceneInstance.Connect(nameof(OptionsGraphics.BackButtonPressed), this, nameof(_on_Options_BackButton_Signal));
         }
 
         private void _on_Options_BackButton_Signal()

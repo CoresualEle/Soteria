@@ -28,7 +28,7 @@ namespace Soteria.Menus
 
             this.GetTree().CurrentScene.AddChild(optionsSceneInstance);
 
-            optionsSceneInstance.Connect("BackButtonPressed", this, "_on_Options_BackButton_Signal");
+            optionsSceneInstance.Connect(nameof(Options.BackButtonPressed), this, nameof(this._on_Options_BackButton_Signal));
         }
         private void _on_CreditsButton_pressed()
         {

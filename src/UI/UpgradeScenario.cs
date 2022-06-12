@@ -22,7 +22,7 @@ namespace Soteria.UI {
             // Normally we would also need to check current infections, but for
             // now we assume that the function will be called anyway on the next day
 
-            this.nextScenarioButton.Connect("pressed", this, nameof(this.DoUpgrade));
+            this.nextScenarioButton.Connect(nameof(BaseButton._Pressed), this, nameof(this.DoUpgrade));
         }
 
         private void OnBudgetChanged(int budget)

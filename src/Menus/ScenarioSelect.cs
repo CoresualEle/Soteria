@@ -32,7 +32,7 @@ namespace Soteria.Menus
             button.Text = scenario.Key;
             button.Name = scenario.Key;
             button.RectMinSize = new Vector2(100, 100);
-            button.Connect("pressed", this, nameof(this.SwitchToScene), new Array { scenario.Value });
+            button.Connect(nameof(BaseButton._Pressed) this, nameof(this.SwitchToScene), new Array { scenario.Value });
             this.grid.AddChild(button);
         }
 

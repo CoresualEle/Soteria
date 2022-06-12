@@ -18,7 +18,7 @@ namespace Soteria.Menus {
             descriptionLabel.Text = this.Description;
             var closeButton = this.GetNode<Button>("CloseButton");
 
-            closeButton.Connect("pressed", this, nameof(this.OnCloseButtonPressed));
+            closeButton.Connect(nameof(BaseButton._Pressed), this, nameof(this.OnCloseButtonPressed));
             this.gameVariables.SetTimeScale(0);
         }
 
