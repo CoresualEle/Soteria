@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Menus/Main.cs" type="Script" id=1]
 [ext_resource path="res://Menus/ButtonTheme.tres" type="Theme" id=2]
 [ext_resource path="res://resources/images/back.png" type="Texture" id=3]
+[ext_resource path="res://Network/NetworkGraph.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Network/Components/Nodes/Server.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Network/Components/Connection.tscn" type="PackedScene" id=6]
+[ext_resource path="res://default_env.tres" type="Environment" id=7]
 
 [node name="Main" type="Control"]
 anchor_right = 1.0
@@ -38,16 +42,56 @@ text = "Options"
 flat = true
 align = 0
 
-[node name="QuitButton" type="Button" parent="VBoxContainer"]
+[node name="CreditsButton" type="Button" parent="VBoxContainer"]
 margin_top = 68.0
 margin_right = 53.0
 margin_bottom = 98.0
+theme = ExtResource( 2 )
+text = "Credits"
+flat = true
+align = 0
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+margin_top = 102.0
+margin_right = 53.0
+margin_bottom = 132.0
 focus_neighbour_bottom = NodePath("../StartButton")
 theme = ExtResource( 2 )
 text = "Quit"
 flat = true
 align = 0
 
+[node name="NetworkGraphRoot" parent="." instance=ExtResource( 4 )]
+
+[node name="ServerA" parent="NetworkGraphRoot" instance=ExtResource( 5 )]
+position = Vector2( 559, 382 )
+
+[node name="ServerB" parent="NetworkGraphRoot" instance=ExtResource( 5 )]
+position = Vector2( 753, 253 )
+
+[node name="ServerC" parent="NetworkGraphRoot" instance=ExtResource( 5 )]
+position = Vector2( 853, 481 )
+
+[node name="AB" parent="NetworkGraphRoot" instance=ExtResource( 6 )]
+SourceNodePath = NodePath("../ServerA")
+TargetNodePath = NodePath("../ServerB")
+
+[node name="BA" parent="NetworkGraphRoot" instance=ExtResource( 6 )]
+SourceNodePath = NodePath("../ServerB")
+TargetNodePath = NodePath("../ServerA")
+
+[node name="BC" parent="NetworkGraphRoot" instance=ExtResource( 6 )]
+SourceNodePath = NodePath("../ServerB")
+TargetNodePath = NodePath("../ServerC")
+
+[node name="AC" parent="NetworkGraphRoot" instance=ExtResource( 6 )]
+SourceNodePath = NodePath("../ServerA")
+TargetNodePath = NodePath("../ServerC")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 7 )
+
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="_on_OptionsButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/CreditsButton" to="." method="_on_CreditsButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]

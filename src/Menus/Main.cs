@@ -9,6 +9,9 @@ namespace Soteria.Menus
             this.GetTree().Root.Connect("size_changed", this, nameof(this.Resize));
 
             this.GetNode<Button>("VBoxContainer/StartButton").GrabFocus();
+
+            var gameVariables = this.GetNode<GameVariables>("/root/GameVariables");
+            gameVariables.Budget = 1000000000;
         }
 
         private void _on_StartButton_pressed()
@@ -26,6 +29,24 @@ namespace Soteria.Menus
             this.GetTree().CurrentScene.AddChild(optionsSceneInstance);
 
             optionsSceneInstance.Connect("BackButtonPressed", this, "_on_Options_BackButton_Signal");
+        }
+        private void _on_CreditsButton_pressed()
+        {
+            this.GetNode<VBoxContainer>("VBoxContainer").Hide();
+            this.GetNode<Node2D>("NetworkGraphRoot").Hide();
+
+            var creditsScene = (PackedScene)ResourceLoader.Load("res://Menus/Credits.tscn");
+            var creditsSceneInstance = (Node2D)creditsScene.Instance();
+
+            this.GetTree().CurrentScene.AddChild(creditsSceneInstance);
+
+            creditsSceneInstance.Connect(nameof(Credits.CreditsFinished), this, nameof(this._on_Credits_Finished));
+        }
+        private void _on_Credits_Finished()
+        {
+            this.GetNode<VBoxContainer>("VBoxContainer").Show();
+            this.GetNode<Node2D>("NetworkGraphRoot").Show();
+            this.GetNode<Button>("VBoxContainer/CreditsButton").GrabFocus();
         }
 
         private void Resize()
