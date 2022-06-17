@@ -10,6 +10,8 @@ namespace Soteria.Scenarios.Scenario1
             this.GameVariables.Budget = 20000;
             this.GameVariables.CostToUpgrade = 25000;
             this.GameVariables.WorkSatisfaction = 0.8f;
+
+            this.EmitSignal(nameof(ScenarioLoaded));
         }
     }
 }

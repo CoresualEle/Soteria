@@ -33,7 +33,7 @@ namespace Soteria.UI.MetaActions
             this.GetNode<CheckButton>("SwitchButton").Pressed = this.Enabled;
 
             var infoButton = this.GetNode<Button>("Headline/InfoButton");
-            infoButton.Connect(nameof(BaseButton._Pressed), this, nameof(this.OnInfoButtonPressed));
+            infoButton.Connect("pressed", this, nameof(this.OnInfoButtonPressed));
         }
 
         private void _on_SwitchButton_toggled(bool value)

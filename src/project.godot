@@ -17,6 +17,7 @@ config/icon="res://icon.png"
 [autoload]
 
 GameVariables="*res://GameVariables.cs"
+Audio="*res://Audio.tscn"
 
 [display]
 
@@ -27,6 +28,14 @@ window/size/test_width=1280
 window/size/test_height=720
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
+
+[editor_plugins]
+
+enabled=PoolStringArray(  )
+
+[gdunit3]
+
+settings/test/test_suite_naming_convention=2
 
 [physics]
 

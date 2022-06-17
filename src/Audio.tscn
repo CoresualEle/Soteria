@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://resources/music/Soteria-pads.mp3" type="AudioStream" id=1]
+[ext_resource path="res://Audio.cs" type="Script" id=2]
+[ext_resource path="res://resources/music/soteria-drums.mp3" type="AudioStream" id=3]
+[ext_resource path="res://resources/music/soteria-bass.mp3" type="AudioStream" id=4]
+
+[node name="AudioStreamPlayer" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="music-drums" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 3 )
+volume_db = -80.0
+autoplay = true
+bus = "music"
+
+[node name="music-bass" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 4 )
+volume_db = -80.0
+autoplay = true
+bus = "music"
+
+[node name="music-pads" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+stream = ExtResource( 1 )
+volume_db = -6.0
+autoplay = true
+bus = "music"
+
+[node name="effects" type="AudioStreamPlayer" parent="."]
+bus = "effects"
+
+[node name="Tween" type="Tween" parent="."]

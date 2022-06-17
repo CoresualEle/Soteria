@@ -42,7 +42,7 @@ namespace Soteria.UI.MetaActions
             slider.Value = this.DefaultValue;
 
             var infoButton = this.GetNode<Button>("Headline/InfoButton");
-            infoButton.Connect(nameof(BaseButton._Pressed), this, nameof(this.OnInfoButtonPressed));
+            infoButton.Connect("pressed", this, nameof(this.OnInfoButtonPressed));
         }
 
         private void _on_Slider_value_changed(float value)
