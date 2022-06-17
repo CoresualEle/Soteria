@@ -106,13 +106,7 @@ namespace Soteria
             set
             {
                 this.currentInfections = value;
-                if (this.currentInfections > 0)
-                {
-                    this.audio.AddDrums();
-                } else
-                {
-                    this.audio.RemoveDrums();
-                }
+                this.audio.IsInfected = this.currentInfections > 0 ? 1f : 0f;
                 this.EmitSignal(nameof(CurrentInfectionsChanged), this.currentInfections);
             }
         }

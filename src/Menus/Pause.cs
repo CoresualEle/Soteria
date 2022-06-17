@@ -5,6 +5,8 @@ namespace Soteria.Menus
     public class Pause : Control
     {
         private bool isPaused;
+        private Audio audio;
+        private float previousAudio = 0f;
 
         [Signal]
         public delegate void RestartButtonPressed();
@@ -28,6 +30,7 @@ namespace Soteria.Menus
         public override void _Ready()
         {
             this.IsPaused = false;
+            this.audio = this.GetNode<Audio>("/root/Audio");
         }
 
         private void _setIsPaused(bool value)
@@ -36,9 +39,23 @@ namespace Soteria.Menus
             this.GetTree().Paused = this.IsPaused;
             this.Visible = this.IsPaused;
 
+            // Sometimes the value is adjusted, before _Ready was called
+            // So we have a quick fix to make sure that this.audio has a valid value
+            if (this.audio is null)
+            {
+                this.audio = this.GetNode<Audio>("/root/Audio");
+            }
+
             if (this.IsPaused)
             {
                 this.GetNode<Button>("VBoxContainer/ResumeButton").GrabFocus();
+                this.previousAudio = this.audio.IsInfected;
+                this.audio.IsInfected = 0f;
+                this.audio.IsIngame = 0f;
+            } else
+            {
+                this.audio.IsIngame = 1f;
+                this.audio.IsInfected = this.previousAudio;
             }
         }
 
@@ -65,12 +82,16 @@ namespace Soteria.Menus
         private void _on_BackToScenarioSelectionButton_pressed()
         {
             this.IsPaused = false;
+            this.audio.IsInfected = 0f;
+            this.audio.IsIngame = 0f;
             this.GetTree().ChangeScene("res://Menus/ScenarioSelect.tscn");
         }
 
         private void _on_OptionsButton_pressed()
         {
             this.Hide();
+            this.audio.IsInfected = 0f;
+            this.audio.IsIngame = 0f;
             var optionsScene = (PackedScene)ResourceLoader.Load("res://Menus/Options.tscn");
             var optionsSceneInstance = (CanvasLayer)optionsScene.Instance();
 

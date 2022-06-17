@@ -28,8 +28,7 @@ namespace Soteria.Scenarios
             this.GameVariables.SetTimeScale(1);
 
             this.Connect(nameof(ScenarioLoaded), this, nameof(OnScenarioLoaded));
-            var audio = this.GetNode<Audio>("/root/Audio");
-            audio.AddBass();
+            this.GetNode<Audio>("/root/Audio").IsIngame = 1f;
         }
 
         private void OnScenarioLoaded()
