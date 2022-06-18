@@ -6,8 +6,6 @@ namespace Soteria.Menus
     {
         public override void _Ready()
         {
-            this.GetTree().Root.Connect("size_changed", this, nameof(this.Resize));
-
             this.GetNode<Button>("VBoxContainer/StartButton").GrabFocus();
 
             var gameVariables = this.GetNode<GameVariables>("/root/GameVariables");
@@ -47,14 +45,6 @@ namespace Soteria.Menus
             this.GetNode<VBoxContainer>("VBoxContainer").Show();
             this.GetNode<Node2D>("NetworkGraphRoot").Show();
             this.GetNode<Button>("VBoxContainer/CreditsButton").GrabFocus();
-        }
-
-        private void Resize()
-        {
-            var visibleRect = this.GetTree().Root.GetVisibleRect();
-            var background = this.GetNode<TextureRect>("TextureRect");
-            background.RectPosition = visibleRect.Position;
-            background.RectSize = visibleRect.Size;
         }
 
         private void _on_Options_BackButton_Signal()
