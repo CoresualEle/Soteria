@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://resources/music/Soteria-pads.mp3" type="AudioStream" id=1]
+[ext_resource path="res://Audio.cs" type="Script" id=2]
+[ext_resource path="res://resources/music/soteria-drums.mp3" type="AudioStream" id=3]
+[ext_resource path="res://resources/music/soteria-bass.mp3" type="AudioStream" id=4]
+[ext_resource path="res://addons/mixing-desk/music/song.gd" type="Script" id=5]
+[ext_resource path="res://addons/mixing-desk/music/containers/core_cont.gd" type="Script" id=6]
+[ext_resource path="res://addons/mixing-desk/music/mixing_desk_music.gd" type="Script" id=7]
+[ext_resource path="res://addons/mixing-desk/music/containers/autofade_cont.gd" type="Script" id=8]
+
+[node name="AudioStreamPlayer" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 2 )
+
+[node name="music" type="Node" parent="."]
+script = ExtResource( 7 )
+play_mode = 1
+autoplay = true
+autoplay_song = NodePath("main")
+
+[node name="main" type="Node" parent="music"]
+script = ExtResource( 5 )
+tempo = 120
+bars = 8
+beats_in_bar = 4
+transition_beats = 1.0
+
+[node name="CoreContainer" type="Node" parent="music/main"]
+script = ExtResource( 6 )
+
+[node name="music-pads" type="AudioStreamPlayer" parent="music/main/CoreContainer"]
+pause_mode = 2
+stream = ExtResource( 1 )
+bus = "Music"
+
+[node name="AutoFadeBass" type="Node" parent="music/main"]
+script = ExtResource( 8 )
+play_style = 1
+target_node = NodePath("../../..")
+target_property = "IsIngame"
+track_speed = 0.5
+
+[node name="music-bass" type="AudioStreamPlayer" parent="music/main/AutoFadeBass"]
+pause_mode = 2
+stream = ExtResource( 4 )
+bus = "Music"
+
+[node name="AutoFadeDrums" type="Node" parent="music/main"]
+script = ExtResource( 8 )
+play_style = 1
+target_node = NodePath("../../..")
+target_property = "IsInfected"
+track_speed = 0.5
+
+[node name="music-drums" type="AudioStreamPlayer" parent="music/main/AutoFadeDrums"]
+pause_mode = 2
+stream = ExtResource( 3 )
+bus = "Music"

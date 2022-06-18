@@ -1,7 +1,9 @@
-﻿using Godot;
+using Godot;
 
 using Soteria.Menus;
+using Soteria.UI;
 using Soteria.Network;
+using Soteria;
 
 namespace Soteria.Scenarios
 {
@@ -9,12 +11,14 @@ namespace Soteria.Scenarios
     {
         protected GameVariables GameVariables;
 
+        [Signal]
+        public delegate void ScenarioLoaded();
+
         public override void _Ready()
         {
             this.GameVariables = this.GetNode<GameVariables>("/root/GameVariables");
 
-            this.GameVariables.AttemptedInfections = 0;
-            this.GameVariables.SuccessfulInfections = 0;
+            this.GameVariables.ResetValues();
 
             var networkGraphInstance = this.GetNode<NetworkGraph>("NetworkGraphRoot");
             this.GameVariables.Connect(nameof(GameVariables.DateIncreasedDay), networkGraphInstance, "_on_GameTickTimer_timeout");
@@ -22,6 +26,15 @@ namespace Soteria.Scenarios
             RegisterGameOver();
 
             this.GameVariables.SetTimeScale(1);
+
+            this.Connect(nameof(ScenarioLoaded), this, nameof(OnScenarioLoaded));
+            this.GetNode<Audio>("/root/Audio").IsIngame = 1f;
+        }
+
+        private void OnScenarioLoaded()
+        {
+            var scenarioUpgrade = this.GetNode<UpgradeScenario>("UI/UpgradeScenario");
+            scenarioUpgrade.OnScenarioLoaded();
         }
 
         protected virtual void RegisterGameOver()

@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/soteria-bass.mp3-03d4e5f2589808eea220deebf5cc9e41.mp3str"
+
+[deps]
+
+source_file="res://resources/music/soteria-bass.mp3"
+dest_files=[ "res://.import/soteria-bass.mp3-03d4e5f2589808eea220deebf5cc9e41.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

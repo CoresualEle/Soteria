@@ -40,5 +40,10 @@ namespace Soteria.Menus
         {
             this.GetTree().ChangeScene("Scenarios/" + scenarioName + "/" + scenarioName + ".tscn");
         }
+
+        private void _on_BackButton_pressed()
+        {
+            this.GetTree().ChangeScene("res://Menus/Main.tscn");
+        }
     }
 }

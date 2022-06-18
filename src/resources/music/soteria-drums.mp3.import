@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/soteria-drums.mp3-6b5e2855e8314bcdbc3e024c21e6016e.mp3str"
+
+[deps]
+
+source_file="res://resources/music/soteria-drums.mp3"
+dest_files=[ "res://.import/soteria-drums.mp3-6b5e2855e8314bcdbc3e024c21e6016e.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

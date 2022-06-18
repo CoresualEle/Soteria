@@ -1,0 +1,86 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Menus/ButtonTheme.tres" type="Theme" id=1]
+[ext_resource path="res://resources/fonts/Dongle_24.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Menus/OptionsAudio.cs" type="Script" id=3]
+
+[node name="OptionsAudio" type="CanvasLayer"]
+script = ExtResource( 3 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_bottom = -10.0
+grow_vertical = 0
+
+[node name="MusicVolumeContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 232.0
+margin_bottom = 36.0
+
+[node name="Label" type="Label" parent="VBoxContainer/MusicVolumeContainer"]
+margin_right = 103.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 2 )
+text = "Music Volume"
+
+[node name="Slider" type="HSlider" parent="VBoxContainer/MusicVolumeContainer"]
+margin_left = 107.0
+margin_right = 207.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 100, 0 )
+focus_neighbour_top = NodePath("../../BackButton")
+focus_neighbour_bottom = NodePath("../../SoundVolumeContainer/Slider")
+size_flags_vertical = 1
+theme = ExtResource( 1 )
+max_value = 10.0
+value = 10.0
+
+[node name="Value" type="Label" parent="VBoxContainer/MusicVolumeContainer"]
+margin_left = 211.0
+margin_right = 227.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 2 )
+text = "10"
+
+[node name="SoundVolumeContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 40.0
+margin_right = 232.0
+margin_bottom = 76.0
+
+[node name="Label" type="Label" parent="VBoxContainer/SoundVolumeContainer"]
+margin_right = 108.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 2 )
+text = "Sound Volume"
+
+[node name="Slider" type="HSlider" parent="VBoxContainer/SoundVolumeContainer"]
+margin_left = 112.0
+margin_right = 212.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 100, 0 )
+focus_neighbour_top = NodePath("../../MusicVolumeContainer/Slider")
+focus_neighbour_bottom = NodePath("../../BackButton")
+size_flags_vertical = 1
+theme = ExtResource( 1 )
+max_value = 10.0
+value = 10.0
+
+[node name="Value" type="Label" parent="VBoxContainer/SoundVolumeContainer"]
+margin_left = 216.0
+margin_right = 232.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 2 )
+text = "10"
+
+[node name="BackButton" type="Button" parent="VBoxContainer"]
+margin_top = 80.0
+margin_right = 232.0
+margin_bottom = 122.0
+focus_neighbour_top = NodePath("../SoundVolumeContainer/Slider")
+focus_neighbour_bottom = NodePath("../MusicVolumeContainer/Slider")
+theme = ExtResource( 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "Back"
+flat = true
+align = 0

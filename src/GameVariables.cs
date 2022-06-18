@@ -24,6 +24,8 @@ namespace Soteria
         private Timer dailyTimer;
         private int nodesAffectedByDenialOfService;
 
+        private Audio audio;
+
         [Signal]
         public delegate void BudgetChanged(int budget);
 
@@ -104,6 +106,7 @@ namespace Soteria
             set
             {
                 this.currentInfections = value;
+                this.audio.IsInfected = this.currentInfections > 0 ? 1f : 0f;
                 this.EmitSignal(nameof(CurrentInfectionsChanged), this.currentInfections);
             }
         }
@@ -135,6 +138,26 @@ namespace Soteria
             this.dailyTimer.Connect("timeout", this, nameof(this.Dailytimer_callback));
             this.dailyTimer.Autostart = true;
             this.AddChild(this.dailyTimer);
+
+            this.audio = this.GetNode<Audio>("/root/Audio");
+        }
+
+        public void ResetValues()
+        {
+            this.WorkSatisfaction = 1.0f;
+            this.CustomerSatisfaction = 1.0f;
+
+            this.CostToUpgrade = 0;
+
+            this.AttemptedInfections = 0;
+            this.SuccessfulInfections = 0;
+
+            this.BackupRestoreSuccessful = 1.0f;
+
+            this.Budget = 0;
+            this.Upkeep = 0;
+            this.BaseIncome = 0;
+            this.CurrentInfections = 0;
         }
 
         public void SetTimeScale(int timeScale)

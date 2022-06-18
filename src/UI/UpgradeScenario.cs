@@ -12,10 +12,6 @@ namespace Soteria.UI {
             this.gameVariables = this.GetNode<GameVariables>("/root/GameVariables");
             this.nextScenarioButton = this.GetNode<Button>("NextScenarioButton");
 
-            var costToUpgrade = this.gameVariables.CostToUpgrade;
-            // TODO initialize this later, when scenario has finished the "Ready" function
-            // Otherwise Costs will show as "0"
-            this.nextScenarioButton.HintTooltip = $"Upgrade to next scenario (Costs {costToUpgrade}€) - Only available when there are no active Infections";
             this.nextScenarioButton.Disabled = true;
             
             this.gameVariables.Connect(nameof(GameVariables.BudgetChanged), this, nameof(this.OnBudgetChanged));
@@ -23,6 +19,12 @@ namespace Soteria.UI {
             // now we assume that the function will be called anyway on the next day
 
             this.nextScenarioButton.Connect("pressed", this, nameof(this.DoUpgrade));
+        }
+
+        public void OnScenarioLoaded()
+        {
+            var costToUpgrade = this.gameVariables.CostToUpgrade;
+            this.nextScenarioButton.HintTooltip = $"Upgrade to next scenario (Costs {costToUpgrade}€) - Only available when there are no active Infections";
         }
 
         private void OnBudgetChanged(int budget)

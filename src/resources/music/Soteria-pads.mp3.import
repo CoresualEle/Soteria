@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/soteria-pads.mp3-6822d49be7f387544489d86373e2fd4e.mp3str"
+
+[deps]
+
+source_file="res://resources/music/soteria-pads.mp3"
+dest_files=[ "res://.import/soteria-pads.mp3-6822d49be7f387544489d86373e2fd4e.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
