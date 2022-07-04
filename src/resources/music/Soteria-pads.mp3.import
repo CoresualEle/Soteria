@@ -2,12 +2,12 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-path="res://.import/soteria-pads.mp3-6822d49be7f387544489d86373e2fd4e.mp3str"
+path="res://.import/Soteria-pads.mp3-54d90b087586f0a3ff0fd4a78b64366d.mp3str"
 
 [deps]
 
-source_file="res://resources/music/soteria-pads.mp3"
-dest_files=[ "res://.import/soteria-pads.mp3-6822d49be7f387544489d86373e2fd4e.mp3str" ]
+source_file="res://resources/music/Soteria-pads.mp3"
+dest_files=[ "res://.import/Soteria-pads.mp3-54d90b087586f0a3ff0fd4a78b64366d.mp3str" ]
 
 [params]
 
