@@ -43,6 +43,7 @@ namespace Soteria.Menus
 
         private void _on_BackButton_pressed()
         {
+            this.GetNode<UserPreferences>("/root/UserPreferences").SavePreferences();
             this.QueueFree();
             this.EmitSignal(nameof(BackButtonPressed));
         }

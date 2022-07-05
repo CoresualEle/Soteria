@@ -10,7 +10,7 @@ namespace Soteria.Menus
         public override void _Ready()
         {
             this.GetNode<Button>("VBoxContainer/FullScreenButton").GrabFocus();
-            this.GetNode<CheckButton>("VBoxContainer/FullScreenButton").Disabled = OS.WindowFullscreen;
+            this.GetNode<CheckButton>("VBoxContainer/FullScreenButton").Pressed = OS.WindowFullscreen;
         }
 
         private void _on_FullScreenButton_toggled(bool buttonPressed)
@@ -20,6 +20,7 @@ namespace Soteria.Menus
 
         private void _on_BackButton_pressed()
         {
+            this.GetNode<UserPreferences>("/root/UserPreferences").SavePreferences();
             this.QueueFree();
             this.EmitSignal(nameof(BackButtonPressed));
         }

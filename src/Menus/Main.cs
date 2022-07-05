@@ -10,6 +10,7 @@ namespace Soteria.Menus
 
             var gameVariables = this.GetNode<GameVariables>("/root/GameVariables");
             gameVariables.Budget = 1000000000;
+            this.GetNode<UserPreferences>("/root/UserPreferences").LoadPreferences();
         }
 
         private void _on_StartButton_pressed()

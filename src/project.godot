@@ -18,6 +18,7 @@ config/icon="res://icon.png"
 
 GameVariables="*res://GameVariables.cs"
 Audio="*res://Audio.tscn"
+UserPreferences="*res://UserPreferences.cs"
 
 [display]
 
