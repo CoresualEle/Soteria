@@ -1,33 +1,34 @@
 using Godot;
-using Soteria;
+
 using Soteria.Menus;
 using Soteria.UI.MetaActions;
 
-namespace Soteria.UI {
+namespace Soteria.UI
+{
     public class MetaActionsScene : Control
     {
         private GameVariables gameVariables;
 
-        private int backupBudgetMax = 0;
-        private int currentBackupBudget = 0;
+        private int backupBudgetMax;
+        private int currentBackupBudget;
         private MetaActionSlider backupSlider;
+
         public override void _Ready()
         {
             this.gameVariables = this.GetNode<GameVariables>("/root/GameVariables");
 
             var trainEmployeesButton = this.GetNode<MetaActionButton>("VBoxContainer/TrainEmployees");
-            trainEmployeesButton.Connect(nameof(MetaActionButton.InfoButtonPressed), this, nameof(OnInfoButtonTrainEmployees));
-            var backupSlider = this.GetNode<MetaActionSlider>("VBoxContainer/BackupBudget");
-            backupSlider.Connect(nameof(MetaActionSlider.InfoButtonPressed), this, nameof(OnInfoButtonBackupBudget));
-            var TFASwitch = this.GetNode<MetaActionSwitch>("VBoxContainer/2FA");
-            TFASwitch.Connect(nameof(MetaActionSwitch.InfoButtonPressed), this, nameof(OnInfoButtonTFA));
+            trainEmployeesButton.Connect(nameof(MetaActionButton.InfoButtonPressed), this, nameof(this.OnInfoButtonTrainEmployees));
+            var tfaSwitch = this.GetNode<MetaActionSwitch>("VBoxContainer/2FA");
+            tfaSwitch.Connect(nameof(MetaActionSwitch.InfoButtonPressed), this, nameof(this.OnInfoButtonTfa));
 
             this.backupSlider = this.GetNode<MetaActionSlider>("VBoxContainer/BackupBudget");
+            this.backupSlider.Connect(nameof(MetaActionSlider.InfoButtonPressed), this, nameof(this.OnInfoButtonBackupBudget));
             this.backupBudgetMax = this.backupSlider.MaxValue;
-            this.backupSlider.Connect(nameof(MetaActionSlider.SliderValueChanged), this, nameof(OnBackupBudgetChanged));
-            this.gameVariables.Connect(nameof(GameVariables.DateIncreasedDay), this, nameof(OnDateIncrease));
-            OnBackupBudgetChanged(this.backupSlider.DefaultValue);
-            OnDateIncrease();
+            this.backupSlider.Connect(nameof(MetaActionSlider.SliderValueChanged), this, nameof(this.OnBackupBudgetChanged));
+            this.gameVariables.Connect(nameof(GameVariables.DateIncreasedDay), this, nameof(this.OnDateIncrease));
+            this.OnBackupBudgetChanged(this.backupSlider.DefaultValue);
+            this.OnDateIncrease();
         }
 
         private void OnBackupBudgetChanged(int value)
@@ -39,8 +40,8 @@ namespace Soteria.UI {
         {
             // Currently this is linear, maybe another formular has better values
             // Also it does not allow for 100% change, but only 99.99%
-            var backupSuccessfulChance = (float) this.currentBackupBudget / ((float) this.backupBudgetMax + 1f);
-            GD.Print($"Chance of successful restore: {backupSuccessfulChance*100}%");
+            var backupSuccessfulChance = this.currentBackupBudget / (this.backupBudgetMax + 1f);
+            GD.Print($"Chance of successful restore: {backupSuccessfulChance * 100}%");
             this.gameVariables.BackupRestoreSuccessful = backupSuccessfulChance;
         }
 
@@ -57,7 +58,7 @@ namespace Soteria.UI {
             infoBox.Description = description;
             this.GetTree().CurrentScene.AddChild(infoBox);
         }
-        
+
         private void OnInfoButtonBackupBudget()
         {
             var infoBoxLoader = (PackedScene)ResourceLoader.Load("res://Menus/InfoScene.tscn");
@@ -71,7 +72,8 @@ namespace Soteria.UI {
             infoBox.Description = description;
             this.GetTree().CurrentScene.AddChild(infoBox);
         }
-        private void OnInfoButtonTFA()
+
+        private void OnInfoButtonTfa()
         {
             var infoBoxLoader = (PackedScene)ResourceLoader.Load("res://Menus/InfoScene.tscn");
             var infoBox = (InfoScene)infoBoxLoader.Instance();

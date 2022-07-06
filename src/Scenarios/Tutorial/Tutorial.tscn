@@ -1,0 +1,149 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Network/Components/Connection.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Network/Components/Nodes/Server.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Network/NetworkGraph.tscn" type="PackedScene" id=3]
+[ext_resource path="res://UI/UI.tscn" type="PackedScene" id=4]
+[ext_resource path="res://UI/TutorialOverlay.tscn" type="PackedScene" id=5]
+[ext_resource path="res://resources/images/LightSprite.png" type="Texture" id=6]
+[ext_resource path="res://Network/Components/Nodes/Client.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Network/Components/Nodes/Internet.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Network/Threats/Malware.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Network/Threats/DenialOfService.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenarios/Tutorial/Tutorial.cs" type="Script" id=11]
+
+[sub_resource type="Environment" id=1]
+background_mode = 4
+background_color = Color( 0.227451, 0.2, 0.207843, 1 )
+tonemap_mode = 4
+auto_exposure_enabled = true
+auto_exposure_scale = 0.1
+auto_exposure_speed = 12.01
+ss_reflections_fade_in = 0.166435
+ss_reflections_fade_out = 4.14106
+ss_reflections_depth_tolerance = 20.7
+glow_enabled = true
+glow_intensity = 0.4
+glow_strength = 0.9
+glow_blend_mode = 1
+glow_hdr_threshold = 1.5
+glow_bicubic_upscale = true
+glow_high_quality = true
+
+[node name="Tutorial" type="Node2D"]
+script = ExtResource( 11 )
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1280.0
+margin_bottom = 720.0
+mouse_filter = 2
+color = Color( 0.101961, 0.0901961, 0.0901961, 1 )
+
+[node name="UI" parent="." instance=ExtResource( 4 )]
+
+[node name="TrainEmployees" parent="UI/MetaActionsScene/VBoxContainer" index="0"]
+margin_right = 215.0
+
+[node name="BackupBudget" parent="UI/MetaActionsScene/VBoxContainer" index="1"]
+margin_right = 215.0
+
+[node name="2FA" parent="UI/MetaActionsScene/VBoxContainer" index="2"]
+margin_right = 215.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 1 )
+
+[node name="Light2D" type="Light2D" parent="WorldEnvironment"]
+position = Vector2( 178, 159 )
+texture = ExtResource( 6 )
+texture_scale = 3.0
+shadow_enabled = true
+shadow_color = Color( 0.384314, 0.290196, 0.290196, 0 )
+shadow_buffer_size = 4096
+shadow_filter = 4
+
+[node name="Light2D2" type="Light2D" parent="WorldEnvironment"]
+position = Vector2( 737, 554 )
+texture = ExtResource( 6 )
+texture_scale = 3.0
+shadow_enabled = true
+shadow_color = Color( 0.384314, 0.290196, 0.290196, 0 )
+shadow_buffer_size = 4096
+shadow_filter = 4
+
+[node name="Light2D3" type="Light2D" parent="WorldEnvironment"]
+position = Vector2( 244, 604 )
+texture = ExtResource( 6 )
+texture_scale = 3.0
+shadow_enabled = true
+shadow_color = Color( 0.384314, 0.290196, 0.290196, 0 )
+shadow_buffer_size = 4096
+shadow_filter = 4
+
+[node name="Light2D4" type="Light2D" parent="WorldEnvironment"]
+position = Vector2( 770, 171 )
+texture = ExtResource( 6 )
+texture_scale = 3.0
+shadow_enabled = true
+shadow_color = Color( 0.384314, 0.290196, 0.290196, 0 )
+shadow_buffer_size = 4096
+shadow_filter = 4
+
+[node name="NetworkGraphRoot" parent="." instance=ExtResource( 3 )]
+
+[node name="Webserver" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
+position = Vector2( 627, 272 )
+policySoftwareFirewall = true
+
+[node name="VBoxContainer" parent="NetworkGraphRoot/Webserver/CanvasLayer/ContextMenu" index="0"]
+margin_bottom = 346.0
+
+[node name="WS-DB" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
+SourceNodePath = NodePath("../Webserver")
+TargetNodePath = NodePath("../Database")
+
+[node name="Database" parent="NetworkGraphRoot" instance=ExtResource( 2 )]
+position = Vector2( 525, 496 )
+
+[node name="VBoxContainer" parent="NetworkGraphRoot/Database/CanvasLayer/ContextMenu" index="0"]
+margin_bottom = 346.0
+
+[node name="Employee" parent="NetworkGraphRoot" instance=ExtResource( 7 )]
+position = Vector2( 310, 324 )
+
+[node name="Emp-DB" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
+SourceNodePath = NodePath("../Employee")
+TargetNodePath = NodePath("../Database")
+
+[node name="Emp-WS" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
+SourceNodePath = NodePath("../Employee")
+TargetNodePath = NodePath("../Webserver")
+
+[node name="Internet" parent="NetworkGraphRoot" instance=ExtResource( 8 )]
+position = Vector2( 528, 45 )
+
+[node name="Internet-WS" parent="NetworkGraphRoot" instance=ExtResource( 1 )]
+SourceNodePath = NodePath("../Internet")
+TargetNodePath = NodePath("../Webserver")
+
+[node name="Malware1" parent="NetworkGraphRoot" instance=ExtResource( 9 )]
+NodeToInfectPath = NodePath("../Webserver")
+
+[node name="DenialOfService" parent="NetworkGraphRoot" instance=ExtResource( 10 )]
+NodeToInfectPath = NodePath("../Database")
+
+[node name="TutorialOverlay" parent="." instance=ExtResource( 5 )]
+nodesToHighlight = [ NodePath(""), NodePath("../UI/TimeControl/VBoxContainer"), NodePath("../UI/TimeControl/VBoxContainer/CurrentTimeContainer/CurrentTime"), NodePath("../UI/TimeControl/VBoxContainer/CurrentTimeContainer/WeekLabel"), NodePath("../UI/TimeControl/VBoxContainer/TimeControlButtons/Pause"), NodePath("../UI/TimeControl/VBoxContainer/TimeControlButtons/Speed1X"), NodePath("../UI/TimeControl/VBoxContainer/TimeControlButtons/Speed2X"), NodePath("../UI/Stats/Background/HBoxContainer"), NodePath("../UI/Stats/Background/HBoxContainer/Budget"), NodePath("../UI/Stats/Background/HBoxContainer/Upkeep"), NodePath("../UI/Stats/Background/HBoxContainer/Income"), NodePath("../UI/Stats/Background/HBoxContainer/CurrentInfections"), NodePath("../UI/MetaActionsScene/VBoxContainer"), NodePath("../UI/MetaActionsScene/VBoxContainer/TrainEmployees"), NodePath("../UI/MetaActionsScene/VBoxContainer/BackupBudget"), NodePath("../UI/MetaActionsScene/VBoxContainer/2FA"), NodePath("../NetworkGraphRoot/Internet/Polygon2D"), NodePath("../NetworkGraphRoot/Webserver/Polygon2D"), NodePath("../NetworkGraphRoot/Database/Polygon2D"), NodePath("../NetworkGraphRoot/Employee/Polygon2D"), NodePath("../UI/UpgradeScenario/NextScenarioButton"), NodePath("") ]
+
+[editable path="UI"]
+[editable path="UI/Pause"]
+[editable path="UI/Stats"]
+[editable path="UI/MetaActionsScene"]
+[editable path="UI/TimeControl"]
+[editable path="UI/UpgradeScenario"]
+[editable path="NetworkGraphRoot/Webserver"]
+[editable path="NetworkGraphRoot/Database"]
+[editable path="NetworkGraphRoot/Employee"]
+[editable path="NetworkGraphRoot/Internet"]

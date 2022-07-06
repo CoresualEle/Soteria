@@ -1,11 +1,11 @@
 using Godot;
-using Soteria;
 
-namespace Soteria.Menus {
+namespace Soteria.Menus
+{
     public class InfoScene : CanvasLayer
     {
         private GameVariables gameVariables;
-        
+
         public string Title;
         public string Description;
 

@@ -1,7 +1,7 @@
 using Godot;
-using Soteria;
 
-namespace Soteria.UI {
+namespace Soteria.UI
+{
     public class UpgradeScenario : Control
     {
         private GameVariables gameVariables;
@@ -13,8 +13,9 @@ namespace Soteria.UI {
             this.nextScenarioButton = this.GetNode<Button>("NextScenarioButton");
 
             this.nextScenarioButton.Disabled = true;
-            
+
             this.gameVariables.Connect(nameof(GameVariables.BudgetChanged), this, nameof(this.OnBudgetChanged));
+
             // Normally we would also need to check current infections, but for
             // now we assume that the function will be called anyway on the next day
 
@@ -29,13 +30,15 @@ namespace Soteria.UI {
 
         private void OnBudgetChanged(int budget)
         {
-            if(budget >= this.gameVariables.CostToUpgrade && this.gameVariables.CurrentInfections == 0)
+            if (budget >= this.gameVariables.CostToUpgrade && this.gameVariables.CurrentInfections == 0)
             {
                 // Only enable the button if it wasn't enabled previously
-                if (this.nextScenarioButton.Disabled) {
+                if (this.nextScenarioButton.Disabled)
+                {
                     this.nextScenarioButton.Disabled = false;
                 }
-            } else if (!this.nextScenarioButton.Disabled)
+            }
+            else if (!this.nextScenarioButton.Disabled)
             {
                 this.nextScenarioButton.Disabled = true;
             }
@@ -44,6 +47,7 @@ namespace Soteria.UI {
         private void DoUpgrade()
         {
             GD.Print("Upgraded Scenario");
+
             // TODO actually load next scenario
         }
     }

@@ -1,7 +1,7 @@
 using Godot;
-using System.Collections.Generic;
 
-namespace Soteria {
+namespace Soteria
+{
     public class Audio : Node2D
     {
         public float IsIngame = 0f;

@@ -1,35 +1,21 @@
-using Godot;
 using System.Collections.Generic;
+
+using Godot;
 
 /* Based on https://github.com/benbishopnz/godot-credits/blob/master/GodotCredits.gd */
 
 public class Credits : Node2D
 {
-    [Signal]
-    public delegate void CreditsFinished();
+    private readonly float sectionTime = 1.5f;
+    private readonly float lineTime = 0.5f;
+    private readonly float baseSpeed = 0.7f;
+    private readonly Color titleColor = Colors.White;
+    private readonly List<Label> lines = new List<Label>();
 
-    private float sectionTime = 1.5f;
-    private float lineTime = 0.5f;
-    private float baseSpeed = 0.7f;
-    private Color titleColor = Colors.White;
-
-    private List<string> section = new List<string>();
-    private bool sectionNext = true;
-    private float sectionTimer = 0f;
-    private float lineTimer = 0f;
-    private int currentLine = 0;
-    private List<Label> lines = new List<Label>();
-
-    private float scrollSpeed;
-
-    private bool started = false;
-
-    private Label line;
-    private Control creditsContainer;
-
-
-    private List<List<string>> credits = new List<List<string>> {
-        new List<string> {
+    private readonly List<List<string>> credits = new List<List<string>>
+    {
+        new List<string>
+        {
             "A game by",
             "Anatol Anciferov",
             "Semjon Alexander Bibow",
@@ -39,10 +25,11 @@ public class Credits : Node2D
         },
         new List<string> { "Game Design", "Semjon Alexander Bibow", "Rico Clemens" },
         new List<string> { "Programming", "Anatol Anciferov", "Semjon Alexander Bibow", "Frederic Oldenbüttel" },
-        new List<string> { "Test manager", "Ferhat Güner"},
+        new List<string> { "Test manager", "Ferhat Güner" },
         new List<string> { "Sound effects", "Ferhat Güner" },
         new List<string> { "Music supervisor", "Ferhat Güner" },
-        new List<string> {
+        new List<string>
+        {
             "Tools used",
             "Developed with Godot Engine",
             "Licensed under MIT License",
@@ -56,9 +43,25 @@ public class Credits : Node2D
             "Designed by Yanghee Ryu",
             "Licensed under SIL Open Font License 1.1",
             "https://github.com/yangheeryu/Dongle/blob/master/OFL.txt"
-         },
+        },
         new List<string> { "Special thanks", "TODO" },
     };
+
+    private List<string> section = new List<string>();
+    private bool sectionNext = true;
+    private float sectionTimer;
+    private float lineTimer;
+    private int currentLine;
+
+    private float scrollSpeed;
+
+    private bool started;
+
+    private Label line;
+    private Control creditsContainer;
+
+    [Signal]
+    public delegate void CreditsFinished();
 
     public override void _Ready()
     {
@@ -68,7 +71,7 @@ public class Credits : Node2D
         this.scrollSpeed = this.baseSpeed;
     }
 
-    private void finished()
+    private void Finished()
     {
         this.EmitSignal(nameof(CreditsFinished));
         this.QueueFree();
@@ -76,22 +79,20 @@ public class Credits : Node2D
 
     public override void _Process(float delta)
     {
-        var scrollSpeed = this.baseSpeed * delta;
-
         if (this.sectionNext)
         {
             this.sectionTimer += delta;
-            if(this.sectionTimer >= this.sectionTime)
+            if (this.sectionTimer >= this.sectionTime)
             {
                 this.sectionTimer -= this.sectionTime;
 
-                if(this.credits.ToArray().Length > 0)
+                if (this.credits.ToArray().Length > 0)
                 {
                     this.started = true;
                     this.section = this.credits[0];
                     this.credits.RemoveAt(0);
                     this.currentLine = 0;
-                    this.addLine();
+                    this.AddLine();
                 }
             }
         }
@@ -101,7 +102,7 @@ public class Credits : Node2D
             if (this.lineTimer >= this.lineTime)
             {
                 this.lineTimer -= this.lineTime;
-                this.addLine();
+                this.AddLine();
             }
         }
 
@@ -109,23 +110,24 @@ public class Credits : Node2D
         {
             foreach (var l in this.lines.ToArray())
             {
-                l.RectPosition +=  new Vector2(0, -this.scrollSpeed);
+                l.RectPosition += new Vector2(0, -this.scrollSpeed);
                 if (l.RectPosition.y < -l.GetLineHeight())
                 {
                     this.lines.Remove(l);
                     l.QueueFree();
                 }
             }
-        } else
+        }
+        else
         {
             if (this.started)
             {
-                this.finished();
+                this.Finished();
             }
         }
     }
 
-    private void addLine()
+    private void AddLine()
     {
         var newLine = (Label)this.line.Duplicate();
         newLine.Text = this.section[0];
@@ -136,22 +138,25 @@ public class Credits : Node2D
         {
             newLine.AddColorOverride("font_color", this.titleColor);
         }
+
         this.creditsContainer.AddChild(newLine);
 
         if (this.section.ToArray().Length > 0)
         {
             this.currentLine += 1;
             this.sectionNext = false;
-        } else
+        }
+        else
         {
             this.sectionNext = true;
         }
     }
+
     public override void _UnhandledInput(InputEvent @event)
     {
-        if(@event.IsActionPressed("ui_cancel"))
+        if (@event.IsActionPressed("ui_cancel"))
         {
-            this.finished();
+            this.Finished();
         }
     }
 }

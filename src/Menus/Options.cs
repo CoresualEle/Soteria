@@ -21,17 +21,16 @@ namespace Soteria.Menus
             var optionsGraphicsSceneInstance = (CanvasLayer)optionsGraphicsScene.Instance();
 
             this.GetTree().CurrentScene.AddChild(optionsGraphicsSceneInstance);
-            
-            optionsGraphicsSceneInstance.Connect(nameof(OptionsGraphics.BackButtonPressed), this, nameof(_on_Graphics_BackButton_Signal));
+
+            optionsGraphicsSceneInstance.Connect(nameof(OptionsGraphics.BackButtonPressed), this, nameof(this._on_Graphics_BackButton_Signal));
         }
-        
+
         private void _on_Graphics_BackButton_Signal()
         {
             this.GetNode<VBoxContainer>("VBoxContainer").Show();
             this.GetNode<Button>("VBoxContainer/GraphicsButton").GrabFocus();
         }
 
-        
         private void _on_AudioButton_pressed()
         {
             this.GetNode<VBoxContainer>("VBoxContainer").Hide();
@@ -40,8 +39,8 @@ namespace Soteria.Menus
             var optionsAudioSceneInstance = (CanvasLayer)optionsAudioScene.Instance();
 
             this.GetTree().CurrentScene.AddChild(optionsAudioSceneInstance);
-            
-            optionsAudioSceneInstance.Connect(nameof(OptionsAudio.BackButtonPressed), this, nameof(_on_Audio_BackButton_Signal));
+
+            optionsAudioSceneInstance.Connect(nameof(OptionsAudio.BackButtonPressed), this, nameof(this._on_Audio_BackButton_Signal));
         }
 
         private void _on_Audio_BackButton_Signal()

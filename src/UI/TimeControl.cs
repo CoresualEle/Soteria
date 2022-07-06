@@ -1,5 +1,6 @@
-using Godot;
 using System;
+
+using Godot;
 
 namespace Soteria.UI
 {
@@ -76,7 +77,7 @@ namespace Soteria.UI
 
         private void OnTimeScaleChanged(int timescale)
         {
-            switch(timescale)
+            switch (timescale)
             {
                 case 0:
                     this.SetActive(this.pauseNode);
