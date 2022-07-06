@@ -10,6 +10,13 @@ namespace Soteria.Network.Components.Nodes
         public override bool AttemptInfection(IThreat threat)
         {
             this.GameVariables.AttemptedInfections += 1;
+
+            // Stipulate that Clients cannot be infected by DoS attacks
+            if(threat is DenialOfService)
+            {
+                return false;
+            }
+
             if (!this.Infections.Contains(threat) && this.Randomizer.NextDouble() > this.ThreatResistance)
             {
                 this.GameVariables.SuccessfulInfections += 1;

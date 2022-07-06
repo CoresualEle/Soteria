@@ -7,6 +7,7 @@ namespace Soteria.Network.Components.Nodes
     {
         public override bool AttemptInfection(IThreat threat)
         {
+            // The internet cannot be infected by anything
             return false;
         }
     }

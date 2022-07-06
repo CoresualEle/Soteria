@@ -22,7 +22,7 @@ namespace Soteria.Foundation
 
         public IList<INetworkConnection> Connections { get; private set; }
 
-        public IList<IThreat> Infections { get; private set; }
+        public IList<IThreat> Infections { get; protected set; }
 
         protected Label NodeTypeLabel;
 

@@ -4,6 +4,8 @@ using Soteria.Foundation;
 using Soteria.Foundation.Contracts;
 using Soteria.UI;
 
+using System.Linq;
+
 namespace Soteria.Network.Components.Nodes
 {
     public class Server : NetworkNodeBase
@@ -33,16 +35,17 @@ namespace Soteria.Network.Components.Nodes
         public override bool AttemptInfection(IThreat threat)
         {
             this.GameVariables.AttemptedInfections += 1;
+
+            if(threat is DenialOfService && this.policySoftwareFirewall)
+            {
+                return false;
+            }
+
             if (!this.Infections.Contains(threat) && this.Randomizer.NextDouble() > this.ThreatResistance)
             {
                 this.GameVariables.SuccessfulInfections += 1;
                 this.Infections.Add(threat);
-                this.GetNode<Polygon2D>("Polygon2D").Color = this.InfectedColor;
-                var currentInfections = "Current Infections: ";
-                foreach(var infection in this.Infections) {
-                    currentInfections += $"{infection.Name}, ";
-                }
-                this.currentInfectionsLabel.Text = currentInfections.TrimEnd(", ".ToCharArray());
+                this.UpdateCurrentInfectionLabel();
 
                 return true;
             }
@@ -68,13 +71,14 @@ namespace Soteria.Network.Components.Nodes
             backupRestoreNode.Connect(nameof(ContextMenuAction.ActionPressed), this, nameof(this._on_backup_restored));
 
             this.currentInfectionsLabel = this.GetNode<Label>("CanvasLayer/ContextMenu/VBoxContainer/InfectionsLabel");
-            this.currentInfectionsLabel.Text = "Current Infections: /";
+            this.UpdateCurrentInfectionLabel();
         }
 
         private void _on_softwareFirewall_toggled(bool value)
         {
             this.policySoftwareFirewall = value;
             this.UpdateThreatResistance();
+            this.RemoveDoS();
         }
 
         private void _on_antivirus_toggled(bool value)
@@ -106,6 +110,40 @@ namespace Soteria.Network.Components.Nodes
             GD.Print($"ThreatResistance for {this.Name}: {this.ThreatResistance*100}%");
         }
 
+        private void UpdateCurrentInfectionLabel()
+        {
+            if (this.currentInfectionsLabel is null)
+            {
+                return;
+            }
+            if (this.Infections.Count == 0) {
+                this.currentInfectionsLabel.Text = "Current Infections: /";
+                this.GetNode<Polygon2D>("Polygon2D").Color = this.NormalColor;
+            } else
+            {
+                var currentInfections = "Current Infections: ";
+                foreach(var infection in this.Infections) {
+                    currentInfections += $"{infection.Name}, ";
+                }
+                this.currentInfectionsLabel.Text = currentInfections.TrimEnd(", ".ToCharArray());
+                this.GetNode<Polygon2D>("Polygon2D").Color = this.InfectedColor;
+            }
+        }
+
+        private void RemoveDoS()
+        {
+            var DoSInfections = this.Infections.Where(threat => threat is DenialOfService);
+            var nonDoSInfections = this.Infections.Where(threat => !(threat is DenialOfService));
+
+            foreach (var threat in DoSInfections)
+            {
+                threat.RemoveNode(this);
+            }
+
+            this.Infections = nonDoSInfections.ToList();
+            this.UpdateCurrentInfectionLabel();
+        }
+
         private void _on_backup_restored()
         {
             if (this.Randomizer.NextDouble() > this.GameVariables.BackupRestoreSuccessful)
@@ -114,14 +152,17 @@ namespace Soteria.Network.Components.Nodes
                 // TODO maybe we should also show the user that the backup failed
                 return;
             }
-            foreach (var threat in this.Infections)
+            
+            var DoSInfections = this.Infections.Where(threat => threat is DenialOfService);
+            var nonDoSInfections = this.Infections.Where(threat => !(threat is DenialOfService));
+
+            foreach (var threat in nonDoSInfections)
             {
                 threat.RemoveNode(this);
             }
 
-            this.Infections.Clear();
-            this.currentInfectionsLabel.Text = "Current Infections: /";
-            this.GetNode<Polygon2D>("Polygon2D").Color = this.NormalColor;
+            this.Infections = DoSInfections.ToList();
+            this.UpdateCurrentInfectionLabel();
         }
     }
 }
