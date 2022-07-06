@@ -1,9 +1,8 @@
 using Godot;
 
 using Soteria.Menus;
-using Soteria.UI;
 using Soteria.Network;
-using Soteria;
+using Soteria.UI;
 
 namespace Soteria.Scenarios
 {
@@ -23,11 +22,11 @@ namespace Soteria.Scenarios
             var networkGraphInstance = this.GetNode<NetworkGraph>("NetworkGraphRoot");
             this.GameVariables.Connect(nameof(GameVariables.DateIncreasedDay), networkGraphInstance, "_on_GameTickTimer_timeout");
 
-            RegisterGameOver();
+            this.RegisterGameOver();
 
             this.GameVariables.SetTimeScale(1);
 
-            this.Connect(nameof(ScenarioLoaded), this, nameof(OnScenarioLoaded));
+            this.Connect(nameof(ScenarioLoaded), this, nameof(this.OnScenarioLoaded));
             this.GetNode<Audio>("/root/Audio").IsIngame = 1f;
         }
 
@@ -39,7 +38,7 @@ namespace Soteria.Scenarios
 
         protected virtual void RegisterGameOver()
         {
-            this.GameVariables.Connect(nameof(GameVariables.NoMoreMoney), this, nameof(DisplayGameOver));
+            this.GameVariables.Connect(nameof(GameVariables.NoMoreMoney), this, nameof(this.DisplayGameOver));
         }
 
         private void DisplayGameOver()

@@ -7,17 +7,17 @@ namespace Soteria
         public float WorkSatisfaction = 1.0f;
         public float CustomerSatisfaction = 1.0f;
 
-        public int CostToUpgrade = 0;
+        public int CostToUpgrade;
 
-        public int AttemptedInfections = 0;
-        public int SuccessfulInfections = 0;
+        public int AttemptedInfections;
+        public int SuccessfulInfections;
 
         public float BackupRestoreSuccessful = 1.0f;
 
         private int budget;
         private int upkeep;
         private int baseIncome;
-        private int currentInfections = 0;
+        private int currentInfections;
 
         private int day;
         private int week;
@@ -30,10 +30,16 @@ namespace Soteria
         public delegate void BudgetChanged(int budget);
 
         [Signal]
+        public delegate void CurrentInfectionsChanged(int currentInfections);
+
+        [Signal]
         public delegate void DateIncreasedDay();
 
         [Signal]
         public delegate void IncomeChanged(int income);
+
+        [Signal]
+        public delegate void NoMoreMoney();
 
         [Signal]
         public delegate void TimeScaleChanged(int timescale);
@@ -43,12 +49,6 @@ namespace Soteria
 
         [Signal]
         public delegate void WeekChanged(int week);
-
-        [Signal]
-        public delegate void CurrentInfectionsChanged(int currentInfections);
-
-        [Signal]
-        public delegate void NoMoreMoney();
 
         public int Budget
         {
@@ -186,9 +186,9 @@ namespace Soteria
         {
             this.Budget += (this.ActualIncome - this.Upkeep) / 7;
 
-            if (Budget <= 0)
+            if (this.Budget <= 0)
             {
-                Budget = 0;
+                this.Budget = 0;
 
                 this.SetTimeScale(0);
                 this.EmitSignal(nameof(NoMoreMoney));

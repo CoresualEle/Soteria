@@ -24,10 +24,10 @@ namespace Soteria.UI.MetaActions
         private int oldValue;
 
         [Signal]
-        public delegate void SliderValueChanged(int value);
+        public delegate void InfoButtonPressed();
 
         [Signal]
-        public delegate void InfoButtonPressed();
+        public delegate void SliderValueChanged(int value);
 
         public override void _Ready()
         {

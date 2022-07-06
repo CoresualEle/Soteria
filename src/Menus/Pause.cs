@@ -6,7 +6,7 @@ namespace Soteria.Menus
     {
         private bool isPaused;
         private Audio audio;
-        private float previousAudio = 0f;
+        private float previousAudio;
 
         [Signal]
         public delegate void RestartButtonPressed();
@@ -52,7 +52,8 @@ namespace Soteria.Menus
                 this.previousAudio = this.audio.IsInfected;
                 this.audio.IsInfected = 0f;
                 this.audio.IsIngame = 0f;
-            } else
+            }
+            else
             {
                 this.audio.IsIngame = 1f;
                 this.audio.IsInfected = this.previousAudio;

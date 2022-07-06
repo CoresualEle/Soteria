@@ -10,6 +10,7 @@ namespace Soteria.Menus
         // Dictionary of ButtonLabel => ScenarioName
         private readonly System.Collections.Generic.Dictionary<string, string> scenarios = new System.Collections.Generic.Dictionary<string, string>
         {
+            { "Tutorial", "Tutorial" },
             { "0", "DebugStage" },
             { "1", "Scenario1" },
         };

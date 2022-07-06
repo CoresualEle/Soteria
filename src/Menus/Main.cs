@@ -28,6 +28,7 @@ namespace Soteria.Menus
 
             optionsSceneInstance.Connect(nameof(Options.BackButtonPressed), this, nameof(this._on_Options_BackButton_Signal));
         }
+
         private void _on_CreditsButton_pressed()
         {
             this.GetNode<VBoxContainer>("VBoxContainer").Hide();
@@ -40,6 +41,7 @@ namespace Soteria.Menus
 
             creditsSceneInstance.Connect(nameof(Credits.CreditsFinished), this, nameof(this._on_Credits_Finished));
         }
+
         private void _on_Credits_Finished()
         {
             this.GetNode<VBoxContainer>("VBoxContainer").Show();
