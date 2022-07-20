@@ -8,9 +8,6 @@ namespace Soteria.Menus
         private Audio audio;
         private float previousAudio;
 
-        [Signal]
-        public delegate void RestartButtonPressed();
-
         // Could be that we will not use the ResumeButtonPressed signal
         [Signal]
         public delegate void ResumeButtonPressed();
@@ -77,7 +74,10 @@ namespace Soteria.Menus
         private void _on_RestartButton_pressed()
         {
             this.IsPaused = false;
-            this.EmitSignal(nameof(RestartButtonPressed));
+
+            var gameVariables = this.GetNode<GameVariables>("/root/GameVariables");
+            var scenarioName = gameVariables.CurrentScenarioName;
+            this.GetTree().ChangeScene("Scenarios/" + scenarioName + "/" + scenarioName + ".tscn");
         }
 
         private void _on_BackToScenarioSelectionButton_pressed()

@@ -36,5 +36,12 @@ margin_right = 180.0
 margin_bottom = 80.0
 text = "Back to Scenario Selection"
 
+[node name="BackToMainMenuButton" type="Button" parent="VBoxContainer"]
+margin_top = 84.0
+margin_right = 180.0
+margin_bottom = 104.0
+text = "Back to Main Menu"
+
 [connection signal="pressed" from="VBoxContainer/RestartButton" to="." method="_on_RestartButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/BackToScenarioSelectionButton" to="." method="_on_BackToScenarioSelectionButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/BackToMainMenuButton" to="." method="_on_BackToMainMenuButton_pressed"]
