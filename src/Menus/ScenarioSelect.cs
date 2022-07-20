@@ -40,6 +40,9 @@ namespace Soteria.Menus
         private void SwitchToScene(string scenarioName)
         {
             this.GetTree().ChangeScene("Scenarios/" + scenarioName + "/" + scenarioName + ".tscn");
+
+            var gameVariables = this.GetNode<GameVariables>("/root/GameVariables");
+            gameVariables.CurrentScenarioName = scenarioName;
         }
 
         private void _on_BackButton_pressed()

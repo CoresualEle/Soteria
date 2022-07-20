@@ -129,6 +129,8 @@ namespace Soteria
             }
         }
 
+        public string CurrentScenarioName { get; set; }
+
         public override void _Ready()
         {
             this.dailyTimer = new Timer();
